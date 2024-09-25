@@ -14,7 +14,7 @@ if [ ! -d "devkit" ]; then
     cp -r overwrite/* devkit
 
     # Format the JS bundle
-    npx @biomejs/biome format --fix devkit/
+    npx @biomejs/biome format --fix devkit/ || true
 else
     echo "Devkit folder already exists. Overwriting..."
     cp -r overwrite/* devkit
