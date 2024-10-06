@@ -1,0 +1,11 @@
+{
+  "name": "jumbotron",
+  "private": true,
+  "workspaces": [
+    "injector"
+  ],
+  "dependencies": {
+    "esbuild": "^0.24.0",
+    "typescript": "^5.6.2"
+  }
+}
