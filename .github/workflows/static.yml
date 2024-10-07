@@ -34,6 +34,7 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - uses: actions/setup-node@v4
+      - run: npm ci
       - run: bash devkit.sh
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
