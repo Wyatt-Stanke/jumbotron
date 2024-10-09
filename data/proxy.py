@@ -4,7 +4,7 @@ import urllib.request
 
 # Last fetched: 9/24/2024
 
-college_mode = True
+college_mode = False
 
 class ProxyHTTPRequestHandler(SimpleHTTPRequestHandler):
     def __init__(self, *args, local_folder=None, **kwargs):
