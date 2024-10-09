@@ -4,6 +4,8 @@ import urllib.request
 
 # Last fetched: 9/24/2024
 
+college_mode = True
+
 class ProxyHTTPRequestHandler(SimpleHTTPRequestHandler):
     def __init__(self, *args, local_folder=None, **kwargs):
         self.local_folder = local_folder or os.getcwd()
@@ -32,7 +34,9 @@ class ProxyHTTPRequestHandler(SimpleHTTPRequestHandler):
             self.fetch_from_url(file_path)
 
     def fetch_from_url(self, file_path):
-        url_prefix = 'https://806e2242-df99-4dcd-b6ac-2c20175159a8.poki-gdn.com/87546fb2-d628-4f5e-81b8-982f740fb40a'
+        url_prefix_normal = 'https://806e2242-df99-4dcd-b6ac-2c20175159a8.poki-gdn.com/87546fb2-d628-4f5e-81b8-982f740fb40a'
+        url_prefix_college = "https://72e5ba00-c3c7-45d5-b68b-abd8c280716d.poki-gdn.com/db71795e-0efa-4f47-927e-a141eea00e86"
+        url_prefix = url_prefix_college if college_mode else url_prefix_normal
         target_url = url_prefix + self.path + ('index.html' if self.path.endswith('/') else '')
         headers = {
             'Referer': 'https://games.poki.com/'
@@ -64,4 +68,4 @@ def run(server_class=HTTPServer, handler_class=ProxyHTTPRequestHandler, port=800
     httpd.serve_forever()
 
 if __name__ == '__main__':
-    run(port=8000, local_folder='raw/')
+    run(port=8000, local_folder=('raw_co/' if college_mode else 'raw/'))

@@ -156,6 +156,42 @@ const filters: Filter[] = [
 			],
 		},
 	},
+	{
+		selector: {
+			type: "FunctionDeclaration",
+			id: {
+				type: "Identifier",
+				name: "gml_Script_s_is_co_mode",
+			},
+			body: {
+				type: "BlockStatement",
+				body: [
+					Contains,
+					{
+						type: "BlockStatement",
+						body: [
+							Contains,
+							{
+								type: "ReturnStatement",
+								argument: {
+									type: "Literal",
+									value: 0,
+									raw: "0",
+									[Tag]: 1,
+								},
+							},
+						],
+					},
+				],
+			},
+		},
+		actions: {
+			1: [
+				{ type: Actions.ReplaceProperty, property: "value", value: 1 },
+				{ type: Actions.ReplaceProperty, property: "raw", value: "1" },
+			],
+		},
+	},
 ];
 
 function nodeSummary(node: AnyNode) {
