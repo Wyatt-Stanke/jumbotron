@@ -156,42 +156,42 @@ const filters: Filter[] = [
 			],
 		},
 	},
-	// {
-	// 	selector: {
-	// 		type: "FunctionDeclaration",
-	// 		id: {
-	// 			type: "Identifier",
-	// 			name: "gml_Script_s_is_co_mode",
-	// 		},
-	// 		body: {
-	// 			type: "BlockStatement",
-	// 			body: [
-	// 				Contains,
-	// 				{
-	// 					type: "BlockStatement",
-	// 					body: [
-	// 						Contains,
-	// 						{
-	// 							type: "ReturnStatement",
-	// 							argument: {
-	// 								type: "Literal",
-	// 								value: 0,
-	// 								raw: "0",
-	// 								[Tag]: 1,
-	// 							},
-	// 						},
-	// 					],
-	// 				},
-	// 			],
-	// 		},
-	// 	},
-	// 	actions: {
-	// 		1: [
-	// 			{ type: Actions.ReplaceProperty, property: "value", value: 1 },
-	// 			{ type: Actions.ReplaceProperty, property: "raw", value: "1" },
-	// 		],
-	// 	},
-	// },
+	{
+		selector: {
+			type: "FunctionDeclaration",
+			id: {
+				type: "Identifier",
+				name: "gml_Script_s_is_co_mode",
+			},
+			body: {
+				type: "BlockStatement",
+				body: [
+					Contains,
+					{
+						type: "BlockStatement",
+						body: [
+							Contains,
+							{
+								type: "ReturnStatement",
+								argument: {
+									type: "Literal",
+									// value: 1,
+									// raw: "1",
+									[Tag]: 1,
+								},
+							},
+						],
+					},
+				],
+			},
+		},
+		actions: {
+			1: [
+				{ type: Actions.ReplaceProperty, property: "value", value: 0 },
+				{ type: Actions.ReplaceProperty, property: "raw", value: "0" },
+			],
+		},
+	},
 ];
 
 function nodeSummary(node: AnyNode) {
@@ -324,7 +324,12 @@ export async function createHooks({ url, logFn }) {
 					}
 				},
 			});
+			throw new Error("Not found");
 		} catch (e) {
+			if (e.message == "Not found") {
+				logFn(`Filter for ${filter.selector.type} not found!`);
+				throw e;
+			}
 			if (e.message !== "Found") {
 				throw e;
 			}

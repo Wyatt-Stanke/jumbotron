@@ -2,6 +2,8 @@
 
 cd "$(dirname "$(realpath "$0")")" || exit 1
 
+COLLEGE_MODE=false
+
 # Check if the raw/ folder exists
 if [ ! -d "data/raw" ]; then
     echo "You must run the proxy first!"
@@ -13,7 +15,11 @@ if [ ! -d "devkit" ]; then
 
     mkdir devkit
     # Copy the raw data to a new devkit/ folder
-    cp -r data/raw/* devkit
+    if [ "$COLLEGE_MODE" = true ]; then
+        cp -r data/raw_co/* devkit
+    else
+        cp -r data/raw/* devkit
+    fi
     # Copy over all the contents of the overwrite/ folder and overwrite any existing files
     cp -r injector/out/* devkit
     cp -r data/overwrite/* devkit
