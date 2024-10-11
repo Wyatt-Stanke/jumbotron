@@ -1,0 +1,15 @@
+{
+  "name": "@jumbotron/typings-core",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build:acquire": "mkdir -p out && cp ../data/raw/html5game/RetroBowl.js ./out/RetroBowl.ts",
+    "build:generate": "tsc --declaration --noCheck out/RetroBowl.ts",
+    "build:process": "node processor.mjs",
+    "build:full": "npm run build:acquire && npm run build:generate && npm run build:move"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {}
+}
