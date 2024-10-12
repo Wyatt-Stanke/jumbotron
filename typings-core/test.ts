@@ -1,12 +1,16 @@
-import { RetroBowl } from './RetroBowl-raw';
+const orig = 
+`
+function test() {
+    return 1;
+}
+`
 
-class Test extends RetroBowl {
-    constructor() {
-        super();
-
-        this.
-    }
+declare class RetroBowl_ext {
+    test(): number;
 }
 
-// type RetroBowlFunctions = 
-//     { [K in keyof RetroBowl]: RetroBowl[K] extends Function ? K : never }[keyof RetroBowl];
+class Test extends RetroBowl_ext {
+    _test() {
+        return this.test() + 1;
+    }
+}

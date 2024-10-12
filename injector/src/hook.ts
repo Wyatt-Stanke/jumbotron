@@ -1,7 +1,5 @@
-import { parse } from "acorn";
-import type { AnyNode } from "acorn";
-import * as walk from "acorn-walk";
-import { generate } from "astring";
+import { parseJS, generate, type types } from "@jumbotron/parser";
+import traverse, { type NodePath } from "@babel/traverse";
 
 // TODO: consider esast, unist, and unified js system for parsing and transforming the AST
 
@@ -143,7 +141,7 @@ const filters: Filter[] = [
 					},
 				},
 				right: {
-					type: "Literal",
+					type: "BooleanLiteral",
 					value: true,
 					[Tag]: 1,
 				},
@@ -155,46 +153,10 @@ const filters: Filter[] = [
 				{ type: Actions.ReplaceProperty, property: "raw", value: "false" },
 			],
 		},
-	},
-	{
-		selector: {
-			type: "FunctionDeclaration",
-			id: {
-				type: "Identifier",
-				name: "gml_Script_s_is_co_mode",
-			},
-			body: {
-				type: "BlockStatement",
-				body: [
-					Contains,
-					{
-						type: "BlockStatement",
-						body: [
-							Contains,
-							{
-								type: "ReturnStatement",
-								argument: {
-									type: "Literal",
-									// value: 1,
-									// raw: "1",
-									[Tag]: 1,
-								},
-							},
-						],
-					},
-				],
-			},
-		},
-		actions: {
-			1: [
-				{ type: Actions.ReplaceProperty, property: "value", value: 0 },
-				{ type: Actions.ReplaceProperty, property: "raw", value: "0" },
-			],
-		},
-	},
+	}
 ];
 
-function nodeSummary(node: AnyNode) {
+function nodeSummary(node: types.Node) {
 	const blocks: string[] = [node.type];
 
 	if (node.type === "VariableDeclarator" && "name" in node.id) {
@@ -207,7 +169,7 @@ function nodeSummary(node: AnyNode) {
 }
 
 export function checkLevel(
-	tnode,
+	tnode: types.Node,
 	node,
 	filter: FilterObject | FilterArray,
 	history = [],
@@ -265,23 +227,15 @@ export async function createHooks({ url, logFn }) {
 	logFn(`Fetching ${url}...`);
 	const js = await fetch(url).then((res) => res.text());
 	logFn(`Parsing fetched content (${js.length} bytes)`);
-	const ast = parse(js, { ecmaVersion: "latest" });
-	logFn("[STAGE 1] Walking AST");
-	const hooks = [];
-	walk.simple(ast, {
-		FunctionDeclaration(node) {
-			hooks.push(node.id.name);
-		},
-	});
-	console.log(hooks);
-	logFn(`[STAGE 1] AST walked - ${hooks.length} hooks found`);
+	const ast = parseJS(js);
 
 	// Modify JSON_game properties
 	logFn("[STAGE 2] Filtering");
 	for (const filter of filters) {
 		try {
-			walk.simple(ast, {
-				[filter.selector.type as string](tnode: AnyNode) {
+			traverse(ast, {
+				[filter.selector.type as string](tnodePath: NodePath) {
+					const tnode = tnodePath.node;
 					const result = checkLevel(tnode, tnode, filter.selector);
 					if (result.result) {
 						console.log("Found", nodeSummary(tnode));
@@ -303,6 +257,8 @@ export async function createHooks({ url, logFn }) {
 							console.log("Applying action", action);
 							if (action.type === Actions.Delete) {
 								if (typeof finalItem === "number") {
+									// TODO: no ts-ignore
+									// @ts-ignore
 									node.splice(finalItem, 1);
 								} else {
 									delete node[finalItem];
@@ -326,7 +282,7 @@ export async function createHooks({ url, logFn }) {
 			});
 			throw new Error("Not found");
 		} catch (e) {
-			if (e.message == "Not found") {
+			if (e.message === "Not found") {
 				logFn(`Filter for ${filter.selector.type} not found!`);
 				throw e;
 			}

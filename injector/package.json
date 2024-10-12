@@ -1,17 +1,16 @@
 {
-	"name": "@jumbotron/injector",
-	"version": "1.0.0",
-	"main": "index.js",
-	"scripts": {
-		"build": "esbuild src/index.ts --bundle --minify --sourcemap --target=es2022 --format=esm --outfile=out/index.js",
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
-	"author": "",
-	"license": "ISC",
-	"description": "",
-	"dependencies": {
-		"acorn": "^8.12.1",
-		"acorn-walk": "^8.3.4",
-		"astring": "^1.9.0"
-	}
+  "name": "@jumbotron/injector",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "esbuild src/index.ts --bundle --minify --metafile=meta.json --sourcemap --target=es2022 --tree-shaking=true --format=esm --outfile=out/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@jumbotron/parser": "^1.0.0",
+    "@types/babel__traverse": "^7.20.6"
+  }
 }

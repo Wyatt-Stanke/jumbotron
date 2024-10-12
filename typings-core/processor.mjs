@@ -11,12 +11,12 @@ const outputFilePath = join(__dirname, 'RetroBowl-raw.d.ts');
 
 async function processFiles() {
     try {
-        let data = await fs.readFile(inputFilePath, 'utf8');
-        data = data.replace(
-          /declare (var|function|namespace|const|class) /g,
-          "export $1 "
-        );
-        data = `export namespace RetroBowl {\n${data}\n}`;
+        let rawData = await fs.readFile(inputFilePath, 'utf8');
+
+        const functionNames = rawData.matchAll(/declare function ([^(]+)/g).map((match) => match[1]);
+
+
+        
         await fs.writeFile(outputFilePath, data, 'utf8');
         console.log('File has been written successfully.');
     } catch (err) {

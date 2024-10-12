@@ -1,0 +1,3375 @@
+{
+  "inputs": {
+    "../node_modules/@babel/parser/lib/index.js": {
+      "bytes": 486706,
+      "imports": [],
+      "format": "cjs"
+    },
+    "../node_modules/@jridgewell/set-array/dist/set-array.umd.js": {
+      "bytes": 2809,
+      "imports": [],
+      "format": "cjs"
+    },
+    "../node_modules/@jridgewell/sourcemap-codec/dist/sourcemap-codec.umd.js": {
+      "bytes": 17024,
+      "imports": [],
+      "format": "cjs"
+    },
+    "../node_modules/@jridgewell/resolve-uri/dist/resolve-uri.umd.js": {
+      "bytes": 9866,
+      "imports": [],
+      "format": "cjs"
+    },
+    "../node_modules/@jridgewell/trace-mapping/dist/trace-mapping.umd.js": {
+      "bytes": 25530,
+      "imports": [
+        {
+          "path": "../node_modules/@jridgewell/sourcemap-codec/dist/sourcemap-codec.umd.js",
+          "kind": "require-call",
+          "original": "@jridgewell/sourcemap-codec"
+        },
+        {
+          "path": "../node_modules/@jridgewell/resolve-uri/dist/resolve-uri.umd.js",
+          "kind": "require-call",
+          "original": "@jridgewell/resolve-uri"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@jridgewell/gen-mapping/dist/gen-mapping.umd.js": {
+      "bytes": 10970,
+      "imports": [
+        {
+          "path": "../node_modules/@jridgewell/set-array/dist/set-array.umd.js",
+          "kind": "require-call",
+          "original": "@jridgewell/set-array"
+        },
+        {
+          "path": "../node_modules/@jridgewell/sourcemap-codec/dist/sourcemap-codec.umd.js",
+          "kind": "require-call",
+          "original": "@jridgewell/sourcemap-codec"
+        },
+        {
+          "path": "../node_modules/@jridgewell/trace-mapping/dist/trace-mapping.umd.js",
+          "kind": "require-call",
+          "original": "@jridgewell/trace-mapping"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/generator/lib/source-map.js": {
+      "bytes": 3055,
+      "imports": [
+        {
+          "path": "../node_modules/@jridgewell/gen-mapping/dist/gen-mapping.umd.js",
+          "kind": "require-call",
+          "original": "@jridgewell/gen-mapping"
+        },
+        {
+          "path": "../node_modules/@jridgewell/trace-mapping/dist/trace-mapping.umd.js",
+          "kind": "require-call",
+          "original": "@jridgewell/trace-mapping"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/generator/lib/buffer.js": {
+      "bytes": 8745,
+      "imports": [],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/utils/shallowEqual.js": {
+      "bytes": 350,
+      "imports": [],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/utils/deprecationWarning.js": {
+      "bytes": 1201,
+      "imports": [],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/validators/generated/index.js": {
+      "bytes": 94873,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/utils/shallowEqual.js",
+          "kind": "require-call",
+          "original": "../../utils/shallowEqual.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/utils/deprecationWarning.js",
+          "kind": "require-call",
+          "original": "../../utils/deprecationWarning.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/validators/matchesPattern.js": {
+      "bytes": 1103,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/validators/generated/index.js",
+          "kind": "require-call",
+          "original": "./generated/index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/validators/buildMatchMemberExpression.js": {
+      "bytes": 409,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/validators/matchesPattern.js",
+          "kind": "require-call",
+          "original": "./matchesPattern.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/validators/react/isReactComponent.js": {
+      "bytes": 368,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/validators/buildMatchMemberExpression.js",
+          "kind": "require-call",
+          "original": "../buildMatchMemberExpression.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/validators/react/isCompatTag.js": {
+      "bytes": 232,
+      "imports": [],
+      "format": "cjs"
+    },
+    "../node_modules/to-fast-properties/index.js": {
+      "bytes": 1001,
+      "imports": [],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/validators/isType.js": {
+      "bytes": 590,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/definitions/index.js",
+          "kind": "require-call",
+          "original": "../definitions/index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/validators/isPlaceholderType.js": {
+      "bytes": 509,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/definitions/index.js",
+          "kind": "require-call",
+          "original": "../definitions/index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/validators/is.js": {
+      "bytes": 769,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/utils/shallowEqual.js",
+          "kind": "require-call",
+          "original": "../utils/shallowEqual.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/validators/isType.js",
+          "kind": "require-call",
+          "original": "./isType.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/validators/isPlaceholderType.js",
+          "kind": "require-call",
+          "original": "./isPlaceholderType.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/definitions/index.js",
+          "kind": "require-call",
+          "original": "../definitions/index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/helper-validator-identifier/lib/identifier.js": {
+      "bytes": 12445,
+      "imports": [],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/helper-validator-identifier/lib/keyword.js": {
+      "bytes": 1577,
+      "imports": [],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/helper-validator-identifier/lib/index.js": {
+      "bytes": 1362,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/helper-validator-identifier/lib/identifier.js",
+          "kind": "require-call",
+          "original": "./identifier.js"
+        },
+        {
+          "path": "../node_modules/@babel/helper-validator-identifier/lib/keyword.js",
+          "kind": "require-call",
+          "original": "./keyword.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/validators/isValidIdentifier.js": {
+      "bytes": 584,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/helper-validator-identifier/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/helper-validator-identifier"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/helper-string-parser/lib/index.js": {
+      "bytes": 7860,
+      "imports": [],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/constants/index.js": {
+      "bytes": 2851,
+      "imports": [],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/definitions/utils.js": {
+      "bytes": 8959,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/validators/is.js",
+          "kind": "require-call",
+          "original": "../validators/is.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/validators/validate.js",
+          "kind": "require-call",
+          "original": "../validators/validate.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/definitions/core.js": {
+      "bytes": 52683,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/validators/is.js",
+          "kind": "require-call",
+          "original": "../validators/is.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/validators/isValidIdentifier.js",
+          "kind": "require-call",
+          "original": "../validators/isValidIdentifier.js"
+        },
+        {
+          "path": "../node_modules/@babel/helper-validator-identifier/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/helper-validator-identifier"
+        },
+        {
+          "path": "../node_modules/@babel/helper-string-parser/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/helper-string-parser"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/constants/index.js",
+          "kind": "require-call",
+          "original": "../constants/index.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/definitions/utils.js",
+          "kind": "require-call",
+          "original": "./utils.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/definitions/flow.js": {
+      "bytes": 16243,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/definitions/utils.js",
+          "kind": "require-call",
+          "original": "./utils.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/definitions/jsx.js": {
+      "bytes": 4082,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/definitions/utils.js",
+          "kind": "require-call",
+          "original": "./utils.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/definitions/placeholders.js": {
+      "bytes": 1042,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/definitions/utils.js",
+          "kind": "require-call",
+          "original": "./utils.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/definitions/misc.js": {
+      "bytes": 675,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/definitions/utils.js",
+          "kind": "require-call",
+          "original": "./utils.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/definitions/placeholders.js",
+          "kind": "require-call",
+          "original": "./placeholders.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/definitions/experimental.js": {
+      "bytes": 3070,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/definitions/utils.js",
+          "kind": "require-call",
+          "original": "./utils.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/definitions/typescript.js": {
+      "bytes": 15651,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/definitions/utils.js",
+          "kind": "require-call",
+          "original": "./utils.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/definitions/core.js",
+          "kind": "require-call",
+          "original": "./core.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/validators/is.js",
+          "kind": "require-call",
+          "original": "../validators/is.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/definitions/deprecated-aliases.js": {
+      "bytes": 275,
+      "imports": [],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/definitions/index.js": {
+      "bytes": 2761,
+      "imports": [
+        {
+          "path": "../node_modules/to-fast-properties/index.js",
+          "kind": "require-call",
+          "original": "to-fast-properties"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/definitions/core.js",
+          "kind": "require-call",
+          "original": "./core.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/definitions/flow.js",
+          "kind": "require-call",
+          "original": "./flow.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/definitions/jsx.js",
+          "kind": "require-call",
+          "original": "./jsx.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/definitions/misc.js",
+          "kind": "require-call",
+          "original": "./misc.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/definitions/experimental.js",
+          "kind": "require-call",
+          "original": "./experimental.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/definitions/typescript.js",
+          "kind": "require-call",
+          "original": "./typescript.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/definitions/utils.js",
+          "kind": "require-call",
+          "original": "./utils.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/definitions/placeholders.js",
+          "kind": "require-call",
+          "original": "./placeholders.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/definitions/deprecated-aliases.js",
+          "kind": "require-call",
+          "original": "./deprecated-aliases.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/validators/validate.js": {
+      "bytes": 1490,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/definitions/index.js",
+          "kind": "require-call",
+          "original": "../definitions/index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/builders/generated/index.js": {
+      "bytes": 84358,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/validators/validate.js",
+          "kind": "require-call",
+          "original": "../../validators/validate.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/utils/deprecationWarning.js",
+          "kind": "require-call",
+          "original": "../../utils/deprecationWarning.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/definitions/utils.js",
+          "kind": "require-call",
+          "original": "../../definitions/utils.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/utils/react/cleanJSXElementLiteralChild.js": {
+      "bytes": 1175,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/builders/generated/index.js",
+          "kind": "require-call",
+          "original": "../../builders/generated/index.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "require-call",
+          "original": "../../index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/builders/react/buildChildren.js": {
+      "bytes": 769,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/validators/generated/index.js",
+          "kind": "require-call",
+          "original": "../../validators/generated/index.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/utils/react/cleanJSXElementLiteralChild.js",
+          "kind": "require-call",
+          "original": "../../utils/react/cleanJSXElementLiteralChild.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/validators/isNode.js": {
+      "bytes": 270,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/definitions/index.js",
+          "kind": "require-call",
+          "original": "../definitions/index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/asserts/assertNode.js": {
+      "bytes": 465,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/validators/isNode.js",
+          "kind": "require-call",
+          "original": "../validators/isNode.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/asserts/generated/index.js": {
+      "bytes": 45025,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/validators/is.js",
+          "kind": "require-call",
+          "original": "../../validators/is.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/utils/deprecationWarning.js",
+          "kind": "require-call",
+          "original": "../../utils/deprecationWarning.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/builders/flow/createTypeAnnotationBasedOnTypeof.js": {
+      "bytes": 1058,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/builders/generated/index.js",
+          "kind": "require-call",
+          "original": "../generated/index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/modifications/flow/removeTypeDuplicates.js": {
+      "bytes": 1869,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/validators/generated/index.js",
+          "kind": "require-call",
+          "original": "../../validators/generated/index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/builders/flow/createFlowUnionType.js": {
+      "bytes": 534,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/builders/generated/index.js",
+          "kind": "require-call",
+          "original": "../generated/index.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/modifications/flow/removeTypeDuplicates.js",
+          "kind": "require-call",
+          "original": "../../modifications/flow/removeTypeDuplicates.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/modifications/typescript/removeTypeDuplicates.js": {
+      "bytes": 1865,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/validators/generated/index.js",
+          "kind": "require-call",
+          "original": "../../validators/generated/index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/builders/typescript/createTSUnionType.js": {
+      "bytes": 729,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/builders/generated/index.js",
+          "kind": "require-call",
+          "original": "../generated/index.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/modifications/typescript/removeTypeDuplicates.js",
+          "kind": "require-call",
+          "original": "../../modifications/typescript/removeTypeDuplicates.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/validators/generated/index.js",
+          "kind": "require-call",
+          "original": "../../validators/generated/index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/builders/generated/uppercase.js": {
+      "bytes": 35515,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/builders/generated/index.js",
+          "kind": "require-call",
+          "original": "./index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/builders/productions.js": {
+      "bytes": 333,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/builders/generated/index.js",
+          "kind": "require-call",
+          "original": "./generated/index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/clone/cloneNode.js": {
+      "bytes": 3314,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/definitions/index.js",
+          "kind": "require-call",
+          "original": "../definitions/index.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/validators/generated/index.js",
+          "kind": "require-call",
+          "original": "../validators/generated/index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/clone/clone.js": {
+      "bytes": 256,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/clone/cloneNode.js",
+          "kind": "require-call",
+          "original": "./cloneNode.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/clone/cloneDeep.js": {
+      "bytes": 261,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/clone/cloneNode.js",
+          "kind": "require-call",
+          "original": "./cloneNode.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/clone/cloneDeepWithoutLoc.js": {
+      "bytes": 303,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/clone/cloneNode.js",
+          "kind": "require-call",
+          "original": "./cloneNode.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/clone/cloneWithoutLoc.js": {
+      "bytes": 292,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/clone/cloneNode.js",
+          "kind": "require-call",
+          "original": "./cloneNode.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/comments/addComments.js": {
+      "bytes": 476,
+      "imports": [],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/comments/addComment.js": {
+      "bytes": 374,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/comments/addComments.js",
+          "kind": "require-call",
+          "original": "./addComments.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/utils/inherit.js": {
+      "bytes": 304,
+      "imports": [],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/comments/inheritInnerComments.js": {
+      "bytes": 323,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/utils/inherit.js",
+          "kind": "require-call",
+          "original": "../utils/inherit.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/comments/inheritLeadingComments.js": {
+      "bytes": 331,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/utils/inherit.js",
+          "kind": "require-call",
+          "original": "../utils/inherit.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/comments/inheritTrailingComments.js": {
+      "bytes": 335,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/utils/inherit.js",
+          "kind": "require-call",
+          "original": "../utils/inherit.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/comments/inheritsComments.js": {
+      "bytes": 595,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/comments/inheritTrailingComments.js",
+          "kind": "require-call",
+          "original": "./inheritTrailingComments.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/comments/inheritLeadingComments.js",
+          "kind": "require-call",
+          "original": "./inheritLeadingComments.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/comments/inheritInnerComments.js",
+          "kind": "require-call",
+          "original": "./inheritInnerComments.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/comments/removeComments.js": {
+      "bytes": 321,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/constants/index.js",
+          "kind": "require-call",
+          "original": "../constants/index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/constants/generated/index.js": {
+      "bytes": 6216,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/definitions/index.js",
+          "kind": "require-call",
+          "original": "../../definitions/index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/converters/toBlock.js": {
+      "bytes": 758,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/validators/generated/index.js",
+          "kind": "require-call",
+          "original": "../validators/generated/index.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/builders/generated/index.js",
+          "kind": "require-call",
+          "original": "../builders/generated/index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/converters/ensureBlock.js": {
+      "bytes": 333,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/converters/toBlock.js",
+          "kind": "require-call",
+          "original": "./toBlock.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/converters/toIdentifier.js": {
+      "bytes": 737,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/validators/isValidIdentifier.js",
+          "kind": "require-call",
+          "original": "../validators/isValidIdentifier.js"
+        },
+        {
+          "path": "../node_modules/@babel/helper-validator-identifier/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/helper-validator-identifier"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/converters/toBindingIdentifierName.js": {
+      "bytes": 393,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/converters/toIdentifier.js",
+          "kind": "require-call",
+          "original": "./toIdentifier.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/converters/toComputedKey.js": {
+      "bytes": 450,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/validators/generated/index.js",
+          "kind": "require-call",
+          "original": "../validators/generated/index.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/builders/generated/index.js",
+          "kind": "require-call",
+          "original": "../builders/generated/index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/converters/toExpression.js": {
+      "bytes": 710,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/validators/generated/index.js",
+          "kind": "require-call",
+          "original": "../validators/generated/index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/traverse/traverseFast.js": {
+      "bytes": 622,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/definitions/index.js",
+          "kind": "require-call",
+          "original": "../definitions/index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/modifications/removeProperties.js": {
+      "bytes": 797,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/constants/index.js",
+          "kind": "require-call",
+          "original": "../constants/index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/modifications/removePropertiesDeep.js": {
+      "bytes": 418,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/traverse/traverseFast.js",
+          "kind": "require-call",
+          "original": "../traverse/traverseFast.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/modifications/removeProperties.js",
+          "kind": "require-call",
+          "original": "./removeProperties.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/converters/toKeyAlias.js": {
+      "bytes": 1047,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/validators/generated/index.js",
+          "kind": "require-call",
+          "original": "../validators/generated/index.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/clone/cloneNode.js",
+          "kind": "require-call",
+          "original": "../clone/cloneNode.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/modifications/removePropertiesDeep.js",
+          "kind": "require-call",
+          "original": "../modifications/removePropertiesDeep.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/converters/toStatement.js": {
+      "bytes": 997,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/validators/generated/index.js",
+          "kind": "require-call",
+          "original": "../validators/generated/index.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/builders/generated/index.js",
+          "kind": "require-call",
+          "original": "../builders/generated/index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/converters/valueToNode.js": {
+      "bytes": 2445,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/validators/isValidIdentifier.js",
+          "kind": "require-call",
+          "original": "../validators/isValidIdentifier.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/builders/generated/index.js",
+          "kind": "require-call",
+          "original": "../builders/generated/index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/modifications/appendToMemberExpression.js": {
+      "bytes": 480,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/builders/generated/index.js",
+          "kind": "require-call",
+          "original": "../builders/generated/index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/modifications/inherits.js": {
+      "bytes": 741,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/constants/index.js",
+          "kind": "require-call",
+          "original": "../constants/index.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/comments/inheritsComments.js",
+          "kind": "require-call",
+          "original": "../comments/inheritsComments.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/modifications/prependToMemberExpression.js": {
+      "bytes": 552,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/builders/generated/index.js",
+          "kind": "require-call",
+          "original": "../builders/generated/index.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "require-call",
+          "original": "../index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/retrievers/getAssignmentIdentifiers.js": {
+      "bytes": 1156,
+      "imports": [],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/retrievers/getBindingIdentifiers.js": {
+      "bytes": 2912,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/validators/generated/index.js",
+          "kind": "require-call",
+          "original": "../validators/generated/index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/retrievers/getOuterBindingIdentifiers.js": {
+      "bytes": 419,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/retrievers/getBindingIdentifiers.js",
+          "kind": "require-call",
+          "original": "./getBindingIdentifiers.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/retrievers/getFunctionName.js": {
+      "bytes": 1721,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/validators/generated/index.js",
+          "kind": "require-call",
+          "original": "../validators/generated/index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/traverse/traverse.js": {
+      "bytes": 1227,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/definitions/index.js",
+          "kind": "require-call",
+          "original": "../definitions/index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/validators/isBinding.js": {
+      "bytes": 776,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/retrievers/getBindingIdentifiers.js",
+          "kind": "require-call",
+          "original": "../retrievers/getBindingIdentifiers.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/validators/isLet.js": {
+      "bytes": 371,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/validators/generated/index.js",
+          "kind": "require-call",
+          "original": "./generated/index.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/constants/index.js",
+          "kind": "require-call",
+          "original": "../constants/index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/validators/isBlockScoped.js": {
+      "bytes": 390,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/validators/generated/index.js",
+          "kind": "require-call",
+          "original": "./generated/index.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/validators/isLet.js",
+          "kind": "require-call",
+          "original": "./isLet.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/validators/isImmutable.js": {
+      "bytes": 487,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/validators/isType.js",
+          "kind": "require-call",
+          "original": "./isType.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/validators/generated/index.js",
+          "kind": "require-call",
+          "original": "./generated/index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/validators/isNodesEquivalent.js": {
+      "bytes": 1481,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/definitions/index.js",
+          "kind": "require-call",
+          "original": "../definitions/index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/validators/isReferenced.js": {
+      "bytes": 2598,
+      "imports": [],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/validators/isScope.js": {
+      "bytes": 534,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/validators/generated/index.js",
+          "kind": "require-call",
+          "original": "./generated/index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/validators/isSpecifierDefault.js": {
+      "bytes": 410,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/validators/generated/index.js",
+          "kind": "require-call",
+          "original": "./generated/index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/validators/isValidES3Identifier.js": {
+      "bytes": 649,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/validators/isValidIdentifier.js",
+          "kind": "require-call",
+          "original": "./isValidIdentifier.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/validators/isVar.js": {
+      "bytes": 370,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/validators/generated/index.js",
+          "kind": "require-call",
+          "original": "./generated/index.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/constants/index.js",
+          "kind": "require-call",
+          "original": "../constants/index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/converters/gatherSequenceExpressions.js": {
+      "bytes": 2439,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/retrievers/getBindingIdentifiers.js",
+          "kind": "require-call",
+          "original": "../retrievers/getBindingIdentifiers.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/validators/generated/index.js",
+          "kind": "require-call",
+          "original": "../validators/generated/index.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/builders/generated/index.js",
+          "kind": "require-call",
+          "original": "../builders/generated/index.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/builders/productions.js",
+          "kind": "require-call",
+          "original": "../builders/productions.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/clone/cloneNode.js",
+          "kind": "require-call",
+          "original": "../clone/cloneNode.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/converters/toSequenceExpression.js": {
+      "bytes": 542,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/converters/gatherSequenceExpressions.js",
+          "kind": "require-call",
+          "original": "./gatherSequenceExpressions.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/types/lib/index.js": {
+      "bytes": 17698,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/validators/react/isReactComponent.js",
+          "kind": "require-call",
+          "original": "./validators/react/isReactComponent.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/validators/react/isCompatTag.js",
+          "kind": "require-call",
+          "original": "./validators/react/isCompatTag.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/builders/react/buildChildren.js",
+          "kind": "require-call",
+          "original": "./builders/react/buildChildren.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/asserts/assertNode.js",
+          "kind": "require-call",
+          "original": "./asserts/assertNode.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/asserts/generated/index.js",
+          "kind": "require-call",
+          "original": "./asserts/generated/index.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/builders/flow/createTypeAnnotationBasedOnTypeof.js",
+          "kind": "require-call",
+          "original": "./builders/flow/createTypeAnnotationBasedOnTypeof.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/builders/flow/createFlowUnionType.js",
+          "kind": "require-call",
+          "original": "./builders/flow/createFlowUnionType.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/builders/typescript/createTSUnionType.js",
+          "kind": "require-call",
+          "original": "./builders/typescript/createTSUnionType.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/builders/generated/index.js",
+          "kind": "require-call",
+          "original": "./builders/generated/index.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/builders/generated/uppercase.js",
+          "kind": "require-call",
+          "original": "./builders/generated/uppercase.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/builders/productions.js",
+          "kind": "require-call",
+          "original": "./builders/productions.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/clone/cloneNode.js",
+          "kind": "require-call",
+          "original": "./clone/cloneNode.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/clone/clone.js",
+          "kind": "require-call",
+          "original": "./clone/clone.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/clone/cloneDeep.js",
+          "kind": "require-call",
+          "original": "./clone/cloneDeep.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/clone/cloneDeepWithoutLoc.js",
+          "kind": "require-call",
+          "original": "./clone/cloneDeepWithoutLoc.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/clone/cloneWithoutLoc.js",
+          "kind": "require-call",
+          "original": "./clone/cloneWithoutLoc.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/comments/addComment.js",
+          "kind": "require-call",
+          "original": "./comments/addComment.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/comments/addComments.js",
+          "kind": "require-call",
+          "original": "./comments/addComments.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/comments/inheritInnerComments.js",
+          "kind": "require-call",
+          "original": "./comments/inheritInnerComments.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/comments/inheritLeadingComments.js",
+          "kind": "require-call",
+          "original": "./comments/inheritLeadingComments.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/comments/inheritsComments.js",
+          "kind": "require-call",
+          "original": "./comments/inheritsComments.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/comments/inheritTrailingComments.js",
+          "kind": "require-call",
+          "original": "./comments/inheritTrailingComments.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/comments/removeComments.js",
+          "kind": "require-call",
+          "original": "./comments/removeComments.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/constants/generated/index.js",
+          "kind": "require-call",
+          "original": "./constants/generated/index.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/constants/index.js",
+          "kind": "require-call",
+          "original": "./constants/index.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/converters/ensureBlock.js",
+          "kind": "require-call",
+          "original": "./converters/ensureBlock.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/converters/toBindingIdentifierName.js",
+          "kind": "require-call",
+          "original": "./converters/toBindingIdentifierName.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/converters/toBlock.js",
+          "kind": "require-call",
+          "original": "./converters/toBlock.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/converters/toComputedKey.js",
+          "kind": "require-call",
+          "original": "./converters/toComputedKey.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/converters/toExpression.js",
+          "kind": "require-call",
+          "original": "./converters/toExpression.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/converters/toIdentifier.js",
+          "kind": "require-call",
+          "original": "./converters/toIdentifier.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/converters/toKeyAlias.js",
+          "kind": "require-call",
+          "original": "./converters/toKeyAlias.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/converters/toStatement.js",
+          "kind": "require-call",
+          "original": "./converters/toStatement.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/converters/valueToNode.js",
+          "kind": "require-call",
+          "original": "./converters/valueToNode.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/definitions/index.js",
+          "kind": "require-call",
+          "original": "./definitions/index.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/modifications/appendToMemberExpression.js",
+          "kind": "require-call",
+          "original": "./modifications/appendToMemberExpression.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/modifications/inherits.js",
+          "kind": "require-call",
+          "original": "./modifications/inherits.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/modifications/prependToMemberExpression.js",
+          "kind": "require-call",
+          "original": "./modifications/prependToMemberExpression.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/modifications/removeProperties.js",
+          "kind": "require-call",
+          "original": "./modifications/removeProperties.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/modifications/removePropertiesDeep.js",
+          "kind": "require-call",
+          "original": "./modifications/removePropertiesDeep.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/modifications/flow/removeTypeDuplicates.js",
+          "kind": "require-call",
+          "original": "./modifications/flow/removeTypeDuplicates.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/retrievers/getAssignmentIdentifiers.js",
+          "kind": "require-call",
+          "original": "./retrievers/getAssignmentIdentifiers.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/retrievers/getBindingIdentifiers.js",
+          "kind": "require-call",
+          "original": "./retrievers/getBindingIdentifiers.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/retrievers/getOuterBindingIdentifiers.js",
+          "kind": "require-call",
+          "original": "./retrievers/getOuterBindingIdentifiers.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/retrievers/getFunctionName.js",
+          "kind": "require-call",
+          "original": "./retrievers/getFunctionName.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/traverse/traverse.js",
+          "kind": "require-call",
+          "original": "./traverse/traverse.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/traverse/traverseFast.js",
+          "kind": "require-call",
+          "original": "./traverse/traverseFast.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/utils/shallowEqual.js",
+          "kind": "require-call",
+          "original": "./utils/shallowEqual.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/validators/is.js",
+          "kind": "require-call",
+          "original": "./validators/is.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/validators/isBinding.js",
+          "kind": "require-call",
+          "original": "./validators/isBinding.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/validators/isBlockScoped.js",
+          "kind": "require-call",
+          "original": "./validators/isBlockScoped.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/validators/isImmutable.js",
+          "kind": "require-call",
+          "original": "./validators/isImmutable.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/validators/isLet.js",
+          "kind": "require-call",
+          "original": "./validators/isLet.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/validators/isNode.js",
+          "kind": "require-call",
+          "original": "./validators/isNode.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/validators/isNodesEquivalent.js",
+          "kind": "require-call",
+          "original": "./validators/isNodesEquivalent.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/validators/isPlaceholderType.js",
+          "kind": "require-call",
+          "original": "./validators/isPlaceholderType.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/validators/isReferenced.js",
+          "kind": "require-call",
+          "original": "./validators/isReferenced.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/validators/isScope.js",
+          "kind": "require-call",
+          "original": "./validators/isScope.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/validators/isSpecifierDefault.js",
+          "kind": "require-call",
+          "original": "./validators/isSpecifierDefault.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/validators/isType.js",
+          "kind": "require-call",
+          "original": "./validators/isType.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/validators/isValidES3Identifier.js",
+          "kind": "require-call",
+          "original": "./validators/isValidES3Identifier.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/validators/isValidIdentifier.js",
+          "kind": "require-call",
+          "original": "./validators/isValidIdentifier.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/validators/isVar.js",
+          "kind": "require-call",
+          "original": "./validators/isVar.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/validators/matchesPattern.js",
+          "kind": "require-call",
+          "original": "./validators/matchesPattern.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/validators/validate.js",
+          "kind": "require-call",
+          "original": "./validators/validate.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/validators/buildMatchMemberExpression.js",
+          "kind": "require-call",
+          "original": "./validators/buildMatchMemberExpression.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/validators/generated/index.js",
+          "kind": "require-call",
+          "original": "./validators/generated/index.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/utils/deprecationWarning.js",
+          "kind": "require-call",
+          "original": "./utils/deprecationWarning.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/converters/toSequenceExpression.js",
+          "kind": "require-call",
+          "original": "./converters/toSequenceExpression.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/generator/lib/node/whitespace.js": {
+      "bytes": 4844,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/types"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/generator/lib/node/parentheses.js": {
+      "bytes": 10191,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/types"
+        },
+        {
+          "path": "../node_modules/@babel/generator/lib/node/index.js",
+          "kind": "require-call",
+          "original": "./index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/generator/lib/node/index.js": {
+      "bytes": 3589,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/generator/lib/node/whitespace.js",
+          "kind": "require-call",
+          "original": "./whitespace.js"
+        },
+        {
+          "path": "../node_modules/@babel/generator/lib/node/parentheses.js",
+          "kind": "require-call",
+          "original": "./parentheses.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/types"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/generator/lib/generators/template-literals.js": {
+      "bytes": 855,
+      "imports": [],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/generator/lib/generators/expressions.js": {
+      "bytes": 7452,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/types"
+        },
+        {
+          "path": "../node_modules/@babel/generator/lib/node/index.js",
+          "kind": "require-call",
+          "original": "../node/index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/generator/lib/generators/statements.js": {
+      "bytes": 6842,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/types"
+        },
+        {
+          "path": "../node_modules/@babel/generator/lib/node/index.js",
+          "kind": "require-call",
+          "original": "../node/index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/generator/lib/generators/classes.js": {
+      "bytes": 4509,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/types"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/generator/lib/generators/methods.js": {
+      "bytes": 5149,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/types"
+        },
+        {
+          "path": "../node_modules/@babel/generator/lib/node/index.js",
+          "kind": "require-call",
+          "original": "../node/index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/generator/lib/generators/modules.js": {
+      "bytes": 7874,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/types"
+        },
+        {
+          "path": "../node_modules/@babel/generator/lib/node/index.js",
+          "kind": "require-call",
+          "original": "../node/index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/jsesc/jsesc.js": {
+      "bytes": 8104,
+      "imports": [],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/generator/lib/generators/types.js": {
+      "bytes": 6442,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/types"
+        },
+        {
+          "path": "../node_modules/jsesc/jsesc.js",
+          "kind": "require-call",
+          "original": "jsesc"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/generator/lib/generators/flow.js": {
+      "bytes": 16684,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/types"
+        },
+        {
+          "path": "../node_modules/@babel/generator/lib/generators/modules.js",
+          "kind": "require-call",
+          "original": "./modules.js"
+        },
+        {
+          "path": "../node_modules/@babel/generator/lib/node/index.js",
+          "kind": "require-call",
+          "original": "../node/index.js"
+        },
+        {
+          "path": "../node_modules/@babel/generator/lib/generators/types.js",
+          "kind": "require-call",
+          "original": "./types.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/generator/lib/generators/base.js": {
+      "bytes": 2765,
+      "imports": [],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/generator/lib/generators/jsx.js": {
+      "bytes": 2936,
+      "imports": [],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/generator/lib/generators/typescript.js": {
+      "bytes": 16326,
+      "imports": [],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/generator/lib/generators/index.js": {
+      "bytes": 3858,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/generator/lib/generators/template-literals.js",
+          "kind": "require-call",
+          "original": "./template-literals.js"
+        },
+        {
+          "path": "../node_modules/@babel/generator/lib/generators/expressions.js",
+          "kind": "require-call",
+          "original": "./expressions.js"
+        },
+        {
+          "path": "../node_modules/@babel/generator/lib/generators/statements.js",
+          "kind": "require-call",
+          "original": "./statements.js"
+        },
+        {
+          "path": "../node_modules/@babel/generator/lib/generators/classes.js",
+          "kind": "require-call",
+          "original": "./classes.js"
+        },
+        {
+          "path": "../node_modules/@babel/generator/lib/generators/methods.js",
+          "kind": "require-call",
+          "original": "./methods.js"
+        },
+        {
+          "path": "../node_modules/@babel/generator/lib/generators/modules.js",
+          "kind": "require-call",
+          "original": "./modules.js"
+        },
+        {
+          "path": "../node_modules/@babel/generator/lib/generators/types.js",
+          "kind": "require-call",
+          "original": "./types.js"
+        },
+        {
+          "path": "../node_modules/@babel/generator/lib/generators/flow.js",
+          "kind": "require-call",
+          "original": "./flow.js"
+        },
+        {
+          "path": "../node_modules/@babel/generator/lib/generators/base.js",
+          "kind": "require-call",
+          "original": "./base.js"
+        },
+        {
+          "path": "../node_modules/@babel/generator/lib/generators/jsx.js",
+          "kind": "require-call",
+          "original": "./jsx.js"
+        },
+        {
+          "path": "../node_modules/@babel/generator/lib/generators/typescript.js",
+          "kind": "require-call",
+          "original": "./typescript.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/generator/lib/printer.js": {
+      "bytes": 22758,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/generator/lib/buffer.js",
+          "kind": "require-call",
+          "original": "./buffer.js"
+        },
+        {
+          "path": "../node_modules/@babel/generator/lib/node/index.js",
+          "kind": "require-call",
+          "original": "./node/index.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/types"
+        },
+        {
+          "path": "../node_modules/@babel/generator/lib/generators/index.js",
+          "kind": "require-call",
+          "original": "./generators/index.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/generator/lib/index.js": {
+      "bytes": 3034,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/generator/lib/source-map.js",
+          "kind": "require-call",
+          "original": "./source-map.js"
+        },
+        {
+          "path": "../node_modules/@babel/generator/lib/printer.js",
+          "kind": "require-call",
+          "original": "./printer.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../parser/src/index.ts": {
+      "bytes": 747,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/parser/lib/index.js",
+          "kind": "import-statement",
+          "original": "@babel/parser"
+        },
+        {
+          "path": "../node_modules/@babel/generator/lib/index.js",
+          "kind": "import-statement",
+          "original": "@babel/generator"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "import-statement",
+          "original": "@babel/types"
+        }
+      ],
+      "format": "esm"
+    },
+    "../node_modules/@babel/traverse/lib/path/lib/virtual-types.js": {
+      "bytes": 1724,
+      "imports": [],
+      "format": "cjs"
+    },
+    "../node_modules/ms/index.js": {
+      "bytes": 3024,
+      "imports": [],
+      "format": "cjs"
+    },
+    "../node_modules/debug/src/common.js": {
+      "bytes": 6289,
+      "imports": [
+        {
+          "path": "../node_modules/ms/index.js",
+          "kind": "require-call",
+          "original": "ms"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/debug/src/browser.js": {
+      "bytes": 6020,
+      "imports": [
+        {
+          "path": "../node_modules/debug/src/common.js",
+          "kind": "require-call",
+          "original": "./common"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/traverse/lib/path/lib/virtual-types-validator.js": {
+      "bytes": 4350,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/types"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/traverse/lib/visitors.js": {
+      "bytes": 7886,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/lib/virtual-types.js",
+          "kind": "require-call",
+          "original": "./path/lib/virtual-types.js"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/lib/virtual-types-validator.js",
+          "kind": "require-call",
+          "original": "./path/lib/virtual-types-validator.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/types"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/context.js",
+          "kind": "require-call",
+          "original": "./path/context.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/traverse/lib/scope/lib/renamer.js": {
+      "bytes": 3764,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/types"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/traverse-node.js",
+          "kind": "require-call",
+          "original": "../../traverse-node.js"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/visitors.js",
+          "kind": "require-call",
+          "original": "../../visitors.js"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/context.js",
+          "kind": "require-call",
+          "original": "../../path/context.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/traverse/lib/scope/binding.js": {
+      "bytes": 1815,
+      "imports": [],
+      "format": "cjs"
+    },
+    "../node_modules/globals/globals.json": {
+      "bytes": 36545,
+      "imports": []
+    },
+    "../node_modules/globals/index.js": {
+      "bytes": 58,
+      "imports": [
+        {
+          "path": "../node_modules/globals/globals.json",
+          "kind": "require-call",
+          "original": "./globals.json"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/traverse/lib/cache.js": {
+      "bytes": 1247,
+      "imports": [],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/traverse/lib/scope/index.js": {
+      "bytes": 30049,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/traverse/lib/scope/lib/renamer.js",
+          "kind": "require-call",
+          "original": "./lib/renamer.js"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/index.js",
+          "kind": "require-call",
+          "original": "../index.js"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/scope/binding.js",
+          "kind": "require-call",
+          "original": "./binding.js"
+        },
+        {
+          "path": "../node_modules/globals/index.js",
+          "kind": "require-call",
+          "original": "globals"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/types"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/cache.js",
+          "kind": "require-call",
+          "original": "../cache.js"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/visitors.js",
+          "kind": "require-call",
+          "original": "../visitors.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/traverse/lib/path/ancestry.js": {
+      "bytes": 3657,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/types"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/traverse/lib/path/inference/util.js": {
+      "bytes": 657,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/types"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/traverse/lib/path/inference/inferer-reference.js": {
+      "bytes": 4581,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/types"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/inference/util.js",
+          "kind": "require-call",
+          "original": "./util.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/traverse/lib/path/inference/inferers.js": {
+      "bytes": 6636,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/types"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/inference/inferer-reference.js",
+          "kind": "require-call",
+          "original": "./inferer-reference.js"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/inference/util.js",
+          "kind": "require-call",
+          "original": "./util.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/traverse/lib/path/inference/index.js": {
+      "bytes": 4270,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/inference/inferers.js",
+          "kind": "require-call",
+          "original": "./inferers.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/types"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/js-tokens/index.js": {
+      "bytes": 1448,
+      "imports": [],
+      "format": "cjs"
+    },
+    "../node_modules/picocolors/picocolors.browser.js": {
+      "bytes": 598,
+      "imports": [],
+      "format": "cjs"
+    },
+    "../node_modules/escape-string-regexp/index.js": {
+      "bytes": 226,
+      "imports": [],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/highlight/node_modules/color-name/index.js": {
+      "bytes": 4617,
+      "imports": [],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/highlight/node_modules/color-convert/conversions.js": {
+      "bytes": 16850,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/highlight/node_modules/color-name/index.js",
+          "kind": "require-call",
+          "original": "color-name"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/highlight/node_modules/color-convert/route.js": {
+      "bytes": 2227,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/highlight/node_modules/color-convert/conversions.js",
+          "kind": "require-call",
+          "original": "./conversions"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/highlight/node_modules/color-convert/index.js": {
+      "bytes": 1725,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/highlight/node_modules/color-convert/conversions.js",
+          "kind": "require-call",
+          "original": "./conversions"
+        },
+        {
+          "path": "../node_modules/@babel/highlight/node_modules/color-convert/route.js",
+          "kind": "require-call",
+          "original": "./route"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/highlight/node_modules/ansi-styles/index.js": {
+      "bytes": 3574,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/highlight/node_modules/color-convert/index.js",
+          "kind": "require-call",
+          "original": "color-convert"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/highlight/node_modules/supports-color/browser.js": {
+      "bytes": 67,
+      "imports": [],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/highlight/node_modules/chalk/templates.js": {
+      "bytes": 3133,
+      "imports": [],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/highlight/node_modules/chalk/index.js": {
+      "bytes": 6439,
+      "imports": [
+        {
+          "path": "../node_modules/escape-string-regexp/index.js",
+          "kind": "require-call",
+          "original": "escape-string-regexp"
+        },
+        {
+          "path": "../node_modules/@babel/highlight/node_modules/ansi-styles/index.js",
+          "kind": "require-call",
+          "original": "ansi-styles"
+        },
+        {
+          "path": "../node_modules/@babel/highlight/node_modules/supports-color/browser.js",
+          "kind": "require-call",
+          "original": "supports-color"
+        },
+        {
+          "path": "../node_modules/@babel/highlight/node_modules/chalk/templates.js",
+          "kind": "require-call",
+          "original": "./templates.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/highlight/lib/index.js": {
+      "bytes": 4426,
+      "imports": [
+        {
+          "path": "../node_modules/js-tokens/index.js",
+          "kind": "require-call",
+          "original": "js-tokens"
+        },
+        {
+          "path": "../node_modules/@babel/helper-validator-identifier/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/helper-validator-identifier"
+        },
+        {
+          "path": "../node_modules/picocolors/picocolors.browser.js",
+          "kind": "require-call",
+          "original": "picocolors"
+        },
+        {
+          "path": "../node_modules/@babel/highlight/node_modules/chalk/index.js",
+          "kind": "require-call",
+          "original": "chalk"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/code-frame/lib/index.js": {
+      "bytes": 6135,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/highlight/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/highlight"
+        },
+        {
+          "path": "../node_modules/picocolors/picocolors.browser.js",
+          "kind": "require-call",
+          "original": "picocolors"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/traverse/lib/path/lib/hoister.js": {
+      "bytes": 5392,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/types"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/traverse/lib/path/lib/removal-hooks.js": {
+      "bytes": 1318,
+      "imports": [],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/traverse/lib/path/removal.js": {
+      "bytes": 1971,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/lib/removal-hooks.js",
+          "kind": "require-call",
+          "original": "./lib/removal-hooks.js"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/cache.js",
+          "kind": "require-call",
+          "original": "../cache.js"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/replacement.js",
+          "kind": "require-call",
+          "original": "./replacement.js"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/index.js",
+          "kind": "require-call",
+          "original": "./index.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/types"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/modification.js",
+          "kind": "require-call",
+          "original": "./modification.js"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/context.js",
+          "kind": "require-call",
+          "original": "./context.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/traverse/lib/path/modification.js": {
+      "bytes": 8110,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/traverse/lib/cache.js",
+          "kind": "require-call",
+          "original": "../cache.js"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/lib/hoister.js",
+          "kind": "require-call",
+          "original": "./lib/hoister.js"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/index.js",
+          "kind": "require-call",
+          "original": "./index.js"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/context.js",
+          "kind": "require-call",
+          "original": "./context.js"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/removal.js",
+          "kind": "require-call",
+          "original": "./removal.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/types"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/traverse/lib/path/replacement.js": {
+      "bytes": 9238,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/code-frame/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/code-frame"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/index.js",
+          "kind": "require-call",
+          "original": "../index.js"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/index.js",
+          "kind": "require-call",
+          "original": "./index.js"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/cache.js",
+          "kind": "require-call",
+          "original": "../cache.js"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/modification.js",
+          "kind": "require-call",
+          "original": "./modification.js"
+        },
+        {
+          "path": "../node_modules/@babel/parser/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/parser"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/types"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/context.js",
+          "kind": "require-call",
+          "original": "./context.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/traverse/lib/path/evaluation.js": {
+      "bytes": 10078,
+      "imports": [],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/template/lib/formatters.js": {
+      "bytes": 1562,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/types"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/template/lib/options.js": {
+      "bytes": 2984,
+      "imports": [],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/template/lib/parse.js": {
+      "bytes": 4484,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/types"
+        },
+        {
+          "path": "../node_modules/@babel/parser/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/parser"
+        },
+        {
+          "path": "../node_modules/@babel/code-frame/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/code-frame"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/template/lib/populate.js": {
+      "bytes": 4327,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/types"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/template/lib/string.js": {
+      "bytes": 607,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/template/lib/options.js",
+          "kind": "require-call",
+          "original": "./options.js"
+        },
+        {
+          "path": "../node_modules/@babel/template/lib/parse.js",
+          "kind": "require-call",
+          "original": "./parse.js"
+        },
+        {
+          "path": "../node_modules/@babel/template/lib/populate.js",
+          "kind": "require-call",
+          "original": "./populate.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/template/lib/literal.js": {
+      "bytes": 1957,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/template/lib/options.js",
+          "kind": "require-call",
+          "original": "./options.js"
+        },
+        {
+          "path": "../node_modules/@babel/template/lib/parse.js",
+          "kind": "require-call",
+          "original": "./parse.js"
+        },
+        {
+          "path": "../node_modules/@babel/template/lib/populate.js",
+          "kind": "require-call",
+          "original": "./populate.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/template/lib/builder.js": {
+      "bytes": 2467,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/template/lib/options.js",
+          "kind": "require-call",
+          "original": "./options.js"
+        },
+        {
+          "path": "../node_modules/@babel/template/lib/string.js",
+          "kind": "require-call",
+          "original": "./string.js"
+        },
+        {
+          "path": "../node_modules/@babel/template/lib/literal.js",
+          "kind": "require-call",
+          "original": "./literal.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/template/lib/index.js": {
+      "bytes": 879,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/template/lib/formatters.js",
+          "kind": "require-call",
+          "original": "./formatters.js"
+        },
+        {
+          "path": "../node_modules/@babel/template/lib/builder.js",
+          "kind": "require-call",
+          "original": "./builder.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/traverse/lib/path/conversion.js": {
+      "bytes": 21607,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/types"
+        },
+        {
+          "path": "../node_modules/@babel/template/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/template"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/visitors.js",
+          "kind": "require-call",
+          "original": "../visitors.js"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/context.js",
+          "kind": "require-call",
+          "original": "./context.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/traverse/lib/path/introspection.js": {
+      "bytes": 12888,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/types"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/traverse/lib/path/family.js": {
+      "bytes": 10335,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/index.js",
+          "kind": "require-call",
+          "original": "./index.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/types"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/traverse/lib/path/comments.js": {
+      "bytes": 1558,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/types"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/traverse/lib/path/index.js": {
+      "bytes": 11255,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/lib/virtual-types.js",
+          "kind": "require-call",
+          "original": "./lib/virtual-types.js"
+        },
+        {
+          "path": "../node_modules/debug/src/browser.js",
+          "kind": "require-call",
+          "original": "debug"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/index.js",
+          "kind": "require-call",
+          "original": "../index.js"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/scope/index.js",
+          "kind": "require-call",
+          "original": "../scope/index.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/types"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/cache.js",
+          "kind": "require-call",
+          "original": "../cache.js"
+        },
+        {
+          "path": "../node_modules/@babel/generator/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/generator"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/ancestry.js",
+          "kind": "require-call",
+          "original": "./ancestry.js"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/inference/index.js",
+          "kind": "require-call",
+          "original": "./inference/index.js"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/replacement.js",
+          "kind": "require-call",
+          "original": "./replacement.js"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/evaluation.js",
+          "kind": "require-call",
+          "original": "./evaluation.js"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/conversion.js",
+          "kind": "require-call",
+          "original": "./conversion.js"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/introspection.js",
+          "kind": "require-call",
+          "original": "./introspection.js"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/context.js",
+          "kind": "require-call",
+          "original": "./context.js"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/removal.js",
+          "kind": "require-call",
+          "original": "./removal.js"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/modification.js",
+          "kind": "require-call",
+          "original": "./modification.js"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/family.js",
+          "kind": "require-call",
+          "original": "./family.js"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/comments.js",
+          "kind": "require-call",
+          "original": "./comments.js"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/lib/virtual-types-validator.js",
+          "kind": "require-call",
+          "original": "./lib/virtual-types-validator.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/traverse/lib/context.js": {
+      "bytes": 3033,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/index.js",
+          "kind": "require-call",
+          "original": "./path/index.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/types"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/context.js",
+          "kind": "require-call",
+          "original": "./path/context.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/traverse/lib/traverse-node.js": {
+      "bytes": 769,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/traverse/lib/context.js",
+          "kind": "require-call",
+          "original": "./context.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/types"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/traverse/lib/path/context.js": {
+      "bytes": 6832,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/traverse/lib/traverse-node.js",
+          "kind": "require-call",
+          "original": "../traverse-node.js"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/index.js",
+          "kind": "require-call",
+          "original": "./index.js"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/removal.js",
+          "kind": "require-call",
+          "original": "./removal.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/types"
+        }
+      ],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/traverse/lib/hub.js": {
+      "bytes": 373,
+      "imports": [],
+      "format": "cjs"
+    },
+    "../node_modules/@babel/traverse/lib/index.js": {
+      "bytes": 2711,
+      "imports": [
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/context.js",
+          "kind": "require-call",
+          "original": "./path/context.js"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/visitors.js",
+          "kind": "require-call",
+          "original": "./visitors.js"
+        },
+        {
+          "path": "../node_modules/@babel/types/lib/index.js",
+          "kind": "require-call",
+          "original": "@babel/types"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/cache.js",
+          "kind": "require-call",
+          "original": "./cache.js"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/traverse-node.js",
+          "kind": "require-call",
+          "original": "./traverse-node.js"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/path/index.js",
+          "kind": "require-call",
+          "original": "./path/index.js"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/scope/index.js",
+          "kind": "require-call",
+          "original": "./scope/index.js"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/hub.js",
+          "kind": "require-call",
+          "original": "./hub.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "src/hook.ts": {
+      "bytes": 7084,
+      "imports": [
+        {
+          "path": "../parser/src/index.ts",
+          "kind": "import-statement",
+          "original": "@jumbotron/parser"
+        },
+        {
+          "path": "../node_modules/@babel/traverse/lib/index.js",
+          "kind": "import-statement",
+          "original": "@babel/traverse"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/index.ts": {
+      "bytes": 752,
+      "imports": [
+        {
+          "path": "src/hook.ts",
+          "kind": "import-statement",
+          "original": "./hook"
+        }
+      ],
+      "format": "esm"
+    }
+  },
+  "outputs": {
+    "out/index.js.map": {
+      "imports": [],
+      "exports": [],
+      "inputs": {},
+      "bytes": 3045319
+    },
+    "out/index.js": {
+      "imports": [],
+      "exports": [],
+      "entryPoint": "src/index.ts",
+      "inputs": {
+        "../node_modules/@babel/parser/lib/index.js": {
+          "bytesInOutput": 293254
+        },
+        "../node_modules/@jridgewell/set-array/dist/set-array.umd.js": {
+          "bytesInOutput": 804
+        },
+        "../node_modules/@jridgewell/sourcemap-codec/dist/sourcemap-codec.umd.js": {
+          "bytesInOutput": 4840
+        },
+        "../node_modules/@jridgewell/resolve-uri/dist/resolve-uri.umd.js": {
+          "bytesInOutput": 2187
+        },
+        "../node_modules/@jridgewell/trace-mapping/dist/trace-mapping.umd.js": {
+          "bytesInOutput": 7228
+        },
+        "../node_modules/@jridgewell/gen-mapping/dist/gen-mapping.umd.js": {
+          "bytesInOutput": 3311
+        },
+        "../node_modules/@babel/generator/lib/source-map.js": {
+          "bytesInOutput": 1521
+        },
+        "../node_modules/@babel/generator/lib/buffer.js": {
+          "bytesInOutput": 4573
+        },
+        "../node_modules/@babel/types/lib/utils/shallowEqual.js": {
+          "bytesInOutput": 180
+        },
+        "../node_modules/@babel/types/lib/utils/deprecationWarning.js": {
+          "bytesInOutput": 646
+        },
+        "../node_modules/@babel/types/lib/validators/generated/index.js": {
+          "bytesInOutput": 51124
+        },
+        "../node_modules/@babel/types/lib/validators/matchesPattern.js": {
+          "bytesInOutput": 567
+        },
+        "../node_modules/@babel/types/lib/validators/buildMatchMemberExpression.js": {
+          "bytesInOutput": 174
+        },
+        "../node_modules/@babel/types/lib/validators/react/isReactComponent.js": {
+          "bytesInOutput": 163
+        },
+        "../node_modules/@babel/types/lib/validators/react/isCompatTag.js": {
+          "bytesInOutput": 137
+        },
+        "../node_modules/to-fast-properties/index.js": {
+          "bytesInOutput": 229
+        },
+        "../node_modules/@babel/types/lib/validators/isType.js": {
+          "bytesInOutput": 279
+        },
+        "../node_modules/@babel/types/lib/validators/isPlaceholderType.js": {
+          "bytesInOutput": 220
+        },
+        "../node_modules/@babel/types/lib/validators/is.js": {
+          "bytesInOutput": 311
+        },
+        "../node_modules/@babel/helper-validator-identifier/lib/identifier.js": {
+          "bytesInOutput": 10176
+        },
+        "../node_modules/@babel/helper-validator-identifier/lib/keyword.js": {
+          "bytesInOutput": 909
+        },
+        "../node_modules/@babel/helper-validator-identifier/lib/index.js": {
+          "bytesInOutput": 963
+        },
+        "../node_modules/@babel/types/lib/validators/isValidIdentifier.js": {
+          "bytesInOutput": 243
+        },
+        "../node_modules/@babel/helper-string-parser/lib/index.js": {
+          "bytesInOutput": 3085
+        },
+        "../node_modules/@babel/types/lib/constants/index.js": {
+          "bytesInOutput": 1722
+        },
+        "../node_modules/@babel/types/lib/definitions/utils.js": {
+          "bytesInOutput": 4736
+        },
+        "../node_modules/@babel/types/lib/definitions/core.js": {
+          "bytesInOutput": 36444
+        },
+        "../node_modules/@babel/types/lib/definitions/flow.js": {
+          "bytesInOutput": 12479
+        },
+        "../node_modules/@babel/types/lib/definitions/jsx.js": {
+          "bytesInOutput": 3077
+        },
+        "../node_modules/@babel/types/lib/definitions/placeholders.js": {
+          "bytesInOutput": 589
+        },
+        "../node_modules/@babel/types/lib/definitions/misc.js": {
+          "bytesInOutput": 410
+        },
+        "../node_modules/@babel/types/lib/definitions/experimental.js": {
+          "bytesInOutput": 2271
+        },
+        "../node_modules/@babel/types/lib/definitions/typescript.js": {
+          "bytesInOutput": 11374
+        },
+        "../node_modules/@babel/types/lib/definitions/deprecated-aliases.js": {
+          "bytesInOutput": 185
+        },
+        "../node_modules/@babel/types/lib/definitions/index.js": {
+          "bytesInOutput": 1738
+        },
+        "../node_modules/@babel/types/lib/validators/validate.js": {
+          "bytesInOutput": 705
+        },
+        "../node_modules/@babel/types/lib/builders/generated/index.js": {
+          "bytesInOutput": 45128
+        },
+        "../node_modules/@babel/types/lib/utils/react/cleanJSXElementLiteralChild.js": {
+          "bytesInOutput": 457
+        },
+        "../node_modules/@babel/types/lib/builders/react/buildChildren.js": {
+          "bytesInOutput": 353
+        },
+        "../node_modules/@babel/types/lib/validators/isNode.js": {
+          "bytesInOutput": 158
+        },
+        "../node_modules/@babel/types/lib/asserts/assertNode.js": {
+          "bytesInOutput": 250
+        },
+        "../node_modules/@babel/types/lib/asserts/generated/index.js": {
+          "bytesInOutput": 21879
+        },
+        "../node_modules/@babel/types/lib/builders/flow/createTypeAnnotationBasedOnTypeof.js": {
+          "bytesInOutput": 676
+        },
+        "../node_modules/@babel/types/lib/modifications/flow/removeTypeDuplicates.js": {
+          "bytesInOutput": 869
+        },
+        "../node_modules/@babel/types/lib/builders/flow/createFlowUnionType.js": {
+          "bytesInOutput": 208
+        },
+        "../node_modules/@babel/types/lib/modifications/typescript/removeTypeDuplicates.js": {
+          "bytesInOutput": 860
+        },
+        "../node_modules/@babel/types/lib/builders/typescript/createTSUnionType.js": {
+          "bytesInOutput": 268
+        },
+        "../node_modules/@babel/types/lib/builders/generated/uppercase.js": {
+          "bytesInOutput": 26304
+        },
+        "../node_modules/@babel/types/lib/builders/productions.js": {
+          "bytesInOutput": 196
+        },
+        "../node_modules/@babel/types/lib/clone/cloneNode.js": {
+          "bytesInOutput": 1436
+        },
+        "../node_modules/@babel/types/lib/clone/clone.js": {
+          "bytesInOutput": 148
+        },
+        "../node_modules/@babel/types/lib/clone/cloneDeep.js": {
+          "bytesInOutput": 145
+        },
+        "../node_modules/@babel/types/lib/clone/cloneDeepWithoutLoc.js": {
+          "bytesInOutput": 151
+        },
+        "../node_modules/@babel/types/lib/clone/cloneWithoutLoc.js": {
+          "bytesInOutput": 151
+        },
+        "../node_modules/@babel/types/lib/comments/addComments.js": {
+          "bytesInOutput": 224
+        },
+        "../node_modules/@babel/types/lib/comments/addComment.js": {
+          "bytesInOutput": 201
+        },
+        "../node_modules/@babel/types/lib/utils/inherit.js": {
+          "bytesInOutput": 184
+        },
+        "../node_modules/@babel/types/lib/comments/inheritInnerComments.js": {
+          "bytesInOutput": 159
+        },
+        "../node_modules/@babel/types/lib/comments/inheritLeadingComments.js": {
+          "bytesInOutput": 161
+        },
+        "../node_modules/@babel/types/lib/comments/inheritTrailingComments.js": {
+          "bytesInOutput": 162
+        },
+        "../node_modules/@babel/types/lib/comments/inheritsComments.js": {
+          "bytesInOutput": 207
+        },
+        "../node_modules/@babel/types/lib/comments/removeComments.js": {
+          "bytesInOutput": 170
+        },
+        "../node_modules/@babel/types/lib/constants/generated/index.js": {
+          "bytesInOutput": 3801
+        },
+        "../node_modules/@babel/types/lib/converters/toBlock.js": {
+          "bytesInOutput": 356
+        },
+        "../node_modules/@babel/types/lib/converters/ensureBlock.js": {
+          "bytesInOutput": 175
+        },
+        "../node_modules/@babel/types/lib/converters/toIdentifier.js": {
+          "bytesInOutput": 353
+        },
+        "../node_modules/@babel/types/lib/converters/toBindingIdentifierName.js": {
+          "bytesInOutput": 191
+        },
+        "../node_modules/@babel/types/lib/converters/toComputedKey.js": {
+          "bytesInOutput": 227
+        },
+        "../node_modules/@babel/types/lib/converters/toExpression.js": {
+          "bytesInOutput": 416
+        },
+        "../node_modules/@babel/types/lib/traverse/traverseFast.js": {
+          "bytesInOutput": 278
+        },
+        "../node_modules/@babel/types/lib/modifications/removeProperties.js": {
+          "bytesInOutput": 419
+        },
+        "../node_modules/@babel/types/lib/modifications/removePropertiesDeep.js": {
+          "bytesInOutput": 170
+        },
+        "../node_modules/@babel/types/lib/converters/toKeyAlias.js": {
+          "bytesInOutput": 477
+        },
+        "../node_modules/@babel/types/lib/converters/toStatement.js": {
+          "bytesInOutput": 491
+        },
+        "../node_modules/@babel/types/lib/converters/valueToNode.js": {
+          "bytesInOutput": 1338
+        },
+        "../node_modules/@babel/types/lib/modifications/appendToMemberExpression.js": {
+          "bytesInOutput": 230
+        },
+        "../node_modules/@babel/types/lib/modifications/inherits.js": {
+          "bytesInOutput": 352
+        },
+        "../node_modules/@babel/types/lib/modifications/prependToMemberExpression.js": {
+          "bytesInOutput": 292
+        },
+        "../node_modules/@babel/types/lib/retrievers/getAssignmentIdentifiers.js": {
+          "bytesInOutput": 649
+        },
+        "../node_modules/@babel/types/lib/retrievers/getBindingIdentifiers.js": {
+          "bytesInOutput": 1852
+        },
+        "../node_modules/@babel/types/lib/retrievers/getOuterBindingIdentifiers.js": {
+          "bytesInOutput": 173
+        },
+        "../node_modules/@babel/types/lib/retrievers/getFunctionName.js": {
+          "bytesInOutput": 906
+        },
+        "../node_modules/@babel/types/lib/traverse/traverse.js": {
+          "bytesInOutput": 481
+        },
+        "../node_modules/@babel/types/lib/validators/isBinding.js": {
+          "bytesInOutput": 378
+        },
+        "../node_modules/@babel/types/lib/validators/isLet.js": {
+          "bytesInOutput": 212
+        },
+        "../node_modules/@babel/types/lib/validators/isBlockScoped.js": {
+          "bytesInOutput": 216
+        },
+        "../node_modules/@babel/types/lib/validators/isImmutable.js": {
+          "bytesInOutput": 220
+        },
+        "../node_modules/@babel/types/lib/validators/isNodesEquivalent.js": {
+          "bytesInOutput": 695
+        },
+        "../node_modules/@babel/types/lib/validators/isReferenced.js": {
+          "bytesInOutput": 1554
+        },
+        "../node_modules/@babel/types/lib/validators/isScope.js": {
+          "bytesInOutput": 301
+        },
+        "../node_modules/@babel/types/lib/validators/isSpecifierDefault.js": {
+          "bytesInOutput": 224
+        },
+        "../node_modules/@babel/types/lib/validators/isValidES3Identifier.js": {
+          "bytesInOutput": 397
+        },
+        "../node_modules/@babel/types/lib/validators/isVar.js": {
+          "bytesInOutput": 208
+        },
+        "../node_modules/@babel/types/lib/converters/gatherSequenceExpressions.js": {
+          "bytesInOutput": 1047
+        },
+        "../node_modules/@babel/types/lib/converters/toSequenceExpression.js": {
+          "bytesInOutput": 226
+        },
+        "../node_modules/@babel/types/lib/index.js": {
+          "bytesInOutput": 9327
+        },
+        "../node_modules/@babel/generator/lib/node/whitespace.js": {
+          "bytesInOutput": 2449
+        },
+        "../node_modules/@babel/generator/lib/node/parentheses.js": {
+          "bytesInOutput": 5335
+        },
+        "../node_modules/@babel/generator/lib/node/index.js": {
+          "bytesInOutput": 1608
+        },
+        "../node_modules/@babel/generator/lib/generators/template-literals.js": {
+          "bytesInOutput": 500
+        },
+        "../node_modules/@babel/generator/lib/generators/expressions.js": {
+          "bytesInOutput": 4662
+        },
+        "../node_modules/@babel/generator/lib/generators/statements.js": {
+          "bytesInOutput": 4238
+        },
+        "../node_modules/@babel/generator/lib/generators/classes.js": {
+          "bytesInOutput": 2814
+        },
+        "../node_modules/@babel/generator/lib/generators/methods.js": {
+          "bytesInOutput": 2848
+        },
+        "../node_modules/@babel/generator/lib/generators/modules.js": {
+          "bytesInOutput": 4566
+        },
+        "../node_modules/jsesc/jsesc.js": {
+          "bytesInOutput": 3269
+        },
+        "../node_modules/@babel/generator/lib/generators/types.js": {
+          "bytesInOutput": 3799
+        },
+        "../node_modules/@babel/generator/lib/generators/flow.js": {
+          "bytesInOutput": 9873
+        },
+        "../node_modules/@babel/generator/lib/generators/base.js": {
+          "bytesInOutput": 1582
+        },
+        "../node_modules/@babel/generator/lib/generators/jsx.js": {
+          "bytesInOutput": 1830
+        },
+        "../node_modules/@babel/generator/lib/generators/typescript.js": {
+          "bytesInOutput": 9876
+        },
+        "../node_modules/@babel/generator/lib/generators/index.js": {
+          "bytesInOutput": 2059
+        },
+        "../node_modules/@babel/generator/lib/printer.js": {
+          "bytesInOutput": 11820
+        },
+        "../node_modules/@babel/generator/lib/index.js": {
+          "bytesInOutput": 1800
+        },
+        "../node_modules/@babel/traverse/lib/path/lib/virtual-types.js": {
+          "bytesInOutput": 1077
+        },
+        "../node_modules/ms/index.js": {
+          "bytesInOutput": 1395
+        },
+        "../node_modules/debug/src/common.js": {
+          "bytesInOutput": 2090
+        },
+        "../node_modules/debug/src/browser.js": {
+          "bytesInOutput": 2588
+        },
+        "../node_modules/@babel/traverse/lib/path/lib/virtual-types-validator.js": {
+          "bytesInOutput": 2338
+        },
+        "../node_modules/@babel/traverse/lib/visitors.js": {
+          "bytesInOutput": 3524
+        },
+        "../node_modules/@babel/traverse/lib/scope/lib/renamer.js": {
+          "bytesInOutput": 1970
+        },
+        "../node_modules/@babel/traverse/lib/scope/binding.js": {
+          "bytesInOutput": 1140
+        },
+        "../node_modules/globals/globals.json": {
+          "bytesInOutput": 23042
+        },
+        "../node_modules/globals/index.js": {
+          "bytesInOutput": 50
+        },
+        "../node_modules/@babel/traverse/lib/cache.js": {
+          "bytesInOutput": 615
+        },
+        "../node_modules/@babel/traverse/lib/scope/index.js": {
+          "bytesInOutput": 16001
+        },
+        "../node_modules/@babel/traverse/lib/path/ancestry.js": {
+          "bytesInOutput": 1689
+        },
+        "../node_modules/@babel/traverse/lib/path/inference/util.js": {
+          "bytesInOutput": 316
+        },
+        "../node_modules/@babel/traverse/lib/path/inference/inferer-reference.js": {
+          "bytesInOutput": 2017
+        },
+        "../node_modules/@babel/traverse/lib/path/inference/inferers.js": {
+          "bytesInOutput": 3427
+        },
+        "../node_modules/@babel/traverse/lib/path/inference/index.js": {
+          "bytesInOutput": 2133
+        },
+        "../node_modules/js-tokens/index.js": {
+          "bytesInOutput": 1003
+        },
+        "../node_modules/picocolors/picocolors.browser.js": {
+          "bytesInOutput": 626
+        },
+        "../node_modules/escape-string-regexp/index.js": {
+          "bytesInOutput": 178
+        },
+        "../node_modules/@babel/highlight/node_modules/color-name/index.js": {
+          "bytesInOutput": 3441
+        },
+        "../node_modules/@babel/highlight/node_modules/color-convert/conversions.js": {
+          "bytesInOutput": 8752
+        },
+        "../node_modules/@babel/highlight/node_modules/color-convert/route.js": {
+          "bytesInOutput": 742
+        },
+        "../node_modules/@babel/highlight/node_modules/color-convert/index.js": {
+          "bytesInOutput": 773
+        },
+        "../node_modules/@babel/highlight/node_modules/ansi-styles/index.js": {
+          "bytesInOutput": 2021
+        },
+        "../node_modules/@babel/highlight/node_modules/supports-color/browser.js": {
+          "bytesInOutput": 67
+        },
+        "../node_modules/@babel/highlight/node_modules/chalk/templates.js": {
+          "bytesInOutput": 1745
+        },
+        "../node_modules/@babel/highlight/node_modules/chalk/index.js": {
+          "bytesInOutput": 2840
+        },
+        "../node_modules/@babel/highlight/lib/index.js": {
+          "bytesInOutput": 2270
+        },
+        "../node_modules/@babel/code-frame/lib/index.js": {
+          "bytesInOutput": 2799
+        },
+        "../node_modules/@babel/traverse/lib/path/lib/hoister.js": {
+          "bytesInOutput": 3156
+        },
+        "../node_modules/@babel/traverse/lib/path/lib/removal-hooks.js": {
+          "bytesInOutput": 832
+        },
+        "../node_modules/@babel/traverse/lib/path/removal.js": {
+          "bytesInOutput": 1092
+        },
+        "../node_modules/@babel/traverse/lib/path/modification.js": {
+          "bytesInOutput": 4549
+        },
+        "../node_modules/@babel/traverse/lib/path/replacement.js": {
+          "bytesInOutput": 5001
+        },
+        "../node_modules/@babel/traverse/lib/path/evaluation.js": {
+          "bytesInOutput": 5047
+        },
+        "../node_modules/@babel/template/lib/formatters.js": {
+          "bytesInOutput": 885
+        },
+        "../node_modules/@babel/template/lib/options.js": {
+          "bytesInOutput": 1872
+        },
+        "../node_modules/@babel/template/lib/parse.js": {
+          "bytesInOutput": 2346
+        },
+        "../node_modules/@babel/template/lib/populate.js": {
+          "bytesInOutput": 2047
+        },
+        "../node_modules/@babel/template/lib/string.js": {
+          "bytesInOutput": 275
+        },
+        "../node_modules/@babel/template/lib/literal.js": {
+          "bytesInOutput": 974
+        },
+        "../node_modules/@babel/template/lib/builder.js": {
+          "bytesInOutput": 1253
+        },
+        "../node_modules/@babel/template/lib/index.js": {
+          "bytesInOutput": 514
+        },
+        "../node_modules/@babel/traverse/lib/path/conversion.js": {
+          "bytesInOutput": 11273
+        },
+        "../node_modules/@babel/traverse/lib/path/introspection.js": {
+          "bytesInOutput": 6961
+        },
+        "../node_modules/@babel/traverse/lib/path/family.js": {
+          "bytesInOutput": 4434
+        },
+        "../node_modules/@babel/traverse/lib/path/comments.js": {
+          "bytesInOutput": 786
+        },
+        "../node_modules/@babel/traverse/lib/path/index.js": {
+          "bytesInOutput": 6399
+        },
+        "../node_modules/@babel/traverse/lib/context.js": {
+          "bytesInOutput": 1486
+        },
+        "../node_modules/@babel/traverse/lib/traverse-node.js": {
+          "bytesInOutput": 353
+        },
+        "../node_modules/@babel/traverse/lib/path/context.js": {
+          "bytesInOutput": 3967
+        },
+        "../node_modules/@babel/traverse/lib/hub.js": {
+          "bytesInOutput": 270
+        },
+        "../node_modules/@babel/traverse/lib/index.js": {
+          "bytesInOutput": 1442
+        },
+        "../parser/src/index.ts": {
+          "bytesInOutput": 232
+        },
+        "src/hook.ts": {
+          "bytesInOutput": 2937
+        },
+        "src/index.ts": {
+          "bytesInOutput": 270
+        }
+      },
+      "bytes": 831413
+    }
+  }
+}

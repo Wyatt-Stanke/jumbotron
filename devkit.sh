@@ -11,7 +11,7 @@ if [ ! -d "data/raw" ]; then
 fi
 
 if [ ! -d "devkit" ]; then
-    npm run build --workspaces
+    npm run build --workspaces --if-present
 
     mkdir devkit
     # Copy the raw data to a new devkit/ folder
