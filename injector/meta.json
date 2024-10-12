@@ -2831,13 +2831,29 @@
       ],
       "format": "esm"
     },
-    "src/index.ts": {
-      "bytes": 752,
+    "src/worker.ts": {
+      "bytes": 353,
       "imports": [
         {
           "path": "src/hook.ts",
           "kind": "import-statement",
           "original": "./hook"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/index.ts": {
+      "bytes": 789,
+      "imports": [
+        {
+          "path": "./hook",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/worker.ts",
+          "kind": "dynamic-import",
+          "original": "./worker.ts"
         }
       ],
       "format": "esm"
@@ -2848,7 +2864,7 @@
       "imports": [],
       "exports": [],
       "inputs": {},
-      "bytes": 3045319
+      "bytes": 3046547
     },
     "out/index.js": {
       "imports": [],
@@ -3197,6 +3213,9 @@
         "../node_modules/@babel/generator/lib/index.js": {
           "bytesInOutput": 1800
         },
+        "../parser/src/index.ts": {
+          "bytesInOutput": 254
+        },
         "../node_modules/@babel/traverse/lib/path/lib/virtual-types.js": {
           "bytesInOutput": 1077
         },
@@ -3359,17 +3378,17 @@
         "../node_modules/@babel/traverse/lib/index.js": {
           "bytesInOutput": 1442
         },
-        "../parser/src/index.ts": {
-          "bytesInOutput": 232
-        },
         "src/hook.ts": {
-          "bytesInOutput": 2937
+          "bytesInOutput": 2969
+        },
+        "src/worker.ts": {
+          "bytesInOutput": 281
         },
         "src/index.ts": {
-          "bytesInOutput": 270
+          "bytesInOutput": 396
         }
       },
-      "bytes": 831413
+      "bytes": 831966
     }
   }
 }
