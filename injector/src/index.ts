@@ -9,8 +9,9 @@ const script = document.createElement("script");
 // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
 const addMsg = msg => log.innerHTML += `${msg}</br>`;
 
-
 const worker = Worker();
+
+worker.postMessage({ url: window.location.href });
 
 worker.onmessage = (e) => {
 	console.log(e.data);
