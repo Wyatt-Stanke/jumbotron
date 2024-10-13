@@ -54,8 +54,57 @@ interface Filter {
 	actions: Record<number, (DeleteAction | ReplacePropertyAction)[]>;
 }
 
-const filters: Filter[] = [
+interface Mod {
+	name: string;
+	id: string;
+	filters: Filter[];
+}
+
+interface LoadingStateMessageStarted {
+	type: "started";
+	mods: {
+		name: string;
+		id: string;
+		filters: string[];
+	}[];
+}
+
+interface LoadingStateMessageFilterApplied {
+	type: "filterApplied";
+	modId: string;
+	filterIndex: number;
+}
+
+interface LoadingStateMessageFilterFailed {
+	type: "filterFailed";
+	modId: string;
+	filterIndex: number;
+}
+
+interface LoadngStateMessageModStarted {
+	type: "modStarting";
+	modId: string;
+	modName: string;
+}
+
+interface LoadingStateMessageModFinished {
+	type: "modFinished";
+	modId: string;
+	modName: string;
+}
+
+export type LoadingState = 
+	LoadingStateMessageStarted
+	| LoadingStateMessageFilterApplied
+	| LoadingStateMessageFilterFailed
+	| LoadngStateMessageModStarted
+	| LoadingStateMessageModFinished;
+
+const mods: Mod[] = [
 	{
+		name: "Jettison Poki",
+		id: "jettison-poki",
+		filters: [{
 		selector: {
 			type: "VariableDeclarator",
 			init: {
@@ -122,8 +171,13 @@ const filters: Filter[] = [
 		actions: {
 			1: [{ type: Actions.Delete }],
 		},
+	},]
 	},
 	{
+		name: "Override Poki",
+		id: "override-poki",
+		filters: [
+			{
 		selector: {
 			type: "ExpressionStatement",
 			expression: {
@@ -154,7 +208,10 @@ const filters: Filter[] = [
 			],
 		},
 	}
-];
+		]
+	}
+]
+
 
 function nodeSummary(node: types.Node) {
 	const blocks: string[] = [node.type];
@@ -223,7 +280,11 @@ export function checkLevel(
 	return { result: true, tags };
 }
 
-export async function createHooks({ url, logFn }) {
+export async function createHooks({ url, logFn, loadingStateCallback }: {
+	url: string;
+	logFn: (message: string) => void;
+	loadingStateCallback: (state: LoadingState) => void;
+}) {
 	logFn(`Fetching ${url}...`);
 	const js = await fetch(url).then((res) => res.text());
 	logFn(`Parsing fetched content (${js.length} bytes)`);
@@ -231,65 +292,80 @@ export async function createHooks({ url, logFn }) {
 
 	// Modify JSON_game properties
 	logFn("[STAGE 2] Filtering");
-	for (const filter of filters) {
-		try {
-			traverse(ast, {
-				[filter.selector.type as string](tnodePath: NodePath) {
-					const tnode = tnodePath.node;
-					const result = checkLevel(tnode, tnode, filter.selector);
-					if (result.result) {
-						console.log("Found", nodeSummary(tnode));
-						console.log(result.tags[1]);
+	loadingStateCallback({ type: "started", mods: mods.map((mod) => ({ name: mod.name, id: mod.id, filters: mod.filters.map((filter) => filter.selector.type as string) })) });
+	for (const mod of mods) {
+		loadingStateCallback({ type: "modStarting", modId: mod.id, modName: mod.name });
+		for (const [index, filter] of mod.filters.entries()) {
+			try {
+				traverse(ast, {
+					[filter.selector.type as string](tnodePath: NodePath) {
+						const tnode = tnodePath.node;
+						const result = checkLevel(tnode, tnode, filter.selector);
+						if (result.result) {
+							console.log("Found", nodeSummary(tnode));
+							console.log(result.tags[1]);
 
-						// Create a function that gets the path of the history from an inputted object while keeping the tnode mutable
-						// result.tags[1] = ["init", "properties", 0, "value", "elements", 1];
+							// Create a function that gets the path of the history from an inputted object while keeping the tnode mutable
+							// result.tags[1] = ["init", "properties", 0, "value", "elements", 1];
 
-						const tag = result.tags[1];
-						let node = tnode;
-						for (const key of tag.slice(0, -1)) {
-							node = node[key];
-						}
-
-						const actions = filter.actions[1];
-						const finalItem = result.tags[1].at(-1);
-
-						for (const action of actions) {
-							console.log("Applying action", action);
-							if (action.type === Actions.Delete) {
-								if (typeof finalItem === "number") {
-									// TODO: no ts-ignore
-									// @ts-ignore
-									node.splice(finalItem, 1);
-								} else {
-									delete node[finalItem];
-								}
-							} else if (action.type === Actions.ReplaceProperty) {
-								console.log(
-									"Replacing",
-									node[finalItem],
-									action.property,
-									"with",
-									action.value,
-								);
-								node[finalItem][action.property] = action.value;
-								console.log(tnode);
+							const tag = result.tags[1];
+							let node = tnode;
+							for (const key of tag.slice(0, -1)) {
+								node = node[key];
 							}
-						}
 
-						throw new Error("Found");
-					}
-				},
-			});
-			throw new Error("Not found");
-		} catch (e) {
-			if (e.message === "Not found") {
-				logFn(`Filter for ${filter.selector.type} not found!`);
-				throw e;
-			}
-			if (e.message !== "Found") {
-				throw e;
+							const actions = filter.actions[1];
+							const finalItem = result.tags[1].at(-1);
+
+							for (const action of actions) {
+								console.log("Applying action", action);
+								if (action.type === Actions.Delete) {
+									if (typeof finalItem === "number") {
+										// TODO: no ts-ignore
+										// @ts-ignore
+										node.splice(finalItem, 1);
+									} else {
+										delete node[finalItem];
+									}
+								} else if (action.type === Actions.ReplaceProperty) {
+									console.log(
+										"Replacing",
+										node[finalItem],
+										action.property,
+										"with",
+										action.value,
+									);
+									node[finalItem][action.property] = action.value;
+									console.log(tnode);
+								}
+							}
+
+							loadingStateCallback({
+								type: "filterApplied",
+								modId: mod.id,
+								filterIndex: index,
+							});
+							throw new Error("Found");
+						}
+					},
+				});
+				throw new Error("Not found");
+			} catch (e) {
+				if (e.message === "Not found") {
+					loadingStateCallback({
+						type: "filterFailed",
+						modId: mod.id,
+						filterIndex: index,
+					});
+					logFn(`Filter for ${filter.selector.type} not found!`);
+					throw e;
+				}
+				if (e.message !== "Found") {
+					throw e;
+				}
 			}
 		}
+		loadingStateCallback({ type: "modFinished", modId: mod.id, modName: mod.name });
 	}
 	logFn("[STAGE 2] JSON_game properties modified");
 

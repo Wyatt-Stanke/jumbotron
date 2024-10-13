@@ -1,6 +1,9 @@
 import { createHooks } from "./hook";
+import type { LoadingState } from "./hook";
 
 export const WORKER_ENTRY_FILE_URL = import.meta.url;
+
+export type WorkerMessage = { type: "message"; msg: string; } | { type: "state"; state: LoadingState; } | { type: "url"; url: string; };
 
 onmessage = async (e) => {
 	postMessage({ msg: "Worker started" });
@@ -8,8 +11,11 @@ onmessage = async (e) => {
 		// ./html5game/RetroBowl.js
 		url: e.data.url + "html5game/RetroBowl.js",
 		logFn: (msg) => {
-			postMessage({ msg });
+			postMessage({ type: "message", msg });
 		},
+		loadingStateCallback: (state) => {
+			postMessage({ type: "state", state });
+		}
 	});
 
 	const blob = new Blob([js], {
@@ -18,5 +24,5 @@ onmessage = async (e) => {
 
 	const url = URL.createObjectURL(blob);
 
-	postMessage({ url });
+	postMessage({ type: "url", url });
 }

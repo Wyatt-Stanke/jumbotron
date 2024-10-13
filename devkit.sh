@@ -31,7 +31,7 @@ if [ ! -d "devkit" ]; then
     npx @biomejs/biome format --fix devkit/html5game/ || true
 else
     echo "Devkit folder already exists. Rebuilding..."
-    npm run build --workspaces
+    npm run build --workspaces --if-present
     cp -r injector/out/* devkit
     cp -r data/overwrite/* devkit
 fi
