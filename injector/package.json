@@ -1,6 +1,6 @@
 {
 	"name": "@jumbotron/injector",
-	"version": "1.0.0",
+	"version": "0.0.1",
 	"source": "src/index.ts",
 	"scripts": {
 		"build": "node build.mjs",
@@ -11,7 +11,7 @@
 	"description": "",
 	"dependencies": {
 		"@babel/traverse": "7.25.7",
-		"@jumbotron/parser": "1.0.0",
+		"@jumbotron/parser": "0.0.1",
 		"@types/babel__traverse": "7.20.6"
 	},
 	"devDependencies": {

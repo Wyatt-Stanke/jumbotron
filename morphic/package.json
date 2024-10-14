@@ -1,6 +1,6 @@
 {
 	"name": "@jumbotron/morphic",
-	"version": "1.0.0",
+	"version": "0.0.1",
 	"main": "index.js",
 	"scripts": {
 		"build": "esbuild src/index.ts --bundle --minify --sourcemap --target=es2022 --format=esm --outfile=out/index.js",

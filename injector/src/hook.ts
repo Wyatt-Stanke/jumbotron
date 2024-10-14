@@ -1,5 +1,7 @@
 import { parseJS, generate, type types } from "@jumbotron/parser";
-import traverse, { type NodePath } from "@babel/traverse";
+import traverse, { type Node, type NodePath } from "@babel/traverse";
+import { parseJSExpression } from "../../parser/src";
+import { version } from "../../package.json"
 
 // TODO: consider esast, unist, and unified js system for parsing and transforming the AST
 
@@ -25,6 +27,7 @@ const Tag = Symbol("Tag");
 const Actions = {
 	Delete: Symbol("Actions.Delete"),
 	ReplaceProperty: Symbol("Actions.ReplaceProperty"),
+	AddArrayElement: Symbol("Actions.AddArrayElement"),
 };
 
 // TODO: use a better type system that uses the actual AST types
@@ -49,9 +52,18 @@ interface ReplacePropertyAction extends BaseAction {
 	value: Key;
 }
 
+interface AddArrayElementAction extends BaseAction {
+	type: typeof Actions.AddArrayElement;
+	element: any;
+}
+
+type Action = DeleteAction | ReplacePropertyAction | AddArrayElementAction;
+
 interface Filter {
-	selector: FilterObject;
-	actions: Record<number, (DeleteAction | ReplacePropertyAction)[]>;
+	selector?: FilterObject;
+	actions: Record<number, Action[]> & {
+		"program"?: Action[];
+	};
 }
 
 interface Mod {
@@ -212,6 +224,35 @@ const mods: Mod[] = [
 			},
 		],
 	},
+	{
+		name: "Show Jumbotron Version",
+		id: "show-jumbotron-version",
+		filters: [
+			{
+				selector: {
+					type: "FunctionDeclaration",
+					id: { name: "gml_Script_s_get_gm_version", [Tag]: 1 },
+				},
+				actions: {
+					1: [{
+						type: Actions.ReplaceProperty,
+						property: "name",
+						value: "__jumbotron_orig$gml_Script_s_get_gm_version",
+					}]
+				}
+			},
+			{
+				actions: {
+					program: [{
+						type: Actions.AddArrayElement,
+						element: parseJSExpression(`function gml_Script_s_get_gm_version() {
+							return __jumbotron_orig$gml_Script_s_get_gm_version() + "\\nJT ${version}";
+						}`),
+					}]
+				}
+			}
+		],
+	}
 ];
 
 function nodeSummary(node: types.Node) {
@@ -302,7 +343,7 @@ export async function createHooks({
 		mods: mods.map((mod) => ({
 			name: mod.name,
 			id: mod.id,
-			filters: mod.filters.map((filter) => filter.selector.type as string),
+			filters: mod.filters.map((filter) => filter.selector?.type as string || "sel"),
 		})),
 	});
 	for (const mod of mods) {
@@ -312,72 +353,59 @@ export async function createHooks({
 			modName: mod.name,
 		});
 		for (const [index, filter] of mod.filters.entries()) {
-			try {
-				traverse(ast, {
-					[filter.selector.type as string](tnodePath: NodePath) {
-						const tnode = tnodePath.node;
-						const result = checkLevel(tnode, tnode, filter.selector);
-						if (result.result) {
-							console.log("Found", nodeSummary(tnode));
-							console.log(result.tags[1]);
+			if (filter.selector) {
+				try {
+					traverse(ast, {
+						[filter.selector.type as string](tnodePath: NodePath) {
+							const tnode = tnodePath.node;
+							const result = checkLevel(tnode, tnode, filter.selector);
+							if (result.result) {
+								console.log("Found", nodeSummary(tnode));
+								console.log(result.tags[1]);
 
-							// Create a function that gets the path of the history from an inputted object while keeping the tnode mutable
-							// result.tags[1] = ["init", "properties", 0, "value", "elements", 1];
-
-							const tag = result.tags[1];
-							let node = tnode;
-							for (const key of tag.slice(0, -1)) {
-								node = node[key];
-							}
-
-							const actions = filter.actions[1];
-							const finalItem = result.tags[1].at(-1);
-
-							for (const action of actions) {
-								console.log("Applying action", action);
-								if (action.type === Actions.Delete) {
-									if (typeof finalItem === "number") {
-										// TODO: no ts-ignore
-										// @ts-ignore
-										node.splice(finalItem, 1);
-									} else {
-										delete node[finalItem];
+								for (const tagKey of Object.keys(result.tags)) {
+									const tag = result.tags[tagKey];
+									let node = tnode;
+									for (const key of tag.slice(0, -1)) {
+										node = node[key];
 									}
-								} else if (action.type === Actions.ReplaceProperty) {
-									console.log(
-										"Replacing",
-										node[finalItem],
-										action.property,
-										"with",
-										action.value,
-									);
-									node[finalItem][action.property] = action.value;
-									console.log(tnode);
-								}
-							}
 
-							loadingStateCallback({
-								type: "filterApplied",
-								modId: mod.id,
-								filterIndex: index,
-							});
-							throw new Error("Found");
-						}
-					},
-				});
-				throw new Error("Not found");
-			} catch (e) {
-				if (e.message === "Not found") {
-					loadingStateCallback({
-						type: "filterFailed",
-						modId: mod.id,
-						filterIndex: index,
+									const actions = filter.actions[tagKey];
+									const finalItem = tag.at(-1);
+
+									for (const action of actions) {
+										applyAction(action, finalItem, node);
+									}
+								}
+
+								loadingStateCallback({
+									type: "filterApplied",
+									modId: mod.id,
+									filterIndex: index,
+								});
+								throw new Error("Found");
+							}
+						},
 					});
-					logFn(`Filter for ${filter.selector.type} not found!`);
-					throw e;
+					throw new Error("Not found");
+				} catch (e) {
+					if (e.message === "Not found") {
+						loadingStateCallback({
+							type: "filterFailed",
+							modId: mod.id,
+							filterIndex: index,
+						});
+						logFn(`Filter for ${filter.selector.type} not found!`);
+						throw e;
+					}
+					if (e.message !== "Found") {
+						throw e;
+					}
 				}
-				if (e.message !== "Found") {
-					throw e;
+			}
+			if (filter.actions.program) {
+				for (const action of filter.actions.program) {
+					applyAction(action, "body", ast.program);
 				}
 			}
 		}
@@ -395,3 +423,37 @@ export async function createHooks({
 	logFn("Done");
 	return code;
 }
+function applyAction(action: Action, finalItem: any, node: Node) {
+	console.log("Applying action", action);
+	switch (action.type) {
+		case Actions.Delete:
+			if (typeof finalItem === "number") {
+				// TODO: no ts-ignore
+				// @ts-ignore
+				node.splice(finalItem, 1);
+			} else {
+				delete node[finalItem];
+			}
+			break;
+		case Actions.ReplaceProperty:
+			console.log(
+				"Replacing",
+				node[finalItem],
+				action.property,
+				"with",
+				action.value
+			);
+			node[finalItem][action.property] = action.value;
+			break;
+		case Actions.AddArrayElement:
+			if (Array.isArray(node[finalItem])) {
+				node[finalItem].push(action.element);
+			} else {
+				console.error("Cannot add element to non-array node");
+			}
+			break;
+		default:
+			console.error("Unknown action type:", action.type);
+	}
+}
+

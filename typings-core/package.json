@@ -1,6 +1,6 @@
 {
 	"name": "@jumbotron/typings-core",
-	"version": "1.0.0",
+	"version": "0.0.1",
 	"main": "index.js",
 	"scripts": {
 		"build:acquire": "mkdir -p out && cp ../data/raw/html5game/RetroBowl.js ./out/RetroBowl.ts",
