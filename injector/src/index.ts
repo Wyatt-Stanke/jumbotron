@@ -1,4 +1,4 @@
-import Worker, { type WorkerMessage } from "./index.worker.ts"
+import Worker, { type WorkerMessage } from "./index.worker.ts";
 
 const loaderDisplay = document.getElementById("loader-display");
 const log = document.getElementById("log");
@@ -8,7 +8,7 @@ const log = document.getElementById("log");
 const script = document.createElement("script");
 
 // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-const addMsg = msg => log.innerHTML += `${msg}</br>`;
+const addMsg = (msg) => (log.innerHTML += `${msg}</br>`);
 
 const worker = Worker();
 
@@ -28,7 +28,7 @@ worker.onmessage = (e: { data: WorkerMessage }) => {
 		const failed = `<span style="color: red;">[failed]</span>`;
 		let state = e.data.state;
 
-		if (state.type === "started"){ 
+		if (state.type === "started") {
 			for (const mod of state.mods) {
 				const { filters, id, name } = mod;
 				loaderDisplay.innerHTML += `<div id="mod-${id}">${queued} ${name} (${id})</div>`;
@@ -39,16 +39,20 @@ worker.onmessage = (e: { data: WorkerMessage }) => {
 			}
 		} else if (state.type === "modStarting") {
 			const { modId, modName } = state;
-			document.getElementById(`mod-${state.modId}`).innerHTML = `${started} ${modName} (${modId})`;
+			document.getElementById(`mod-${state.modId}`).innerHTML =
+				`${started} ${modName} (${modId})`;
 		} else if (state.type === "filterApplied") {
 			const { modId, filterIndex } = state;
-			document.getElementById(`filter-${modId}-${filterIndex}`).innerHTML = applied;
+			document.getElementById(`filter-${modId}-${filterIndex}`).innerHTML =
+				applied;
 		} else if (state.type === "modFinished") {
 			const { modId, modName } = state;
-			document.getElementById(`mod-${modId}`).innerHTML = `${applied} ${modName} (${modId})`;
+			document.getElementById(`mod-${modId}`).innerHTML =
+				`${applied} ${modName} (${modId})`;
 		} else if (state.type === "filterFailed") {
 			const { modId, filterIndex } = state;
-			document.getElementById(`filter-${modId}-${filterIndex}`).innerHTML = failed;
+			document.getElementById(`filter-${modId}-${filterIndex}`).innerHTML =
+				failed;
 		}
 	}
-}
+};

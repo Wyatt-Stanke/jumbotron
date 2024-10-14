@@ -28,7 +28,7 @@ if [ ! -d "devkit" ]; then
     ln -s "$(pwd)/devkit.sh" devkit/devkit.sh
 
     # Format the JS bundle
-    npx @biomejs/biome format --fix devkit/html5game/ || true
+    npx @biomejs/biome format --vcs-use-ignore-file=false --fix devkit/html5game/ || true
 else
     echo "Devkit folder already exists. Rebuilding..."
     npm run build --workspaces --if-present

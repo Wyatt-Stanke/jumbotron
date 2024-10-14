@@ -1,6 +1,6 @@
 {
-    "typeAcquisition": {
-        "enable": true,
-        "include": ["acorn", "acorn-walk"]
-    }
+	"typeAcquisition": {
+		"enable": true,
+		"include": ["acorn", "acorn-walk"]
+	}
 }

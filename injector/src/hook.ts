@@ -93,8 +93,8 @@ interface LoadingStateMessageModFinished {
 	modName: string;
 }
 
-export type LoadingState = 
-	LoadingStateMessageStarted
+export type LoadingState =
+	| LoadingStateMessageStarted
 	| LoadingStateMessageFilterApplied
 	| LoadingStateMessageFilterFailed
 	| LoadngStateMessageModStarted
@@ -104,114 +104,115 @@ const mods: Mod[] = [
 	{
 		name: "Jettison Poki",
 		id: "jettison-poki",
-		filters: [{
-		selector: {
-			type: "VariableDeclarator",
-			init: {
-				type: "ObjectExpression",
-				properties: [
-					Contains,
-					{
-						key: { name: "Extensions" },
-						value: {
-							type: "ArrayExpression",
-							elements: [
-								Contains,
-								{
-									type: "ObjectExpression",
-									properties: [
+		filters: [
+			{
+				selector: {
+					type: "VariableDeclarator",
+					init: {
+						type: "ObjectExpression",
+						properties: [
+							Contains,
+							{
+								key: { name: "Extensions" },
+								value: {
+									type: "ArrayExpression",
+									elements: [
 										Contains,
 										{
-											key: { name: "name" },
-											value: { value: "Poki" },
+											type: "ObjectExpression",
+											properties: [
+												Contains,
+												{
+													key: { name: "name" },
+													value: { value: "Poki" },
+												},
+											],
+											[Tag]: 1,
 										},
 									],
-									[Tag]: 1,
 								},
-							],
-						},
+							},
+						],
 					},
-				],
+				},
+				actions: {
+					1: [{ type: Actions.Delete }],
+				},
 			},
-		},
-		actions: {
-			1: [{ type: Actions.Delete }],
-		},
-	},
-	{
-		selector: {
-			type: "VariableDeclarator",
-			init: {
-				type: "ObjectExpression",
-				properties: [
-					Contains,
-					{
-						key: { name: "Extensions" },
-						value: {
-							type: "ArrayExpression",
-							elements: [
-								Contains,
-								{
-									type: "ObjectExpression",
-									properties: [
+			{
+				selector: {
+					type: "VariableDeclarator",
+					init: {
+						type: "ObjectExpression",
+						properties: [
+							Contains,
+							{
+								key: { name: "Extensions" },
+								value: {
+									type: "ArrayExpression",
+									elements: [
 										Contains,
 										{
-											key: { name: "init" },
-											value: { value: "gml_Script_poki_init" },
+											type: "ObjectExpression",
+											properties: [
+												Contains,
+												{
+													key: { name: "init" },
+													value: { value: "gml_Script_poki_init" },
+												},
+											],
+											[Tag]: 1,
 										},
 									],
-									[Tag]: 1,
 								},
-							],
-						},
+							},
+						],
 					},
-				],
+				},
+				actions: {
+					1: [{ type: Actions.Delete }],
+				},
 			},
-		},
-		actions: {
-			1: [{ type: Actions.Delete }],
-		},
-	},]
+		],
 	},
 	{
 		name: "Override Poki",
 		id: "override-poki",
 		filters: [
 			{
-		selector: {
-			type: "ExpressionStatement",
-			expression: {
-				type: "AssignmentExpression",
-				operator: "=",
-				left: {
-					type: "MemberExpression",
-					object: {
-						type: "Identifier",
-						name: "global",
-					},
-					property: {
-						type: "Identifier",
-						name: "gmlpoki",
+				selector: {
+					type: "ExpressionStatement",
+					expression: {
+						type: "AssignmentExpression",
+						operator: "=",
+						left: {
+							type: "MemberExpression",
+							object: {
+								type: "Identifier",
+								name: "global",
+							},
+							property: {
+								type: "Identifier",
+								name: "gmlpoki",
+							},
+						},
+						right: {
+							type: "BooleanLiteral",
+							value: true,
+							[Tag]: 1,
+						},
 					},
 				},
-				right: {
-					type: "BooleanLiteral",
-					value: true,
-					[Tag]: 1,
+				actions: {
+					1: [
+						{ type: Actions.ReplaceProperty, property: "value", value: false },
+						{ type: Actions.ReplaceProperty, property: "raw", value: "false" },
+					],
 				},
 			},
-		},
-		actions: {
-			1: [
-				{ type: Actions.ReplaceProperty, property: "value", value: false },
-				{ type: Actions.ReplaceProperty, property: "raw", value: "false" },
-			],
-		},
-	}
-		]
-	}
-]
-
+		],
+	},
+];
 
 function nodeSummary(node: types.Node) {
 	const blocks: string[] = [node.type];
@@ -280,7 +281,11 @@ export function checkLevel(
 	return { result: true, tags };
 }
 
-export async function createHooks({ url, logFn, loadingStateCallback }: {
+export async function createHooks({
+	url,
+	logFn,
+	loadingStateCallback,
+}: {
 	url: string;
 	logFn: (message: string) => void;
 	loadingStateCallback: (state: LoadingState) => void;
@@ -292,9 +297,20 @@ export async function createHooks({ url, logFn, loadingStateCallback }: {
 
 	// Modify JSON_game properties
 	logFn("[STAGE 2] Filtering");
-	loadingStateCallback({ type: "started", mods: mods.map((mod) => ({ name: mod.name, id: mod.id, filters: mod.filters.map((filter) => filter.selector.type as string) })) });
+	loadingStateCallback({
+		type: "started",
+		mods: mods.map((mod) => ({
+			name: mod.name,
+			id: mod.id,
+			filters: mod.filters.map((filter) => filter.selector.type as string),
+		})),
+	});
 	for (const mod of mods) {
-		loadingStateCallback({ type: "modStarting", modId: mod.id, modName: mod.name });
+		loadingStateCallback({
+			type: "modStarting",
+			modId: mod.id,
+			modName: mod.name,
+		});
 		for (const [index, filter] of mod.filters.entries()) {
 			try {
 				traverse(ast, {
@@ -365,7 +381,11 @@ export async function createHooks({ url, logFn, loadingStateCallback }: {
 				}
 			}
 		}
-		loadingStateCallback({ type: "modFinished", modId: mod.id, modName: mod.name });
+		loadingStateCallback({
+			type: "modFinished",
+			modId: mod.id,
+			modName: mod.name,
+		});
 	}
 	logFn("[STAGE 2] JSON_game properties modified");
 

@@ -1,33 +1,35 @@
 import * as esbuild from "esbuild";
-import findCacheDir from 'find-cache-dir';
-import fs from 'fs';
-import path from 'path';
+import findCacheDir from "find-cache-dir";
+import fs from "fs";
+import path from "path";
 
 function inlineWorkerPlugin() {
-  return {
-    name: 'esbuild-plugin-inline-worker',
+	return {
+		name: "esbuild-plugin-inline-worker",
 
-    setup(build) {
-      build.onLoad(
-        {filter: /\.worker\.(js|jsx|ts|tsx)$/},
-        async ({path: workerPath}) => {
-          // let workerCode = await fs.promises.readFile(workerPath, {
-          //   encoding: 'utf-8',
-          // });
+		setup(build) {
+			build.onLoad(
+				{ filter: /\.worker\.(js|jsx|ts|tsx)$/ },
+				async ({ path: workerPath }) => {
+					// let workerCode = await fs.promises.readFile(workerPath, {
+					//   encoding: 'utf-8',
+					// });
 
-          let workerCode = `globalThis.process={env:{},platform:"browser"};` + await buildWorker(workerPath);
-          return {
-            contents: `import inlineWorker from '__inline-worker'
+					let workerCode =
+						`globalThis.process={env:{},platform:"browser"};` +
+						(await buildWorker(workerPath));
+					return {
+						contents: `import inlineWorker from '__inline-worker'
 export default function Worker() {
   return inlineWorker(${JSON.stringify(workerCode)});
 }
 `,
-            loader: "js",
-          };
-        }
-      );
+						loader: "js",
+					};
+				},
+			);
 
-      const inlineWorkerFunctionCode = `
+			const inlineWorkerFunctionCode = `
 export default function inlineWorker(scriptText) {
   let blob = new Blob([scriptText], {type: 'text/javascript'});
   let url = URL.createObjectURL(blob);
@@ -37,50 +39,48 @@ export default function inlineWorker(scriptText) {
 }
 `;
 
-      build.onResolve({filter: /^__inline-worker$/}, ({path}) => {
-        return {path, namespace: 'inline-worker'};
-      });
-      build.onLoad({filter: /.*/, namespace: 'inline-worker'}, () => {
-        return {contents: inlineWorkerFunctionCode, loader: 'js'};
-      });
-    },
-  };
+			build.onResolve({ filter: /^__inline-worker$/ }, ({ path }) => {
+				return { path, namespace: "inline-worker" };
+			});
+			build.onLoad({ filter: /.*/, namespace: "inline-worker" }, () => {
+				return { contents: inlineWorkerFunctionCode, loader: "js" };
+			});
+		},
+	};
 }
 
 let cacheDir = findCacheDir({
-  name: 'esbuild-plugin-inline-worker',
-  create: true,
+	name: "esbuild-plugin-inline-worker",
+	create: true,
 });
 
 async function buildWorker(workerPath) {
-  let scriptNameParts = path.basename(workerPath).split('.');
-  scriptNameParts.pop();
-  scriptNameParts.push('js');
-  let scriptName = scriptNameParts.join('.');
-  let bundlePath = path.resolve(cacheDir, scriptName);
-  
-  await esbuild.build({
-    entryPoints: [workerPath],
-    bundle: true,
-    minify: true,
-    outfile: bundlePath,
-    target: 'es2022',
-    format: 'esm',
-  });
+	let scriptNameParts = path.basename(workerPath).split(".");
+	scriptNameParts.pop();
+	scriptNameParts.push("js");
+	let scriptName = scriptNameParts.join(".");
+	let bundlePath = path.resolve(cacheDir, scriptName);
 
-  return fs.promises.readFile(bundlePath, {encoding: 'utf-8'});
+	await esbuild.build({
+		entryPoints: [workerPath],
+		bundle: true,
+		minify: true,
+		outfile: bundlePath,
+		target: "es2022",
+		format: "esm",
+	});
+
+	return fs.promises.readFile(bundlePath, { encoding: "utf-8" });
 }
 esbuild.build({
-    entryPoints: ['src/index.ts'],
-    bundle: true,
-    minify: true,
-    metafile: true,
-    sourcemap: true,
-    target: 'es2022',
-    treeShaking: true,
-    format: 'esm',
-    outfile: 'out/index.js',
-    plugins: [
-        inlineWorkerPlugin()
-    ],
-})
+	entryPoints: ["src/index.ts"],
+	bundle: true,
+	minify: true,
+	metafile: true,
+	sourcemap: true,
+	target: "es2022",
+	treeShaking: true,
+	format: "esm",
+	outfile: "out/index.js",
+	plugins: [inlineWorkerPlugin()],
+});
