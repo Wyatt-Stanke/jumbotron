@@ -1,9 +1,6 @@
 import { createHooks } from "./hook";
 import type { LoadingState } from "./hook";
 
-declare function inlineWorker(): Worker;
-export default inlineWorker;
-
 export type WorkerMessage =
 	| { type: "message"; msg: string }
 	| { type: "state"; state: LoadingState }
