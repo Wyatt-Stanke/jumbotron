@@ -15,7 +15,7 @@ function inlineWorkerPlugin() {
 					//   encoding: 'utf-8',
 					// });
 
-					let workerCode =
+					const workerCode =
 						`globalThis.process={env:{},platform:"browser"};` +
 						(await buildWorker(workerPath));
 					return {
@@ -49,17 +49,17 @@ export default function inlineWorker(scriptText) {
 	};
 }
 
-let cacheDir = findCacheDir({
+const cacheDir = findCacheDir({
 	name: "esbuild-plugin-inline-worker",
 	create: true,
 });
 
 async function buildWorker(workerPath) {
-	let scriptNameParts = path.basename(workerPath).split(".");
+	const scriptNameParts = path.basename(workerPath).split(".");
 	scriptNameParts.pop();
 	scriptNameParts.push("js");
-	let scriptName = scriptNameParts.join(".");
-	let bundlePath = path.resolve(cacheDir, scriptName);
+	const scriptName = scriptNameParts.join(".");
+	const bundlePath = path.resolve(cacheDir, scriptName);
 
 	await esbuild.build({
 		entryPoints: [workerPath],

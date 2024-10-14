@@ -4,7 +4,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 const { obfuscate } = pkg;
 
-let config = {
+const config = {
 	compact: false,
 	controlFlowFlattening: false,
 	controlFlowFlatteningThreshold: 0.75,

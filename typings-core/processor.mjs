@@ -11,7 +11,7 @@ const outputFilePath = join(__dirname, "RetroBowl-raw.d.ts");
 
 async function processFiles() {
 	try {
-		let rawData = await fs.readFile(inputFilePath, "utf8");
+		const rawData = await fs.readFile(inputFilePath, "utf8");
 
 		const functionNames = rawData
 			.matchAll(/declare function ([^(]+)/g)

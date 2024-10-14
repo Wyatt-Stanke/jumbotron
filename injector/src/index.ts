@@ -26,7 +26,7 @@ worker.onmessage = (e: { data: WorkerMessage }) => {
 		const started = `<span style="color: blue;">[started]</span>`;
 		const applied = `<span style="color: green;">[applied]</span>`;
 		const failed = `<span style="color: red;">[failed]</span>`;
-		let state = e.data.state;
+		const state = e.data.state;
 
 		if (state.type === "started") {
 			for (const mod of state.mods) {
