@@ -1,7 +1,7 @@
 import { parseJS, generate, type types } from "@jumbotron/parser";
 import traverse, { type Node, type NodePath } from "@babel/traverse";
 import { parseJSExpression } from "../../parser/src";
-import { version } from "../../package.json"
+import { version } from "../../package.json";
 
 // TODO: consider esast, unist, and unified js system for parsing and transforming the AST
 
@@ -28,11 +28,14 @@ const Actions = {
 	Delete: Symbol("Actions.Delete"),
 	ReplaceProperty: Symbol("Actions.ReplaceProperty"),
 	AddArrayElement: Symbol("Actions.AddArrayElement"),
+	ReplaceSelf: Symbol("Actions.ReplaceSelf"),
 };
 
 // TODO: use a better type system that uses the actual AST types
 type Key = string | number | boolean;
-type FilterArray = [typeof Contains, FilterArray | FilterObject];
+type FilterArray =
+	| [typeof Contains, FilterArray | FilterObject]
+	| [typeof Contains, FilterArray | FilterObject, { [Tag]: number}];
 interface FilterObject
 	extends Record<string, FilterArray | FilterObject | Key> {
 	[Tag]?: number;
@@ -52,17 +55,26 @@ interface ReplacePropertyAction extends BaseAction {
 	value: Key;
 }
 
+interface ReplaceSelfAction extends BaseAction {
+	type: typeof Actions.ReplaceSelf;
+	value: any;
+}
+
 interface AddArrayElementAction extends BaseAction {
 	type: typeof Actions.AddArrayElement;
 	element: any;
 }
 
-type Action = DeleteAction | ReplacePropertyAction | AddArrayElementAction;
+type Action =
+	| DeleteAction
+	| ReplacePropertyAction
+	| AddArrayElementAction
+	| ReplaceSelfAction;
 
 interface Filter {
 	selector?: FilterObject;
 	actions: Record<number, Action[]> & {
-		"program"?: Action[];
+		program?: Action[];
 	};
 }
 
@@ -234,25 +246,212 @@ const mods: Mod[] = [
 					id: { name: "gml_Script_s_get_gm_version", [Tag]: 1 },
 				},
 				actions: {
-					1: [{
-						type: Actions.ReplaceProperty,
-						property: "name",
-						value: "__jumbotron_orig$gml_Script_s_get_gm_version",
-					}]
-				}
+					1: [
+						{
+							type: Actions.ReplaceProperty,
+							property: "name",
+							value: "__jumbotron_orig$gml_Script_s_get_gm_version",
+						},
+					],
+				},
 			},
 			{
 				actions: {
-					program: [{
-						type: Actions.AddArrayElement,
-						element: parseJSExpression(`function gml_Script_s_get_gm_version() {
-							return __jumbotron_orig$gml_Script_s_get_gm_version() + "\\nJT ${version}";
+					program: [
+						{
+							type: Actions.AddArrayElement,
+							element: parseJSExpression(`function gml_Script_s_get_gm_version() {
+							return __jumbotron_orig$gml_Script_s_get_gm_version() + "\\nJumbotron ${version}";
 						}`),
-					}]
-				}
-			}
+						},
+					],
+				},
+			},
 		],
+	},
+	{
+		name: "Display OVR",
+		id: "display-ovr",
+		filters: [
+			{
+				selector: {
+					type: "FunctionDeclaration",
+					id: { name: "gml_Object_obj_player_profile_Draw_64" },
+					body: {
+						type: "BlockStatement",
+						body: [
+							Contains,
+							{
+								type: "IfStatement",
+								alternate: {
+									type: "BlockStatement",
+									body: [
+										Contains,
+										{
+											type: "BlockStatement",
+											body: [
+												Contains,
+												{
+													type: "ExpressionStatement",
+													expression: {
+														type: "CallExpression",
+														callee: { name: "draw_sprite_ext" },
+													},
+													[Tag]: 1,
+												},
+											],
+										},
+									],
+								},
+							},
+						],
+					},
+				},
+				actions: {
+					1: [{ type: Actions.ReplaceProperty, property: "expression", value: parseJSExpression(`
+gml_Script_draw_hd_text(
+   	_inst,
+   	_other,
+   	gmltx,
+   	gmlty,
+   	yyfplus(
+   		"OVR ",
+   		gml_Script_s_get_player_ovr(_inst, _other, _inst.gmlpmap).toString()
+   	)
+)`)
+						}],
+				},
+			},
+			{
+				actions: {
+					program: [
+						{
+							type: Actions.AddArrayElement,
+							element: parseJSExpression(`
+function gml_Script_s_get_player_ovr(_inst, _other, argument0) {
+	{
+		var gmlmax_rating = 0;
+		var gmlrating = 0;
+		var ___sw1046___ = ds_map_find_value(argument0, "position");
+		var ___swc1047___ = -1;
+		if (yyCompareVal(___sw1046___, 1, g_GMLMathEpsilon, false) == 0) {
+			___swc1047___ = 0;
+		} else if (yyCompareVal(___sw1046___, 2, g_GMLMathEpsilon, false) == 0) {
+			___swc1047___ = 1;
+		} else if (yyCompareVal(___sw1046___, 3, g_GMLMathEpsilon, false) == 0) {
+			___swc1047___ = 2;
+		} else if (yyCompareVal(___sw1046___, 4, g_GMLMathEpsilon, false) == 0) {
+			___swc1047___ = 3;
+		} else if (yyCompareVal(___sw1046___, 5, g_GMLMathEpsilon, false) == 0) {
+			___swc1047___ = 4;
+		} else if (yyCompareVal(___sw1046___, 6, g_GMLMathEpsilon, false) == 0) {
+			___swc1047___ = 5;
+		} else if (yyCompareVal(___sw1046___, 7, g_GMLMathEpsilon, false) == 0) {
+			___swc1047___ = 6;
+		} else if (yyCompareVal(___sw1046___, 8, g_GMLMathEpsilon, false) == 0) {
+			___swc1047___ = 7;
+		} else if (yyCompareVal(___sw1046___, 9, g_GMLMathEpsilon, false) == 0) {
+			___swc1047___ = 8;
+		} else if (yyCompareVal(___sw1046___, 10, g_GMLMathEpsilon, false) == 0) {
+			___swc1047___ = 9;
+		}
+		switch (___swc1047___) {
+			case 0: {
+				gmlmax_rating = 37;
+				break;
+			}
+			case 1: {
+				gmlmax_rating = 34;
+				break;
+			}
+			case 2: {
+				gmlmax_rating = 33;
+				break;
+			}
+			case 3: {
+				gmlmax_rating = 34;
+				break;
+			}
+			case 4: {
+				gmlmax_rating = 35;
+				break;
+			}
+			case 5: {
+				gmlmax_rating = 35;
+				break;
+			}
+			case 6: {
+				gmlmax_rating = 33;
+				break;
+			}
+			case 7: {
+				gmlmax_rating = 33;
+				break;
+			}
+			case 8: {
+				gmlmax_rating = 33;
+				break;
+			}
+			case 9: {
+				gmlmax_rating = 37;
+				break;
+			}
+		}
+		var gmlstm = 0;
+		var gmlspd = 0;
+		var gmlstr = 0;
+		var gmlskl = 0;
+		if (yyGetBool(ds_map_exists(argument0, "stamina"))) {
+			gmlstm = real(ds_map_find_value(argument0, "stamina"));
+		}
+		if (yyGetBool(ds_map_exists(argument0, "speed"))) {
+			gmlspd = real(ds_map_find_value(argument0, "speed"));
+		}
+		if (yyGetBool(ds_map_exists(argument0, "strength"))) {
+			gmlstr = real(ds_map_find_value(argument0, "strength"));
+		}
+		if (yyGetBool(ds_map_exists(argument0, "skill"))) {
+			gmlskl = real(ds_map_find_value(argument0, "skill"));
+		}
+		gmlrating = yyfplus(
+			yyfplus(
+				yyfplus(__yy_gml_errCheck(gmlstm), __yy_gml_errCheck(gmlspd)),
+				__yy_gml_errCheck(gmlstr),
+			),
+			__yy_gml_errCheck(gmlskl),
+		);
+		gmlrating = round(
+			yyfplus(
+				yyftime(
+					75,
+					yyfdivide(
+						__yy_gml_errCheck(
+							yyftime(
+								__yy_gml_errCheck(
+									yyfdivide(
+										__yy_gml_errCheck(gmlrating),
+										__yy_gml_errCheck(gmlmax_rating),
+									),
+								),
+								100,
+							),
+						),
+						100,
+					),
+				),
+				25,
+			),
+		);
+		return gmlrating;
 	}
+}
+								`),
+						},
+					],
+				},
+			},
+		],
+	},
 ];
 
 function nodeSummary(node: types.Node) {
@@ -267,6 +466,8 @@ function nodeSummary(node: types.Node) {
 	return `[${blocks.join(" ")}]`;
 }
 
+const noisy = false;
+
 export function checkLevel(
 	tnode: types.Node,
 	node,
@@ -277,9 +478,10 @@ export function checkLevel(
 	if (isObject(filter)) {
 		for (const [key, value] of Object.entries(filter)) {
 			if (!node || node[key] === undefined) {
-				console.log(
-					`${nodeSummary(tnode)} does not have ${[...history, key].join(".")}`,
-				);
+				noisy &&
+					console.log(
+						`${nodeSummary(tnode)} does not have ${[...history, key].join(".")}`,
+					);
 				return { result: false };
 			}
 			if (isObject(value) || Array.isArray(value)) {
@@ -290,11 +492,12 @@ export function checkLevel(
 				}
 			} else {
 				if (node[key] !== value) {
-					console.log(
-						`${nodeSummary(tnode)} does not have ${[...history, key].join(
-							".",
-						)} = ${value} (got ${node[key]})`,
-					);
+					noisy &&
+						console.log(
+							`${nodeSummary(tnode)} does not have ${[...history, key].join(
+								".",
+							)} = ${value} (got ${node[key]})`,
+						);
 					return { result: false };
 				}
 			}
@@ -311,11 +514,12 @@ export function checkLevel(
 				if (checkLevel(tnode, item, rest[0], [...history, index], tags).result)
 					return { result: true, tags };
 			}
-			console.log(
-				`${nodeSummary(tnode)} does not contain ${[...history, "[]"].join(
-					".",
-				)}`,
-			);
+			noisy &&
+				console.log(
+					`${nodeSummary(tnode)} does not contain ${[...history, "[]"].join(
+						".",
+					)}`,
+				);
 			return { result: false };
 		}
 	}
@@ -343,7 +547,9 @@ export async function createHooks({
 		mods: mods.map((mod) => ({
 			name: mod.name,
 			id: mod.id,
-			filters: mod.filters.map((filter) => filter.selector?.type as string || "sel"),
+			filters: mod.filters.map(
+				(filter) => (filter.selector?.type as string) || "sel",
+			),
 		})),
 	});
 	for (const mod of mods) {
@@ -441,7 +647,7 @@ function applyAction(action: Action, finalItem: any, node: Node) {
 				node[finalItem],
 				action.property,
 				"with",
-				action.value
+				action.value,
 			);
 			node[finalItem][action.property] = action.value;
 			break;
@@ -456,4 +662,3 @@ function applyAction(action: Action, finalItem: any, node: Node) {
 			console.error("Unknown action type:", action.type);
 	}
 }
-
