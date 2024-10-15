@@ -6,6 +6,7 @@ const copyPlugin = (): Plugin => {
   return {
 			name: "copy-static-files",
 			buildStart() {
+        $`mkdir -p public`
         console.log("Copying static files");
 				$({ shell: true })`cp -r ../data/raw/* ./public`;
         console.log("Copying overwrite files");
