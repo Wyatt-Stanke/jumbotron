@@ -147,7 +147,7 @@ const mods: Mod[] = [
 											properties: [
 												Contains,
 												{
-													key: { name: "name" },
+													key: { value: "name" },
 													value: { value: "Poki" },
 												},
 											],

@@ -2,7 +2,7 @@
 	"name": "jumbotron",
 	"version": "0.0.1",
 	"private": true,
-	"workspaces": ["parser", "typings-core", "injector"],
+	"workspaces": ["app", "parser", "typings-core", "injector"],
 	"devDependencies": {
 		"@biomejs/biome": "1.9.3",
 		"esbuild": "0.24.0",

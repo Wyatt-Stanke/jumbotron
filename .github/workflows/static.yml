@@ -34,12 +34,12 @@ jobs:
         uses: actions/configure-pages@v5
       - uses: actions/setup-node@v4
       - run: npm ci
-      - run: bash devkit.sh
+      - run: npm run build --workspace=app
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload entire repository
-          path: 'devkit'
+          path: 'app/dist'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
