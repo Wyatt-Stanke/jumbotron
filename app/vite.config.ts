@@ -5,14 +5,14 @@ import { nodePolyfills } from "vite-plugin-node-polyfills";
 const copyPlugin = (): Plugin => {
   return {
 			name: "copy-static-files",
-			buildStart() {
-        $`mkdir -p public`
+			async buildStart() {
+        await $`mkdir -p public`
         console.log("Copying static files");
-				$({ shell: true })`cp -r ../data/raw/* ./public`;
+				await $({ shell: true })`cp -r ../data/raw/* ./public`;
         console.log("Copying overwrite files");
-        $({ shell: true })`cp -r ../data/overwrite/* ./public`;
+        await $({ shell: true })`cp -r ../data/overwrite/* ./public`;
         console.log("Copying index.html");
-        $({ shell: true })`cp public/index.html ./index.html`;
+        await $({ shell: true })`cp public/index.html ./index.html`;
 			},
 		};
 };
