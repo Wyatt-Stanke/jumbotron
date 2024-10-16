@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "execa": "9.4.0",
+    "execa": "9.4.1",
     "typescript": "5.5.3",
     "vite": "5.4.8",
     "vite-plugin-node-polyfills": "0.22.0"
