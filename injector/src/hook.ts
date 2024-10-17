@@ -35,7 +35,7 @@ const Actions = {
 type Key = string | number | boolean;
 type FilterArray =
 	| [typeof Contains, FilterArray | FilterObject]
-	| [typeof Contains, FilterArray | FilterObject, { [Tag]: number}];
+	| [typeof Contains, FilterArray | FilterObject, { [Tag]: number }];
 interface FilterObject
 	extends Record<string, FilterArray | FilterObject | Key> {
 	[Tag]?: number;
@@ -308,7 +308,11 @@ const mods: Mod[] = [
 					},
 				},
 				actions: {
-					1: [{ type: Actions.ReplaceProperty, property: "expression", value: parseJSExpression(`
+					1: [
+						{
+							type: Actions.ReplaceProperty,
+							property: "expression",
+							value: parseJSExpression(`
 gml_Script_draw_hd_text(
    	_inst,
    	_other,
@@ -318,8 +322,9 @@ gml_Script_draw_hd_text(
    		"OVR ",
    		gml_Script_s_get_player_ovr(_inst, _other, _inst.gmlpmap).toString()
    	)
-)`)
-						}],
+)`),
+						},
+					],
 				},
 			},
 			{
@@ -526,6 +531,24 @@ export function checkLevel(
 	return { result: true, tags };
 }
 
+const getPartOfPath = (path: NodePath, part: string | number): NodePath =>
+	typeof part === "number" ? path[part] : path.get(part);
+
+export function serializeNodePath(tNodePath: NodePath, nodePath: NodePath) {
+	return JSON.stringify([serializePath(tNodePath), serializePath(nodePath)]);
+
+	function serializePath(tPath) {
+		let path: NodePath = tPath;
+		const parts = [];
+		do {
+			parts.unshift(path.key);
+			if (path.inList) parts.unshift(path.listKey);
+			path = path.parentPath;
+		} while (path);
+		return parts;
+	}
+}
+
 export async function createHooks({
 	url,
 	logFn,
@@ -572,16 +595,27 @@ export async function createHooks({
 								for (const tagKey of Object.keys(result.tags)) {
 									const tag = result.tags[tagKey];
 									let node = tnode;
+									let nodePath = tnodePath;
 									for (const key of tag.slice(0, -1)) {
 										node = node[key];
+										nodePath =
+											typeof key === "number"
+												? nodePath[key]
+												: nodePath.get(key);
 									}
 
 									const actions = filter.actions[tagKey];
 									const finalItem = tag.at(-1);
+									nodePath =
+										typeof finalItem === "number"
+											? nodePath[finalItem]
+											: nodePath.get(finalItem);
 
 									for (const action of actions) {
 										applyAction(action, finalItem, node);
 									}
+
+									console.log(serializeNodePath(tnodePath, nodePath));
 								}
 
 								loadingStateCallback({
@@ -629,6 +663,7 @@ export async function createHooks({
 	logFn("Done");
 	return code;
 }
+
 function applyAction(action: Action, finalItem: any, node: Node) {
 	console.log("Applying action", action);
 	switch (action.type) {
