@@ -73,7 +73,7 @@ async function buildWorker(workerPath) {
 	return fs.promises.readFile(bundlePath, { encoding: "utf-8" });
 }
 esbuild.build({
-	entryPoints: ["src/index.ts"],
+	entryPoints: ["src/hook.ts"],
 	bundle: true,
 	minify: true,
 	metafile: true,

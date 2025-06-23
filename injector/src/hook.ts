@@ -36,7 +36,7 @@ type Key = string | number | boolean;
 type FilterArray =
 	| [typeof Contains, FilterArray | FilterObject]
 	| [typeof Contains, FilterArray | FilterObject, { [Tag]: number }];
-interface FilterObject
+export interface FilterObject
 	extends Record<string, FilterArray | FilterObject | Key> {
 	[Tag]?: number;
 }
@@ -65,20 +65,20 @@ interface AddArrayElementAction extends BaseAction {
 	element: any;
 }
 
-type Action =
+export type Action =
 	| DeleteAction
 	| ReplacePropertyAction
 	| AddArrayElementAction
 	| ReplaceSelfAction;
 
-interface Filter {
+export interface Filter {
 	selector?: FilterObject;
 	actions: Record<number, Action[]> & {
 		program?: Action[];
 	};
 }
 
-interface Mod {
+export interface Mod {
 	name: string;
 	id: string;
 	filters: Filter[];
@@ -346,6 +346,14 @@ export function checkLevel(
 const getPartOfPath = (path: NodePath, part: string | number): NodePath =>
 	typeof part === "number" ? path[part] : path.get(part);
 
+function followTagPath(basePath: NodePath, tagPath: (string | number)[]): NodePath {
+	let currentPath = basePath;
+	for (const key of tagPath) {
+		currentPath = typeof key === "number" ? currentPath[key] : currentPath.get(key);
+	}
+	return currentPath;
+}
+
 export function serializeNodePath(tNodePath: NodePath, nodePath: NodePath) {
 	return JSON.stringify([serializePath(tNodePath), serializePath(nodePath)]);
 
@@ -387,86 +395,110 @@ export async function createHooks({
 			),
 		})),
 	});
+
+	// Group filters by AST node type for efficient single-pass processing
+	const filtersByType = mods.flatMap((mod, modIndex) =>
+		mod.filters
+			.map((filter, filterIndex) => ({ mod, modIndex, filter, filterIndex }))
+			.filter(x => !!x.filter.selector)
+	).reduce((map, { mod, modIndex, filter, filterIndex }) => {
+		const nodeType = filter.selector!.type as string;
+		if (!map[nodeType]) map[nodeType] = [];
+		map[nodeType].push({ 
+			modIndex, 
+			filterIndex, 
+			modId: mod.id,
+			selector: filter.selector!, 
+			actions: filter.actions 
+		});
+		return map;
+	}, {} as Record<string, Array<{
+		modIndex: number;
+		filterIndex: number;
+		modId: string;
+		selector: FilterObject;
+		actions: Record<number, Action[]>;
+	}>>);
+
+	// Collect program-level actions for later execution
+	const programActions: Array<{ mod: Mod; action: Action }> = [];
 	for (const mod of mods) {
 		loadingStateCallback({
 			type: "modStarting",
 			modId: mod.id,
 			modName: mod.name,
 		});
-		for (const [index, filter] of mod.filters.entries()) {
-			if (filter.selector) {
-				try {
-					traverse(ast, {
-						[filter.selector.type as string](tnodePath: NodePath) {
-							const tnode = tnodePath.node;
-							const result = checkLevel(tnode, tnode, filter.selector);
-							if (result.result) {
-								console.log("Found", nodeSummary(tnode));
-								console.log(result.tags[1]);
-
-								for (const tagKey of Object.keys(result.tags)) {
-									const tag = result.tags[tagKey];
-									let node = tnode;
-									let nodePath = tnodePath;
-									for (const key of tag.slice(0, -1)) {
-										node = node[key];
-										nodePath =
-											typeof key === "number"
-												? nodePath[key]
-												: nodePath.get(key);
-									}
-
-									const actions = filter.actions[tagKey];
-									const finalItem = tag.at(-1);
-									nodePath =
-										typeof finalItem === "number"
-											? nodePath[finalItem]
-											: nodePath.get(finalItem);
-
-									for (const action of actions) {
-										applyAction(action, finalItem, node);
-									}
-
-									console.log(serializeNodePath(tnodePath, nodePath));
-								}
-
-								loadingStateCallback({
-									type: "filterApplied",
-									modId: mod.id,
-									filterIndex: index,
-								});
-								throw new Error("Found");
-							}
-						},
-					});
-					throw new Error("Not found");
-				} catch (e) {
-					if (e.message === "Not found") {
-						loadingStateCallback({
-							type: "filterFailed",
-							modId: mod.id,
-							filterIndex: index,
-						});
-						logFn(`Filter for ${filter.selector.type} not found!`);
-						throw e;
-					}
-					if (e.message !== "Found") {
-						throw e;
-					}
-				}
-			}
+		for (const filter of mod.filters) {
 			if (filter.actions.program) {
 				for (const action of filter.actions.program) {
-					applyAction(action, "body", ast.program);
+					programActions.push({ mod, action });
 				}
 			}
 		}
+	}
+
+	// Single-pass traversal with grouped filters
+	const visitor = Object.fromEntries(
+		Object.entries(filtersByType).map(([nodeType, filterList]) => [
+			nodeType,
+			(nodePath: NodePath) => {
+				const tnode = nodePath.node;
+				
+				for (const { modIndex, filterIndex, modId, selector, actions } of filterList) {
+					const result = checkLevel(tnode, tnode, selector);
+					if (!result.result) continue;
+
+					console.log("Found", nodeSummary(tnode));
+					
+					// Apply actions for each tag
+					for (const tagKey of Object.keys(result.tags)) {
+						const tagPath = result.tags[tagKey];
+						const tagActions = actions[tagKey];
+						if (!tagActions) continue;
+
+						let targetNode = tnode;
+						let targetPath = nodePath;
+						
+						// Navigate to the tagged location
+						for (const key of tagPath.slice(0, -1)) {
+							targetNode = targetNode[key];
+							targetPath = typeof key === "number" ? targetPath[key] : targetPath.get(key);
+						}
+
+						const finalKey = tagPath.at(-1);
+						const finalPath = typeof finalKey === "number" ? targetPath[finalKey] : targetPath.get(finalKey);
+
+						// Apply all actions for this tag
+						for (const action of tagActions) {
+							applyAction(action, finalKey, targetNode);
+						}
+
+						console.log(serializeNodePath(nodePath, finalPath));
+					}
+
+					loadingStateCallback({
+						type: "filterApplied",
+						modId,
+						filterIndex,
+					});
+				}
+			}
+		])
+	);
+
+	// Execute the single traversal
+	traverse(ast, visitor);
+
+	// Apply program-level actions
+	for (const { mod, action } of programActions) {
+		applyAction(action, "body", ast.program);
 		loadingStateCallback({
 			type: "modFinished",
 			modId: mod.id,
 			modName: mod.name,
 		});
 	}
+
 	logFn("[STAGE 2] JSON_game properties modified");
 
 	// Serialize the ast to string
