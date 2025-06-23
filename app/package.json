@@ -10,10 +10,10 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "execa": "9.4.1",
-    "typescript": "5.5.3",
-    "vite": "5.4.12",
-    "vite-plugin-node-polyfills": "0.22.0"
+    "execa": "9.6.0",
+    "typescript": "5.8.3",
+    "vite": "5.4.19",
+    "vite-plugin-node-polyfills": "0.23.0"
   },
   "dependencies": {
     "@jumbotron/injector": "0.0.1"
