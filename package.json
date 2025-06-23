@@ -4,7 +4,7 @@
 	"private": true,
 	"workspaces": ["app", "parser", "typings-core", "injector"],
 	"devDependencies": {
-		"@biomejs/biome": "2.0.4",
+		"@biomejs/biome": "2.0.5",
 		"esbuild": "0.25.5",
 		"javascript-obfuscator": "4.1.1",
 		"typescript": "5.8.3"
