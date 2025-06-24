@@ -2,6 +2,10 @@ import { parseJS, generate, type types } from "@jumbotron/parser";
 import traverse, { type Node, type NodePath } from "@babel/traverse";
 import { parseJSExpression } from "../../parser/src";
 import { version } from "../../package.json";
+import { Contains, TagSymbol, Actions } from "./symbols";
+import { f } from "./fluent";
+import { tag, type Tag } from "./tag";
+import { Override } from "./mixin";
 
 // TODO: consider esast, unist, and unified js system for parsing and transforming the AST
 
@@ -21,48 +25,44 @@ const flattenObject = (obj, delimiter = ".", prefix = "") =>
 const isObject = (obj: unknown): obj is Record<string, unknown> =>
 	obj.constructor.name === "Object";
 
-const Contains = Symbol("Contains");
-const Tag = Symbol("Tag");
-
-const Actions = {
-	Delete: Symbol("Actions.Delete"),
-	ReplaceProperty: Symbol("Actions.ReplaceProperty"),
-	AddArrayElement: Symbol("Actions.AddArrayElement"),
-	ReplaceSelf: Symbol("Actions.ReplaceSelf"),
-};
-
 // TODO: use a better type system that uses the actual AST types
 type Key = string | number | boolean;
 type FilterArray =
 	| [typeof Contains, FilterArray | FilterObject]
-	| [typeof Contains, FilterArray | FilterObject, { [Tag]: number }];
+	| [typeof Contains, FilterArray | FilterObject, { [TagSymbol]: Tag }];
 export interface FilterObject
 	extends Record<string, FilterArray | FilterObject | Key> {
-	[Tag]?: number;
+	[TagSymbol]?: Tag;
 }
 
-interface BaseAction {
+export interface BaseAction {
 	type: (typeof Actions)[keyof typeof Actions];
 }
 
-interface DeleteAction extends BaseAction {
+export interface DeleteAction extends BaseAction {
 	type: typeof Actions.Delete;
 }
 
-interface ReplacePropertyAction extends BaseAction {
+export interface ReplacePropertyAction extends BaseAction {
 	type: typeof Actions.ReplaceProperty;
 	property: string;
 	value: Key;
 }
 
-interface ReplaceSelfAction extends BaseAction {
+export interface ReplaceSelfAction extends BaseAction {
 	type: typeof Actions.ReplaceSelf;
 	value: any;
 }
 
-interface AddArrayElementAction extends BaseAction {
+export enum AddArrayElementPosition {
+	Start = "start",
+	End = "end",
+}
+
+export interface AddArrayElementAction extends BaseAction {
 	type: typeof Actions.AddArrayElement;
 	element: any;
+	position?: AddArrayElementPosition;
 }
 
 export type Action =
@@ -81,7 +81,7 @@ export interface Filter {
 export interface Mod {
 	name: string;
 	id: string;
-	filters: Filter[];
+	filters: Filter[] | Filter[][];
 }
 
 interface LoadingStateMessageStarted {
@@ -130,69 +130,63 @@ const mods: Mod[] = [
 		id: "jettison-poki",
 		filters: [
 			{
-				selector: {
-					type: "VariableDeclarator",
-					init: {
-						type: "ObjectExpression",
-						properties: [
-							Contains,
-							{
-								key: { name: "Extensions" },
-								value: {
-									type: "ArrayExpression",
-									elements: [
-										Contains,
-										{
-											type: "ObjectExpression",
-											properties: [
-												Contains,
-												{
-													key: { value: "name" },
-													value: { value: "Poki" },
-												},
-											],
-											[Tag]: 1,
-										},
-									],
-								},
+				selector: f.variableDeclarator({
+					type: "ObjectExpression",
+					properties: [
+						Contains,
+						{
+							key: { name: "Extensions" },
+							value: {
+								type: "ArrayExpression",
+								elements: [
+									Contains,
+									{
+										type: "ObjectExpression",
+										properties: [
+											Contains,
+											{
+												key: { value: "name" },
+												value: { value: "Poki" },
+											},
+										],
+										[TagSymbol]: tag(1),
+									},
+								],
 							},
-						],
-					},
-				},
+						},
+					],
+				}),
 				actions: {
 					1: [{ type: Actions.Delete }],
 				},
 			},
 			{
-				selector: {
-					type: "VariableDeclarator",
-					init: {
-						type: "ObjectExpression",
-						properties: [
-							Contains,
-							{
-								key: { name: "Extensions" },
-								value: {
-									type: "ArrayExpression",
-									elements: [
-										Contains,
-										{
-											type: "ObjectExpression",
-											properties: [
-												Contains,
-												{
-													key: { name: "init" },
-													value: { value: "gml_Script_poki_init" },
-												},
-											],
-											[Tag]: 1,
-										},
-									],
-								},
+				selector: f.variableDeclarator({
+					type: "ObjectExpression",
+					properties: [
+						Contains,
+						{
+							key: { name: "Extensions" },
+							value: {
+								type: "ArrayExpression",
+								elements: [
+									Contains,
+									{
+										type: "ObjectExpression",
+										properties: [
+											Contains,
+											{
+												key: { name: "init" },
+												value: { value: "gml_Script_poki_init" },
+											},
+										],
+										[TagSymbol]: tag(1),
+									},
+								],
 							},
-						],
-					},
-				},
+						},
+					],
+				}),
 				actions: {
 					1: [{ type: Actions.Delete }],
 				},
@@ -220,11 +214,7 @@ const mods: Mod[] = [
 								name: "gmlpoki",
 							},
 						},
-						right: {
-							type: "BooleanLiteral",
-							value: true,
-							[Tag]: 1,
-						},
+						right: f.true(tag(1)),
 					},
 				},
 				actions: {
@@ -240,34 +230,14 @@ const mods: Mod[] = [
 		name: "Show Jumbotron Version",
 		id: "show-jumbotron-version",
 		filters: [
-			{
-				selector: {
-					type: "FunctionDeclaration",
-					id: { name: "gml_Script_s_get_gm_version", [Tag]: 1 },
+			new Override(
+				"gml_Script_s_get_gm_version",
+				(ctx, ...args) => {
+					return `${ctx.original()}\nJumbotron ${ctx.inputs.version}`
 				},
-				actions: {
-					1: [
-						{
-							type: Actions.ReplaceProperty,
-							property: "name",
-							value: "__jumbotron_orig$gml_Script_s_get_gm_version",
-						},
-					],
-				},
-			},
-			{
-				actions: {
-					program: [
-						{
-							type: Actions.AddArrayElement,
-							element: parseJSExpression(`function gml_Script_s_get_gm_version() {
-							return __jumbotron_orig$gml_Script_s_get_gm_version() + "\\nJumbotron ${version}";
-						}`),
-						},
-					],
-				},
-			},
-		],
+				{ inputs: { version } }
+			).compile()
+		]
 	}
 ];
 
@@ -319,8 +289,8 @@ export function checkLevel(
 				}
 			}
 		}
-		if (filter[Tag]) {
-			tags[filter[Tag]] = history;
+		if (filter[TagSymbol]) {
+			tags[filter[TagSymbol].inner] = history;
 		}
 		return { result: true, tags };
 	}
@@ -346,10 +316,14 @@ export function checkLevel(
 const getPartOfPath = (path: NodePath, part: string | number): NodePath =>
 	typeof part === "number" ? path[part] : path.get(part);
 
-function followTagPath(basePath: NodePath, tagPath: (string | number)[]): NodePath {
+function followTagPath(
+	basePath: NodePath,
+	tagPath: (string | number)[],
+): NodePath {
 	let currentPath = basePath;
 	for (const key of tagPath) {
-		currentPath = typeof key === "number" ? currentPath[key] : currentPath.get(key);
+		currentPath =
+			typeof key === "number" ? currentPath[key] : currentPath.get(key);
 	}
 	return currentPath;
 }
@@ -384,41 +358,51 @@ export async function createHooks({
 	const ast = parseJS(js);
 
 	// Modify JSON_game properties
+	const startTime = Date.now();
 	logFn("[STAGE 2] Filtering");
 	loadingStateCallback({
 		type: "started",
 		mods: mods.map((mod) => ({
 			name: mod.name,
 			id: mod.id,
-			filters: mod.filters.map(
+			filters: mod.filters.flat().map(
 				(filter) => (filter.selector?.type as string) || "sel",
 			),
 		})),
 	});
 
 	// Group filters by AST node type for efficient single-pass processing
-	const filtersByType = mods.flatMap((mod, modIndex) =>
-		mod.filters
-			.map((filter, filterIndex) => ({ mod, modIndex, filter, filterIndex }))
-			.filter(x => !!x.filter.selector)
-	).reduce((map, { mod, modIndex, filter, filterIndex }) => {
-		const nodeType = filter.selector!.type as string;
-		if (!map[nodeType]) map[nodeType] = [];
-		map[nodeType].push({ 
-			modIndex, 
-			filterIndex, 
-			modId: mod.id,
-			selector: filter.selector!, 
-			actions: filter.actions 
-		});
-		return map;
-	}, {} as Record<string, Array<{
-		modIndex: number;
-		filterIndex: number;
-		modId: string;
-		selector: FilterObject;
-		actions: Record<number, Action[]>;
-	}>>);
+	const filtersByType = mods
+		.flatMap((mod, modIndex) =>
+			mod.filters
+				.flat()
+				.map((filter, filterIndex) => ({ mod, modIndex, filter, filterIndex }))
+				.filter((x) => !!x.filter.selector),
+		)
+		.reduce(
+			(map, { mod, modIndex, filter, filterIndex }) => {
+				const nodeType = filter.selector!.type as string;
+				if (!map[nodeType]) map[nodeType] = [];
+				map[nodeType].push({
+					modIndex,
+					filterIndex,
+					modId: mod.id,
+					selector: filter.selector!,
+					actions: filter.actions,
+				});
+				return map;
+			},
+			{} as Record<
+				string,
+				Array<{
+					modIndex: number;
+					filterIndex: number;
+					modId: string;
+					selector: FilterObject;
+					actions: Record<number, Action[]>;
+				}>
+			>,
+		);
 
 	// Collect program-level actions for later execution
 	const programActions: Array<{ mod: Mod; action: Action }> = [];
@@ -428,7 +412,7 @@ export async function createHooks({
 			modId: mod.id,
 			modName: mod.name,
 		});
-		for (const filter of mod.filters) {
+		for (const filter of mod.filters.flat()) {
 			if (filter.actions.program) {
 				for (const action of filter.actions.program) {
 					programActions.push({ mod, action });
@@ -443,13 +427,19 @@ export async function createHooks({
 			nodeType,
 			(nodePath: NodePath) => {
 				const tnode = nodePath.node;
-				
-				for (const { modIndex, filterIndex, modId, selector, actions } of filterList) {
+
+				for (const {
+					modIndex,
+					filterIndex,
+					modId,
+					selector,
+					actions,
+				} of filterList) {
 					const result = checkLevel(tnode, tnode, selector);
 					if (!result.result) continue;
 
 					console.log("Found", nodeSummary(tnode));
-					
+
 					// Apply actions for each tag
 					for (const tagKey of Object.keys(result.tags)) {
 						const tagPath = result.tags[tagKey];
@@ -458,15 +448,19 @@ export async function createHooks({
 
 						let targetNode = tnode;
 						let targetPath = nodePath;
-						
+
 						// Navigate to the tagged location
 						for (const key of tagPath.slice(0, -1)) {
 							targetNode = targetNode[key];
-							targetPath = typeof key === "number" ? targetPath[key] : targetPath.get(key);
+							targetPath =
+								typeof key === "number" ? targetPath[key] : targetPath.get(key);
 						}
 
 						const finalKey = tagPath.at(-1);
-						const finalPath = typeof finalKey === "number" ? targetPath[finalKey] : targetPath.get(finalKey);
+						const finalPath =
+							typeof finalKey === "number"
+								? targetPath[finalKey]
+								: targetPath.get(finalKey);
 
 						// Apply all actions for this tag
 						for (const action of tagActions) {
@@ -482,8 +476,8 @@ export async function createHooks({
 						filterIndex,
 					});
 				}
-			}
-		])
+			},
+		]),
 	);
 
 	// Execute the single traversal
@@ -499,7 +493,7 @@ export async function createHooks({
 		});
 	}
 
-	logFn("[STAGE 2] JSON_game properties modified");
+	logFn(`[STAGE 2] JSON_game properties modified in ${Date.now() - startTime}ms`);
 
 	// Serialize the ast to string
 	logFn("Serializing AST");
@@ -521,6 +515,7 @@ function applyAction(action: Action, finalItem: any, node: Node) {
 			}
 			break;
 		case Actions.ReplaceProperty:
+			// Assert action is ReplacePropertyAction
 			console.log(
 				"Replacing",
 				node[finalItem],
@@ -532,7 +527,11 @@ function applyAction(action: Action, finalItem: any, node: Node) {
 			break;
 		case Actions.AddArrayElement:
 			if (Array.isArray(node[finalItem])) {
-				node[finalItem].push(action.element);
+				if (action.position === AddArrayElementPosition.Start) {
+					node[finalItem].unshift(action.element);
+				} else {
+					node[finalItem].push(action.element);
+				}
 			} else {
 				console.error("Cannot add element to non-array node");
 			}
