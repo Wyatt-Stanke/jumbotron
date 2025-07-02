@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "build:gh": "npx vite build --base=jumbotron",
-    "preview": "vite preview"
+    "preview": "npm run build && vite preview"
   },
   "devDependencies": {
     "execa": "9.6.0",
@@ -16,6 +16,8 @@
     "vite-plugin-node-polyfills": "0.23.0"
   },
   "dependencies": {
-    "@jumbotron/injector": "0.0.1"
+    "@jumbotron/injector-core": "0.0.1",
+    "@jumbotron/injector-mod-format": "0.0.1",
+    "@jumbotron/injector-symbols": "0.0.1"
   }
 }

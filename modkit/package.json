@@ -1,0 +1,20 @@
+{
+  "name": "@jumbotron/modkit",
+  "version": "0.0.1",
+  "main": "src/index.ts",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@jumbotron/injector-mod-format": "0.0.1",
+    "@jumbotron/injector-symbols": "0.0.1",
+    "@jumbotron/parser": "0.0.1",
+    "@jumbotron/typings-core": "0.0.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.0.5"
+  }
+}

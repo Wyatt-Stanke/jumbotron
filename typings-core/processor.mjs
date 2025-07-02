@@ -13,12 +13,17 @@ async function processFiles() {
 	try {
 		const rawData = await fs.readFile(inputFilePath, "utf8");
 
-		const functionNames = rawData
-			.matchAll(/declare function ([^(]+)/g)
-			.map((match) => match[1]);
+		const data = rawData.replace(/declare (function|const|let|var|namespace|class)/g, "export $1");
 
 		await fs.writeFile(outputFilePath, data, "utf8");
-		console.log("File has been written successfully.");
+		console.log("Raw files have been processed successfully.");
+
+		let computedTypes = "";
+		console.log("Generating function names...")
+		const functionNames = data.match(/export function (\w+)/g)?.map(line => line.replace("export function ", "")) || [];
+		computedTypes += `export type FunctionNames = ${functionNames.map(name => `"${name}"`).join(" | ")};\n\n`;
+
+		await fs.writeFile(join(__dirname, "RetroBowl-precomputed.d.ts"), computedTypes, "utf8");
 	} catch (err) {
 		console.error("Error processing the files:", err);
 	}

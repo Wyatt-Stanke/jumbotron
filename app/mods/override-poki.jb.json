@@ -1,0 +1,45 @@
+{
+  "name": "Override Poki",
+  "id": "override-poki",
+  "filters": [
+    {
+      "selector": {
+        "type": "ExpressionStatement",
+        "expression": {
+          "type": "AssignmentExpression",
+          "operator": "=",
+          "left": {
+            "type": "MemberExpression",
+            "object": {
+              "type": "Identifier",
+              "name": "global"
+            },
+            "property": {
+              "type": "Identifier",
+              "name": "gmlpoki"
+            }
+          },
+          "right": {
+            "_tag": 1,
+            "type": "BooleanLiteral",
+            "value": true
+          }
+        }
+      },
+      "actions": {
+        "1": [
+          {
+            "type": "Actions_ReplaceProperty",
+            "property": "value",
+            "value": false
+          },
+          {
+            "type": "Actions_ReplaceProperty",
+            "property": "raw",
+            "value": "false"
+          }
+        ]
+      }
+    }
+  ]
+}

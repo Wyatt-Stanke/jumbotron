@@ -1,0 +1,329 @@
+{
+  "name": "Show Jumbotron Version",
+  "id": "show-jumbotron-version",
+  "filters": [
+    [
+      {
+        "selector": {
+          "type": "FunctionDeclaration",
+          "id": {
+            "_tag": 1,
+            "name": "gml_Script_s_get_gm_version"
+          }
+        },
+        "actions": {
+          "1": [
+            {
+              "type": "Actions_ReplaceProperty",
+              "property": "name",
+              "value": "__jumbotron_orig__Primitives_UniqueSafeString$1__$$gml_Script_s_get_gm_version"
+            }
+          ]
+        }
+      },
+      {
+        "actions": {
+          "program": [
+            {
+              "type": "Actions_AddArrayElement",
+              "position": "end",
+              "element": {
+                "type": "FunctionExpression",
+                "start": 0,
+                "end": 48,
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 0,
+                    "index": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 48,
+                    "index": 48
+                  }
+                },
+                "id": {
+                  "type": "Identifier",
+                  "name": "gml_Script_s_get_gm_version"
+                },
+                "generator": false,
+                "async": false,
+                "params": [
+                  {
+                    "type": "RestElement",
+                    "start": 37,
+                    "end": 44,
+                    "loc": {
+                      "start": {
+                        "line": 1,
+                        "column": 37,
+                        "index": 37
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 44,
+                        "index": 44
+                      }
+                    },
+                    "argument": {
+                      "type": "Identifier",
+                      "start": 40,
+                      "end": 44,
+                      "loc": {
+                        "start": {
+                          "line": 1,
+                          "column": 40,
+                          "index": 40
+                        },
+                        "end": {
+                          "line": 1,
+                          "column": 44,
+                          "index": 44
+                        },
+                        "identifierName": "args"
+                      },
+                      "name": "args"
+                    }
+                  }
+                ],
+                "body": {
+                  "type": "BlockStatement",
+                  "start": 15,
+                  "end": 81,
+                  "loc": {
+                    "start": {
+                      "line": 1,
+                      "column": 15,
+                      "index": 15
+                    },
+                    "end": {
+                      "line": 2,
+                      "column": 33,
+                      "index": 81
+                    }
+                  },
+                  "body": [
+                    {
+                      "type": "ReturnStatement",
+                      "start": 16,
+                      "end": 80,
+                      "loc": {
+                        "start": {
+                          "line": 1,
+                          "column": 16,
+                          "index": 16
+                        },
+                        "end": {
+                          "line": 2,
+                          "column": 32,
+                          "index": 80
+                        }
+                      },
+                      "argument": {
+                        "type": "TemplateLiteral",
+                        "start": 22,
+                        "end": 80,
+                        "loc": {
+                          "start": {
+                            "line": 1,
+                            "column": 22,
+                            "index": 22
+                          },
+                          "end": {
+                            "line": 2,
+                            "column": 32,
+                            "index": 80
+                          }
+                        },
+                        "expressions": [
+                          {
+                            "type": "CallExpression",
+                            "start": 0,
+                            "end": 87,
+                            "loc": {
+                              "start": {
+                                "line": 1,
+                                "column": 0,
+                                "index": 0
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 87,
+                                "index": 87
+                              }
+                            },
+                            "callee": {
+                              "type": "Identifier",
+                              "start": 0,
+                              "end": 78,
+                              "loc": {
+                                "start": {
+                                  "line": 1,
+                                  "column": 0,
+                                  "index": 0
+                                },
+                                "end": {
+                                  "line": 1,
+                                  "column": 78,
+                                  "index": 78
+                                },
+                                "identifierName": "__jumbotron_orig__Primitives_UniqueSafeString$1__$$gml_Script_s_get_gm_version"
+                              },
+                              "name": "__jumbotron_orig__Primitives_UniqueSafeString$1__$$gml_Script_s_get_gm_version"
+                            },
+                            "arguments": [
+                              {
+                                "type": "SpreadElement",
+                                "start": 79,
+                                "end": 86,
+                                "loc": {
+                                  "start": {
+                                    "line": 1,
+                                    "column": 79,
+                                    "index": 79
+                                  },
+                                  "end": {
+                                    "line": 1,
+                                    "column": 86,
+                                    "index": 86
+                                  }
+                                },
+                                "argument": {
+                                  "type": "Identifier",
+                                  "start": 82,
+                                  "end": 86,
+                                  "loc": {
+                                    "start": {
+                                      "line": 1,
+                                      "column": 82,
+                                      "index": 82
+                                    },
+                                    "end": {
+                                      "line": 1,
+                                      "column": 86,
+                                      "index": 86
+                                    },
+                                    "identifierName": "args"
+                                  },
+                                  "name": "args"
+                                }
+                              }
+                            ],
+                            "comments": [],
+                            "errors": [],
+                            "trailingComments": [],
+                            "leadingComments": [],
+                            "innerComments": []
+                          },
+                          {
+                            "type": "StringLiteral",
+                            "start": 0,
+                            "end": 7,
+                            "loc": {
+                              "start": {
+                                "line": 1,
+                                "column": 0,
+                                "index": 0
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 7,
+                                "index": 7
+                              }
+                            },
+                            "extra": {
+                              "rawValue": "0.0.1",
+                              "raw": "\"0.0.1\""
+                            },
+                            "value": "0.0.1",
+                            "comments": [],
+                            "errors": [],
+                            "trailingComments": [],
+                            "leadingComments": [],
+                            "innerComments": []
+                          }
+                        ],
+                        "quasis": [
+                          {
+                            "type": "TemplateElement",
+                            "start": 23,
+                            "end": 23,
+                            "loc": {
+                              "start": {
+                                "line": 1,
+                                "column": 23,
+                                "index": 23
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 23,
+                                "index": 23
+                              }
+                            },
+                            "value": {
+                              "raw": "",
+                              "cooked": ""
+                            },
+                            "tail": false
+                          },
+                          {
+                            "type": "TemplateElement",
+                            "start": 47,
+                            "end": 58,
+                            "loc": {
+                              "start": {
+                                "line": 1,
+                                "column": 47,
+                                "index": 47
+                              },
+                              "end": {
+                                "line": 2,
+                                "column": 10,
+                                "index": 58
+                              }
+                            },
+                            "value": {
+                              "raw": "\nJumbotron ",
+                              "cooked": "\nJumbotron "
+                            },
+                            "tail": false
+                          },
+                          {
+                            "type": "TemplateElement",
+                            "start": 79,
+                            "end": 79,
+                            "loc": {
+                              "start": {
+                                "line": 2,
+                                "column": 31,
+                                "index": 79
+                              },
+                              "end": {
+                                "line": 2,
+                                "column": 31,
+                                "index": 79
+                              }
+                            },
+                            "value": {
+                              "raw": "",
+                              "cooked": ""
+                            },
+                            "tail": true
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "directives": []
+                },
+                "comments": [],
+                "errors": []
+              }
+            }
+          ]
+        }
+      }
+    ]
+  ]
+}

@@ -1,6 +1,5 @@
-import type { FilterObject } from "./hook";
-import { Contains, TagSymbol, Actions } from "./symbols";
-import type { Tag } from "./tag";
+import type { FilterObject } from "@jumbotron/injector-mod-format";
+import { TagSymbol, type Tag } from "@jumbotron/injector-symbols";
 
 export const f = {
     function: (name: string, tag?: Tag) => {

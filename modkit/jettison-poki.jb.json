@@ -1,0 +1,94 @@
+{
+  "name": "Jettison Poki",
+  "id": "jettison-poki",
+  "filters": [
+    {
+      "selector": {
+        "type": "VariableDeclarator",
+        "init": {
+          "type": "ObjectExpression",
+          "properties": [
+            "Contains",
+            {
+              "key": {
+                "name": "Extensions"
+              },
+              "value": {
+                "type": "ArrayExpression",
+                "elements": [
+                  "Contains",
+                  {
+                    "_tag": 1,
+                    "type": "ObjectExpression",
+                    "properties": [
+                      "Contains",
+                      {
+                        "key": {
+                          "value": "name"
+                        },
+                        "value": {
+                          "value": "Poki"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "actions": {
+        "1": [
+          {
+            "type": "Actions_Delete"
+          }
+        ]
+      }
+    },
+    {
+      "selector": {
+        "type": "VariableDeclarator",
+        "init": {
+          "type": "ObjectExpression",
+          "properties": [
+            "Contains",
+            {
+              "key": {
+                "name": "Extensions"
+              },
+              "value": {
+                "type": "ArrayExpression",
+                "elements": [
+                  "Contains",
+                  {
+                    "_tag": 1,
+                    "type": "ObjectExpression",
+                    "properties": [
+                      "Contains",
+                      {
+                        "key": {
+                          "name": "init"
+                        },
+                        "value": {
+                          "value": "gml_Script_poki_init"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "actions": {
+        "1": [
+          {
+            "type": "Actions_Delete"
+          }
+        ]
+      }
+    }
+  ]
+}

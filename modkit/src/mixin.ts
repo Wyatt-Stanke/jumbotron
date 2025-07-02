@@ -1,33 +1,47 @@
 import { f } from "./fluent";
-import {
-	AddArrayElementPosition,
-	type Filter,
-	type FilterObject,
-} from "./hook";
 import { parseJSExpression } from "@jumbotron/parser";
 import traverse, { type Node, type NodePath } from "@babel/traverse";
-import type { AddElementArrayPosition } from "./hook";
-import { Actions } from "./symbols";
+import {
+	Actions,
+	SubstitutionPrimitives,
+	tag,
+} from "@jumbotron/injector-symbols";
 import type {
 	ArrowFunctionExpression,
 	BlockStatement,
 	Expression,
 	FunctionDeclaration,
 } from "@babel/types";
-import { tag } from "./tag";
+import {
+	AddArrayElementPosition,
+	Filter,
+} from "@jumbotron/injector-mod-format";
+import { RBFunctions, RBFunctionNames } from "@jumbotron/typings-core";
 
-interface Context {
-	original: (...args: unknown[]) => unknown;
+interface Context<FName extends RBFunctionNames> {
+	original: RBFunctions[FName];
 	inputs: { [key: string]: unknown };
 }
 
-export class Override {
-	originalFunctionName: string;
-	overrideFunction: (ctx: Context, ...args: unknown[]) => unknown;
+type ArgsFromFunction<T extends (...args: any[]) => any> = T extends (
+	...args: infer A
+) => unknown
+	? A
+	: never;
+
+export class Override<FName extends RBFunctionNames> {
+	originalFunctionName: FName;
+	overrideFunction: (
+		ctx: Context<FName>,
+		...args: ArgsFromFunction<RBFunctions[FName]>
+	) => unknown;
 
 	constructor(
-		originalFunctionName: string,
-		overrideFunction: (ctx: Context, ...args: unknown[]) => unknown,
+		originalFunctionName: FName,
+		overrideFunction: (
+			ctx: Context<FName>,
+			...args: ArgsFromFunction<RBFunctions[FName]>
+		) => unknown,
 		public options?: {
 			inputs?: { [key: string]: unknown };
 		},
@@ -37,7 +51,8 @@ export class Override {
 	}
 
 	newFunctionName(): string {
-		return `__jumbotron_orig$${this.originalFunctionName}`;
+		// TODO: Id other than just 1
+		return `__jumbotron_orig__${SubstitutionPrimitives.UniqueSafeString}$1__$$${this.originalFunctionName}`;
 	}
 
 	serializeOverrideFunction(): FunctionDeclaration {
@@ -99,7 +114,10 @@ export class Override {
 					if (
 						path.get("object").isMemberExpression() &&
 						path.get("object").get("object").isIdentifier({ name: "ctx" }) &&
-						path.get("object").get("property").isIdentifier({ name: "inputs" }) &&
+						path
+							.get("object")
+							.get("property")
+							.isIdentifier({ name: "inputs" }) &&
 						path.get("property").isIdentifier()
 					) {
 						const inputName = path.get("property").node.name;

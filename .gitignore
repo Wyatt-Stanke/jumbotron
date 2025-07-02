@@ -2,3 +2,5 @@ node_modules/
 out/
 devkit/
 app/public
+.mypy_cache/
+dist/

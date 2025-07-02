@@ -2,5 +2,6 @@
 	"typeAcquisition": {
 		"enable": true,
 		"include": ["acorn", "acorn-walk"]
-	}
+	},
+	"exclude": ["node_modules", "devkit", "**/dist", "**/data"]
 }

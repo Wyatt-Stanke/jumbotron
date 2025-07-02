@@ -8,11 +8,126 @@ const log = document.getElementById("log");
 const script = document.createElement("script");
 
 // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-const addMsg = (msg: string) => { if (log) { log.innerHTML += `${msg}</br>`; } };
+const addMsg = (msg: string) => {
+	if (log) {
+		log.innerHTML += `${msg}</br>`;
+	}
+};
 
-const worker = new Worker(new URL("./index.worker.ts", import.meta.url), { type: "module" });
+// Load all available mods
+const modIndex = (await fetch("/mods/modindex.json").then((res) =>
+	res.json(),
+)) as string[];
+const allMods = await Promise.all(
+	modIndex.map((mod) => {
+		return fetch(`/mods/${mod}`)
+			.then((res) =>
+				Promise.all([res.json(), res.headers.get("Content-Length")]),
+			)
+			.then(([modData, bytes]) => {
+				return { ...modData, size: bytes };
+			});
+	}),
+);
 
-worker.postMessage({ url: window.location.href });
+// Create mod selection panel
+const createModSelectionPanel = (): Promise<any[]> => {
+	return new Promise((resolve) => {
+		// Create overlay
+		const overlay = document.createElement("div");
+		overlay.className = "mod-selection-overlay";
+
+		// Create panel container
+		const panel = document.createElement("div");
+		panel.className = "mod-selection-panel";
+
+		// Create title
+		const title = document.createElement("h2");
+		title.textContent = "Select Mods to Load";
+		title.style.cssText = "margin-top: 0; color: #333; text-align: center;";
+		panel.appendChild(title);
+
+		// Create mod list
+		const modList = document.createElement("div");
+		const checkboxes: HTMLInputElement[] = [];
+
+		allMods.forEach((mod, index) => {
+			const modItem = document.createElement("div");
+			modItem.className = "mod-item";
+			modItem.style.cssText = "display: flex; align-items: center;";
+
+			const checkbox = document.createElement("input");
+			checkbox.type = "checkbox";
+			checkbox.id = `mod-${index}`;
+			checkbox.checked = true; // Default to all mods selected
+			checkbox.style.marginRight = "10px";
+			checkboxes.push(checkbox);
+
+			const label = document.createElement("label");
+			label.htmlFor = checkbox.id;
+			label.style.cssText = "cursor: pointer; color: #333;";
+			label.innerHTML = `<strong>${mod.name}</strong> (${mod.id}) - <small style="color: #666;">${mod.size} bytes</small>`;
+
+			modItem.appendChild(checkbox);
+			modItem.appendChild(label);
+			modList.appendChild(modItem);
+		});
+
+		panel.appendChild(modList);
+
+		// Create buttons
+		const buttonContainer = document.createElement("div");
+		buttonContainer.style.cssText = "margin-top: 20px;";
+
+		const selectAllBtn = document.createElement("button");
+		selectAllBtn.textContent = "Select All";
+		selectAllBtn.className = "mod-button primary";
+		selectAllBtn.onclick = () =>
+			checkboxes.forEach((cb) => (cb.checked = true));
+
+		const selectNoneBtn = document.createElement("button");
+		selectNoneBtn.textContent = "Select None";
+		selectNoneBtn.className = "mod-button secondary";
+		selectNoneBtn.onclick = () =>
+			checkboxes.forEach((cb) => (cb.checked = false));
+
+		const startBtn = document.createElement("button");
+		startBtn.textContent = "Start Game";
+		startBtn.className = "mod-button success";
+		startBtn.onclick = () => {
+			const selectedMods = allMods.filter(
+				(_, index) => checkboxes[index].checked,
+			);
+			document.body.removeChild(overlay);
+			resolve(selectedMods);
+		};
+
+		buttonContainer.appendChild(selectAllBtn);
+		buttonContainer.appendChild(selectNoneBtn);
+		buttonContainer.appendChild(startBtn);
+		panel.appendChild(buttonContainer);
+
+		// Add overlay and panel to document
+		overlay.appendChild(panel);
+		document.body.appendChild(overlay);
+	});
+};
+
+// Show mod selection panel and wait for user selection
+const selectedMods = await createModSelectionPanel();
+
+// Log selected mods
+selectedMods.forEach((mod) => {
+	addMsg(`Selected mod: ${mod.name} (${mod.id}) - ${mod.size} bytes`);
+});
+
+document.getElementById("canvas")!.style.display = "block";
+const worker = new Worker(new URL("./index.worker.ts", import.meta.url), {
+	type: "module",
+});
+
+worker.postMessage({ type: "mods", mods: selectedMods });
+worker.postMessage({ type: "url", url: window.location.href });
 
 const barLength = 50;
 
@@ -33,13 +148,15 @@ worker.onmessage = (e: { data: WorkerMessage }) => {
 		if (state.type === "started") {
 			for (const mod of state.mods) {
 				const { filters, id, name } = mod;
-				loaderDisplay.innerHTML += `<div id="mod-${id}">${queued} ${name} (${id}) -- <span style="float:right;margin-right:10px;"><span id="mod-${id}-bar">[${"&nbsp;".repeat(barLength)}]</span> <span id="mod-${id}-counter">0/${filters.length}</span></span></div>`;
+				if (loaderDisplay) {
+					loaderDisplay.innerHTML += `<div id="mod-${id}">${queued} ${name} (${id}) -- <span style="float:right;margin-right:10px;"><span id="mod-${id}-bar">[${"&nbsp;".repeat(barLength)}]</span> <span id="mod-${id}-counter">0/${filters.length}</span></span></div>`;
+				}
 			}
 		} else if (state.type === "modStarting") {
-			document.getElementById(`mod-${state.modId}`).innerHTML.replace(
-				queued,
-				started
-			);
+			const modElement = document.getElementById(`mod-${state.modId}`);
+			if (modElement) {
+				modElement.innerHTML = modElement.innerHTML.replace(queued, started);
+			}
 		} else if (state.type === "filterApplied") {
 			const { modId, filterIndex } = state;
 			const counter = document.getElementById(`mod-${modId}-counter`);
@@ -48,22 +165,26 @@ worker.onmessage = (e: { data: WorkerMessage }) => {
 				return;
 			}
 			const filterCount = Number.parseInt(counter.innerHTML.split("/")[1]);
-			const progress = Math.floor(((filterIndex + 1) / filterCount) * barLength);
+			const progress = Math.floor(
+				((filterIndex + 1) / filterCount) * barLength,
+			);
 			counter.innerHTML = `${filterIndex + 1}/${filterCount}`;
 			bar.innerHTML = `[${"=".repeat(progress)}${"&nbsp;".repeat(barLength - progress)}]`;
 		} else if (state.type === "modFinished") {
-			const { modId, modName } = state;
-			document.getElementById(`mod-${modId}`).innerHTML.replace(
-				started,
-				applied
-			);
+			const { modId } = state;
+			const modElement = document.getElementById(`mod-${modId}`);
+			if (modElement) {
+				modElement.innerHTML = modElement.innerHTML.replace(started, applied);
+			}
 		} else if (state.type === "filterFailed") {
 			const { modId, filterIndex } = state;
-			const filterElement = document.getElementById(`filter-${modId}-${filterIndex}`);
+			const filterElement = document.getElementById(
+				`filter-${modId}-${filterIndex}`,
+			);
 			if (filterElement) {
 				filterElement.innerHTML = filterElement.innerHTML.replace(
 					started,
-					failed
+					failed,
 				);
 			}
 		}
