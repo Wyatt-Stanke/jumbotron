@@ -15,12 +15,12 @@ const addMsg = (msg: string) => {
 };
 
 // Load all available mods
-const modIndex = (await fetch("/mods/modindex.json").then((res) =>
+const modIndex = (await fetch("./mods/modindex.json").then((res) =>
 	res.json(),
 )) as string[];
 const allMods = await Promise.all(
 	modIndex.map((mod) => {
-		return fetch(`/mods/${mod}`)
+		return fetch(`./mods/${mod}`)
 			.then((res) =>
 				Promise.all([res.json(), res.headers.get("Content-Length")]),
 			)
