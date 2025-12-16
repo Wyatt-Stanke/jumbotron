@@ -184,7 +184,7 @@ Mods use a declarative JSON format with selectors and actions to transform the g
 
 ## 📄 License
 
-See LICENSE file for details.
+This project does not currently have a license file. Please contact the repository owner for licensing information.
 
 ## 🤝 Contributing
 
