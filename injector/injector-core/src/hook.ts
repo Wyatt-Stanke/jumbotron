@@ -497,3 +497,7 @@ function applyAction(
 			console.error("Unknown action type:", action.type);
 	}
 }
+
+// Export for testing
+export { applyPrimitives, makeStringJavascriptSafe };
+export type { Context };
