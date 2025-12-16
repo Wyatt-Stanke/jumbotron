@@ -381,7 +381,8 @@ function applyUniqueSafeStringPrimitive(context: Context, p1: string): string {
 	const identifier = p1;
 	const safeModId = makeStringJavascriptSafe(context.modId);
 	const safeIdentifier = makeStringJavascriptSafe(identifier);
-	// Ensure single underscore separator: if safeIdentifier starts with underscore (from digit), don't add another
+	// Ensure single underscore separator: if safeIdentifier starts with underscore
+	// (added by makeStringJavascriptSafe for identifiers starting with non-letters), don't add another
 	const separator = safeIdentifier.startsWith("_") ? "" : "_";
 	return `$$JUMBOTRON$$_uniqueString_${safeModId}${separator}${safeIdentifier}`;
 }
@@ -412,14 +413,16 @@ function applyPrimitives(
 	// The identifier can contain underscores, so use non-greedy match with lookahead for the __ delimiter
 
 	// First, match the old format with leading __ (for standalone usage)
-	// Matches: __Primitives_UniqueSafeString,<anything>__ (doesn't consume the trailing __)
+	// Matches: __Primitives_UniqueSafeString,<anything> where <anything> is followed by __
+	// The lookahead (?=__) ensures __ exists but doesn't include it in the captured group
 	const oldFormatRegex = new RegExp(
 		String.raw`__${SubstitutionPrimitives.UniqueSafeString.replace(".", "\\.")},(.+?)(?=__)`,
 		"g",
 	);
 
 	// Then, match the new format without leading __ (for embedded usage)
-	// Matches: Primitives_UniqueSafeString$<anything>__ (doesn't consume the trailing __)
+	// Matches: Primitives_UniqueSafeString$<anything> where <anything> is followed by __
+	// The lookahead (?=__) ensures __ exists but doesn't include it in the captured group
 	const newFormatRegex = new RegExp(
 		String.raw`${SubstitutionPrimitives.UniqueSafeString.replace(".", "\\.")}\$(.+?)(?=__)`,
 		"g",
