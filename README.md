@@ -84,6 +84,8 @@ npm run build
 
 ## 🛠️ How It Works
 
+The injector system follows a multi-stage pipeline to transform game code at runtime:
+
 ### 1. Parsing Stage
 The **parser** package uses Babel to parse GameMaker-generated JavaScript into an Abstract Syntax Tree (AST).
 
@@ -114,13 +116,17 @@ Example mod structure (JSON format):
 
 ### 3. Injection Stage
 The **injector-core** traverses the AST, applies mod filters, and generates modified JavaScript:
-- Matches selectors against AST nodes
-- Executes defined actions (replace, delete, add)
-- Handles symbol resolution and substitution
+- Groups filters by AST node type for efficient single-pass traversal
+- Matches selectors against AST nodes using pattern matching
+- Executes defined actions (delete, replace, add) on tagged nodes
+- Processes substitution primitives for unique identifiers
+- Handles symbol resolution and code generation
 - Generates final JavaScript code
 
 ### 4. Runtime Execution
 The **app** loads the modified JavaScript in a web worker and creates a blob URL for execution.
+
+**For detailed information about the injector stages, pattern matching, and action system, see [docs/injector-architecture.md](docs/injector-architecture.md)**
 
 ## 📦 Workspace Packages
 
@@ -172,12 +178,16 @@ npm run preview --workspace=app
 
 ## 🔧 Creating Mods
 
-See the example mods in `modkit/`:
+Mods use a declarative JSON format with selectors and actions to transform the game code.
+
+**Example mods** in `modkit/`:
 - `jettison-poki.jb.json` - Remove Poki SDK integration
 - `override-poki.jb.json` - Override Poki functionality
 - `show-jumbotron-version.jb.json` - Display Jumbotron version
 
-Mods use a declarative JSON format with selectors and actions to transform the game code.
+**Documentation**:
+- For detailed information on the injector architecture, stages, and pattern matching, see [docs/injector-architecture.md](docs/injector-architecture.md)
+- For code standards and development guidelines, see [.github/copilot-instructions.md](.github/copilot-instructions.md)
 
 ## 📝 Technical Notes
 
