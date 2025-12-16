@@ -1,7 +1,8 @@
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import pkg from "javascript-obfuscator";
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
+
 const { obfuscate } = pkg;
 
 const config = {

@@ -121,7 +121,7 @@ selectedMods.forEach((mod) => {
 	addMsg(`Selected mod: ${mod.name} (${mod.id}) - ${mod.size} bytes`);
 });
 
-document.getElementById("canvas")!.style.display = "block";
+document.getElementById("canvas")?.style.display = "block";
 const worker = new Worker(new URL("./index.worker.ts", import.meta.url), {
 	type: "module",
 });
@@ -164,7 +164,7 @@ worker.onmessage = (e: { data: WorkerMessage }) => {
 			if (!counter || !bar) {
 				return;
 			}
-			const filterCount = Number.parseInt(counter.innerHTML.split("/")[1]);
+			const filterCount = Number.parseInt(counter.innerHTML.split("/")[1], 10);
 			const progress = Math.floor(
 				((filterIndex + 1) / filterCount) * barLength,
 			);

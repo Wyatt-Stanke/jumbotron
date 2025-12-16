@@ -1,16 +1,35 @@
 {
-	"root": false,
 	"$schema": "https://biomejs.dev/schemas/2.0.5/schema.json",
 	"vcs": {
 		"enabled": true,
 		"clientKind": "git",
-		"useIgnoreFile": true
+		"useIgnoreFile": true,
+		"defaultBranch": "main"
 	},
 	"files": {
 		"ignoreUnknown": false,
-		"includes": ["**", "!devkit", "!**/dist", "!**/data", "!**/node_modules", "!**/.mypy_cache", "!*.jb.json"],
-		"maxSize": 100000000
+		"maxSize": 2000000
 	},
+	"overrides": [
+		{
+			"includes": ["**/*.jb.json"],
+			"linter": {
+				"enabled": false
+			},
+			"formatter": {
+				"enabled": false
+			}
+		},
+		{
+			"includes": ["data/**/*"],
+			"linter": {
+				"enabled": false
+			},
+			"formatter": {
+				"enabled": false
+			}
+		}
+	],
 	"formatter": {
 		"enabled": true,
 		"indentStyle": "tab",

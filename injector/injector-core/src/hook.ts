@@ -1,25 +1,25 @@
-import { parseJS, generate, type types } from "@jumbotron/parser";
 import traverse, { type Node, type NodePath } from "@babel/traverse";
-import { parseJSExpression } from "@jumbotron/parser";
-import { version } from "../package.json";
 import {
-	Contains,
-	TagSymbol,
-	Actions,
-	SubstitutionPrimitives,
-	ObjectPrimitives,
-	tag,
-} from "@jumbotron/injector-symbols";
-import { f } from "./fluent";
-import { Override } from "./mixin";
-import {
-	Mod,
-	Action,
-	FilterObject,
+	type Action,
 	AddArrayElementPosition,
+	type FilterObject,
+	type Mod,
 } from "@jumbotron/injector-mod-format";
+import {
+	Actions,
+	Contains,
+	ObjectPrimitives,
+	SubstitutionPrimitives,
+	TagSymbol,
+} from "@jumbotron/injector-symbols";
+import {
+	generate,
+	parseJS,
+	parseJSExpression,
+	type types,
+} from "@jumbotron/parser";
 
-const flattenObject = (
+const _flattenObject = (
 	obj: Record<string, unknown>,
 	delimiter = ".",
 	prefix = "",
@@ -35,7 +35,7 @@ const flattenObject = (
 		)
 			Object.assign(
 				acc,
-				flattenObject(obj[k] as Record<string, unknown>, delimiter, pre + k),
+				_flattenObject(obj[k] as Record<string, unknown>, delimiter, pre + k),
 			);
 		else acc[pre + k] = obj[k];
 		return acc;
@@ -157,10 +157,10 @@ export function checkLevel(
 	return { result: true, tags };
 }
 
-const getPartOfPath = (path: NodePath, part: string | number): NodePath =>
+const _getPartOfPath = (path: NodePath, part: string | number): NodePath =>
 	typeof part === "number" ? path[part] : path.get(part);
 
-function followTagPath(
+function _followTagPath(
 	basePath: NodePath,
 	tagPath: (string | number)[],
 ): NodePath {
@@ -227,7 +227,7 @@ export async function createHooks({
 		)
 		.reduce(
 			(map, { mod, modIndex, filter, filterIndex }) => {
-				const nodeType = filter.selector!.type as string;
+				const nodeType = filter.selector?.type as string;
 				if (!map[nodeType]) map[nodeType] = [];
 				map[nodeType].push({
 					modIndex,
@@ -430,16 +430,18 @@ function applyPrimitives(
 
 	if (typeof input === "string") {
 		// Apply both regexes
-		let result = input.replace(oldFormatRegex, (match, p1) =>
+		let result = input.replace(oldFormatRegex, (_match, p1) =>
 			applyUniqueSafeStringPrimitive(context, p1),
 		);
-		result = result.replace(newFormatRegex, (match, p1) =>
+		result = result.replace(newFormatRegex, (_match, p1) =>
 			applyUniqueSafeStringPrimitive(context, p1),
 		);
 		return result;
-	} else if (Array.isArray(input)) {
+	}
+	if (Array.isArray(input)) {
 		return input.map((item) => applyPrimitives(context, item));
-	} else if (input && typeof input === "object") {
+	}
+	if (input && typeof input === "object") {
 		const result: Record<string, any> = {};
 		if (input[ObjectPrimitives.ParseJSExpression]) {
 			input = applyParseJSExpressionPrimitive(
@@ -468,20 +470,21 @@ function applyAction(
 		case Actions.Delete:
 			if (typeof finalItem === "number") {
 				// TODO: no ts-ignore
-				// @ts-ignore
+				// @ts-expect-error
 				node.splice(finalItem, 1);
 			} else {
 				delete node[finalItem];
 			}
 			break;
-		case Actions.ReplaceProperty:
-			let value = applyPrimitives(context, action.value);
+		case Actions.ReplaceProperty: {
+			const value = applyPrimitives(context, action.value);
 			console.log("Replacing", node[finalItem], action.property, "with", value);
 			node[finalItem][action.property] = value;
 			break;
-		case Actions.AddArrayElement:
+		}
+		case Actions.AddArrayElement: {
 			console.log(action.element);
-			let element = applyPrimitives(context, action.element);
+			const element = applyPrimitives(context, action.element);
 			console.log(element);
 			if (Array.isArray(node[finalItem])) {
 				if (action.position === AddArrayElementPosition.Start) {
@@ -493,6 +496,7 @@ function applyAction(
 				console.error("Cannot add element to non-array node");
 			}
 			break;
+		}
 		default:
 			console.error("Unknown action type:", action.type);
 	}

@@ -29,6 +29,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
       
+      - name: Check formatting and linting
+        run: npm run check:ci
+      
       - name: Run tests
         run: npm test
       

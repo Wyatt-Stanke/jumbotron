@@ -1,10 +1,9 @@
-import { Mod } from "@jumbotron/injector-mod-format";
-import { Contains, TagSymbol, tag, Actions } from "@jumbotron/injector-symbols";
+import fs from "node:fs";
+import type { Mod } from "@jumbotron/injector-mod-format";
+import { Actions, Contains, TagSymbol, tag } from "@jumbotron/injector-symbols";
 import { version } from "../package.json";
 import { f } from "./fluent";
 import { Override } from "./mixin";
-import fs from "fs";
-import zlib from "zlib";
 
 const mods: Mod[] = [
 	{
@@ -128,7 +127,8 @@ export function serializeMod(mod: Mod): string {
 	const replaceTagSymbol = (obj: any) => {
 		if (Array.isArray(obj)) {
 			return obj.map(replaceTagSymbol);
-		} else if (typeof obj === "object" && obj !== null) {
+		}
+		if (typeof obj === "object" && obj !== null) {
 			const newObj: any = {};
 			if (obj[TagSymbol]) {
 				newObj._tag = obj[TagSymbol].inner;

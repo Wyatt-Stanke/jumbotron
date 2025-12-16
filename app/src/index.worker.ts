@@ -1,5 +1,5 @@
-import { createHooks } from "@jumbotron/injector-core";
 import type { LoadingState } from "@jumbotron/injector-core";
+import { createHooks } from "@jumbotron/injector-core";
 import { TagSymbol } from "@jumbotron/injector-symbols";
 
 export type WorkerMessage =
@@ -10,14 +10,15 @@ export type WorkerMessage =
 let mods: unknown[];
 
 addEventListener("message", async (e) => {
-	if (e.data.type == "mods") {
+	if (e.data.type === "mods") {
 		// For each mod, recursively re-add the TagSymbol if a "_tag" property was found.
 		mods = e.data.mods.map((mod: any) => {
 			const restoreTagSymbol = (obj: any): any => {
 				if (Array.isArray(obj)) {
 					return obj.map(restoreTagSymbol);
-				} else if (obj && typeof obj === "object") {
-					if (obj.hasOwnProperty("_tag")) {
+				}
+				if (obj && typeof obj === "object") {
+					if (Object.hasOwn(obj, "_tag")) {
 						obj[TagSymbol] = { inner: obj._tag };
 						delete obj._tag;
 					}
@@ -32,7 +33,7 @@ addEventListener("message", async (e) => {
 		postMessage({ msg: "Mods received with tag restored" });
 		return;
 	}
-	if (e.data.type == "url") {
+	if (e.data.type === "url") {
 		postMessage({ msg: "Worker started" });
 		const js = await createHooks({
 			url: `${e.data.url}html5game/RetroBowl.js`,
