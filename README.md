@@ -160,6 +160,12 @@ npm run build
 # Build specific workspace
 npm run build --workspace=app
 
+# Run tests
+npm test
+
+# Run tests for specific workspace
+npm test --workspace=parser
+
 # Format code with Biome
 npx @biomejs/biome format --write .
 
@@ -174,6 +180,40 @@ npm run build:gh --workspace=app
 
 # Preview production build
 npm run preview --workspace=app
+```
+
+## 🧪 Testing
+
+The project uses Node.js's built-in test runner with TypeScript support via `tsx`. Tests are located in each package's `src/` directory with the `.test.ts` extension.
+
+**Current test coverage:**
+- `@jumbotron/parser` - Core parsing and code generation functions
+- `@jumbotron/modkit` - Fluent API for mod creation
+- `@jumbotron/injector-symbols` - Symbol definitions and tag creation
+
+**Running tests:**
+```bash
+# Run all tests
+npm test
+
+# Run tests for a specific package
+npm test --workspace=parser
+npm test --workspace=modkit
+npm test --workspace=injector-symbols
+```
+
+**Writing new tests:**
+Create test files alongside the source code with the `.test.ts` extension. Use Node.js's built-in test API:
+
+```typescript
+import { describe, it } from "node:test";
+import assert from "node:assert";
+
+describe("My Feature", () => {
+  it("should work correctly", () => {
+    assert.strictEqual(1 + 1, 2);
+  });
+});
 ```
 
 ## 🔧 Creating Mods
