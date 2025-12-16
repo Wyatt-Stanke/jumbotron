@@ -16,7 +16,7 @@ jobs:
       # Enable auto-merge using the repository's default merge method
       - uses: actions/checkout@v6.0.1
       - name: Enable auto-merge for PR
-        run: gh pr merge --auto "$PR_NUMBER"
+        run: gh pr merge --squash --auto "$PR_NUMBER"
         env:
           PR_NUMBER: ${{ github.event.pull_request.number }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
