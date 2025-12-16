@@ -166,11 +166,14 @@ npm test
 # Run tests for specific workspace
 npm test --workspace=parser
 
-# Format code with Biome
-npx @biomejs/biome format --write .
+# Format and lint code with Biome
+npm run check
 
-# Lint code with Biome
-npx @biomejs/biome lint .
+# Check formatting (no changes)
+npm run format:check
+
+# Check linting (no changes)
+npm run lint:check
 
 # Run development server
 npm run dev --workspace=app
