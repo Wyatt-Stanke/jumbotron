@@ -121,7 +121,10 @@ selectedMods.forEach((mod) => {
 	addMsg(`Selected mod: ${mod.name} (${mod.id}) - ${mod.size} bytes`);
 });
 
-document.getElementById("canvas")?.style.display = "block";
+const canvas = document.getElementById("canvas");
+if (canvas) {
+	canvas.style.display = "block";
+}
 const worker = new Worker(new URL("./index.worker.ts", import.meta.url), {
 	type: "module",
 });
