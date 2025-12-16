@@ -376,9 +376,9 @@ interface Context {
 }
 
 function applyUniqueSafeStringPrimitive(context: Context, p1: string): string {
-	// p1 is the captured identifier from the regex (e.g., "1" or "identifier")
-	// For backward compatibility, try splitting by comma if it contains one (old format)
-	const identifier = p1.includes(",") ? p1.split(",")[1] : p1;
+	// p1 is the captured identifier from the regex (e.g., "1" or "my_identifier")
+	// The regex already extracts just the identifier part
+	const identifier = p1;
 	const safeModId = makeStringJavascriptSafe(context.modId);
 	const safeIdentifier = makeStringJavascriptSafe(identifier);
 	// Ensure single underscore separator: if safeIdentifier starts with underscore (from digit), don't add another
@@ -406,17 +406,34 @@ function applyPrimitives(
 	context: Context,
 	input: string | Record<string, any> | any[],
 ): any {
-	// Match both formats: __Primitives_UniqueSafeString,id__ and Primitives_UniqueSafeString$id__
-	// Use lookahead to not consume the trailing __
-	const regex = new RegExp(
-		String.raw`${SubstitutionPrimitives.UniqueSafeString.replace(".", "\\.")}[\$,]([^_]+)(?=__)`,
+	// Match both old and new formats:
+	// Old format: __Primitives_UniqueSafeString,identifier__ (standalone, with leading __)
+	// New format: Primitives_UniqueSafeString$identifier__ (embedded in larger string)
+	// The identifier can contain underscores, so use non-greedy match with lookahead for the __ delimiter
+
+	// First, match the old format with leading __ (for standalone usage)
+	// Matches: __Primitives_UniqueSafeString,<anything>__ (doesn't consume the trailing __)
+	const oldFormatRegex = new RegExp(
+		String.raw`__${SubstitutionPrimitives.UniqueSafeString.replace(".", "\\.")},(.+?)(?=__)`,
+		"g",
+	);
+
+	// Then, match the new format without leading __ (for embedded usage)
+	// Matches: Primitives_UniqueSafeString$<anything>__ (doesn't consume the trailing __)
+	const newFormatRegex = new RegExp(
+		String.raw`${SubstitutionPrimitives.UniqueSafeString.replace(".", "\\.")}\$(.+?)(?=__)`,
 		"g",
 	);
 
 	if (typeof input === "string") {
-		return input.replace(regex, (match, p1) =>
+		// Apply both regexes
+		let result = input.replace(oldFormatRegex, (match, p1) =>
 			applyUniqueSafeStringPrimitive(context, p1),
 		);
+		result = result.replace(newFormatRegex, (match, p1) =>
+			applyUniqueSafeStringPrimitive(context, p1),
+		);
+		return result;
 	} else if (Array.isArray(input)) {
 		return input.map((item) => applyPrimitives(context, item));
 	} else if (input && typeof input === "object") {
