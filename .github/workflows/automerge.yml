@@ -1,0 +1,21 @@
+name: Auto Merge PR
+
+on:
+  pull_request:
+    types: [labeled]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  automerge:
+    runs-on: ubuntu-latest
+    if: github.event.label.name == 'automerge'
+    steps:
+      # Enable auto-merge using the repository's default merge method
+      - name: Enable auto-merge for PR
+        run: gh pr merge --auto "$PR_NUMBER"
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
