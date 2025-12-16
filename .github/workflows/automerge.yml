@@ -14,6 +14,7 @@ jobs:
     if: github.event.label.name == 'automerge'
     steps:
       # Enable auto-merge using the repository's default merge method
+      - uses: actions/checkout@v6.0.1
       - name: Enable auto-merge for PR
         run: gh pr merge --auto "$PR_NUMBER"
         env:
