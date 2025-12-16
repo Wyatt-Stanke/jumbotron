@@ -93,15 +93,20 @@ Mods are defined using the **modkit** fluent API or JSON format. Each mod specif
 - **Actions**: Define transformations (delete, replace, add, etc.)
 - **Tags**: Mark nodes for cross-reference actions
 
-Example mod structure:
-```typescript
+Example mod structure (JSON format):
+```json
 {
-  name: "Example Mod",
-  id: "example-mod",
-  filters: [
+  "name": "Example Mod",
+  "id": "example-mod",
+  "filters": [
     {
-      selector: f.functionDeclaration({ name: "targetFunction" }),
-      actions: { 1: [{ type: Actions.Delete }] }
+      "selector": {
+        "type": "FunctionDeclaration",
+        "id": { "name": "targetFunction", "_tag": 1 }
+      },
+      "actions": {
+        "1": [{ "type": "Actions_Delete" }]
+      }
     }
   ]
 }
@@ -196,6 +201,6 @@ This project does not currently have a license file. Please contact the reposito
 
 ## 🐛 Troubleshooting
 
-**Build fails**: Ensure you've run `npm ci` to install dependencies
-**Devkit fails**: Run `python3 data/proxy.py` first to fetch game files
-**App won't start**: Check that all packages are built with `npm run build`
+**Build fails:** Ensure you've run `npm ci` to install dependencies
+**Devkit fails:** Run `python3 data/proxy.py` first to fetch game files
+**App won't start:** Check that all packages are built with `npm run build`

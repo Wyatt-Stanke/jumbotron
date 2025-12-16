@@ -96,9 +96,10 @@ npm run preview --workspace=app
 ```
 
 ### Testing
-- Currently no automated tests configured (`echo "Error: no test specified" && exit 1`)
-- Manual testing is performed through the app's dev server
-- Test mods are located in `modkit/*.jb.json`
+- No automated test suite currently implemented
+- Testing is performed manually through the app's development server
+- Example mods in `modkit/*.jb.json` serve as integration test cases
+- Verify mods work by running the app and loading them through the mod selection UI
 
 ## Project-Specific Guidelines
 
