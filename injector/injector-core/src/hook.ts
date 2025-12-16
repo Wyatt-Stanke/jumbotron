@@ -2,14 +2,30 @@ import { parseJS, generate, type types } from "@jumbotron/parser";
 import traverse, { type Node, type NodePath } from "@babel/traverse";
 import { parseJSExpression } from "@jumbotron/parser";
 import { version } from "../package.json";
-import { Contains, TagSymbol, Actions, SubstitutionPrimitives, ObjectPrimitives, tag } from "@jumbotron/injector-symbols";
+import {
+	Contains,
+	TagSymbol,
+	Actions,
+	SubstitutionPrimitives,
+	ObjectPrimitives,
+	tag,
+} from "@jumbotron/injector-symbols";
 import { f } from "./fluent";
 import { Override } from "./mixin";
-import { Mod, Action, FilterObject, AddArrayElementPosition} from "@jumbotron/injector-mod-format"
+import {
+	Mod,
+	Action,
+	FilterObject,
+	AddArrayElementPosition,
+} from "@jumbotron/injector-mod-format";
 
-const flattenObject = (obj: Record<string, unknown>, delimiter = ".", prefix = "") => {
-	const keys = Object.keys(obj)
-	
+const flattenObject = (
+	obj: Record<string, unknown>,
+	delimiter = ".",
+	prefix = "",
+) => {
+	const keys = Object.keys(obj);
+
 	return keys.reduce((acc, k) => {
 		const pre = prefix.length ? `${prefix}${delimiter}` : "";
 		if (
@@ -17,15 +33,17 @@ const flattenObject = (obj: Record<string, unknown>, delimiter = ".", prefix = "
 			obj[k] !== null &&
 			Object.keys(obj[k]).length > 0
 		)
-			Object.assign(acc, flattenObject(obj[k] as Record<string, unknown>, delimiter, pre + k));
+			Object.assign(
+				acc,
+				flattenObject(obj[k] as Record<string, unknown>, delimiter, pre + k),
+			);
 		else acc[pre + k] = obj[k];
 		return acc;
 	}, {});
-}
+};
 
 const isObject = (obj: unknown): obj is Record<string, unknown> =>
 	obj.constructor.name === "Object";
-
 
 interface LoadingStateMessageStarted {
 	type: "started";
@@ -66,7 +84,6 @@ export type LoadingState =
 	| LoadingStateMessageFilterFailed
 	| LoadngStateMessageModStarted
 	| LoadingStateMessageModFinished;
-
 
 function nodeSummary(node: types.Node) {
 	const blocks: string[] = [node.type];
@@ -293,9 +310,14 @@ export async function createHooks({
 
 						// Apply all actions for this tag
 						for (const action of tagActions) {
-							applyAction({
-								modId,
-							}, action, finalKey, targetNode);
+							applyAction(
+								{
+									modId,
+								},
+								action,
+								finalKey,
+								targetNode,
+							);
 						}
 
 						console.log(serializeNodePath(nodePath, finalPath));
@@ -316,9 +338,14 @@ export async function createHooks({
 
 	// Apply program-level actions
 	for (const { mod, action } of programActions) {
-		applyAction({
-			modId: mod.id,
-		}, action, "body", ast.program);
+		applyAction(
+			{
+				modId: mod.id,
+			},
+			action,
+			"body",
+			ast.program,
+		);
 		loadingStateCallback({
 			type: "modFinished",
 			modId: mod.id,
@@ -348,19 +375,21 @@ interface Context {
 	modId: string;
 }
 
-function applyUniqueSafeStringPrimitive(
-	context: Context,
-	p1: string
-): string {
-	const [, x] = p1.split(",");
-	return `$$JUMBOTRON$$_uniqueString_${makeStringJavascriptSafe(
-		context.modId
-	)}_${makeStringJavascriptSafe(x)}`;
+function applyUniqueSafeStringPrimitive(context: Context, p1: string): string {
+	// p1 is the captured identifier from the regex (e.g., "1" or "my_identifier")
+	// The regex already extracts just the identifier part
+	const identifier = p1;
+	const safeModId = makeStringJavascriptSafe(context.modId);
+	const safeIdentifier = makeStringJavascriptSafe(identifier);
+	// Ensure single underscore separator: if safeIdentifier starts with underscore
+	// (added by makeStringJavascriptSafe for identifiers starting with non-letters), don't add another
+	const separator = safeIdentifier.startsWith("_") ? "" : "_";
+	return `$$JUMBOTRON$$_uniqueString_${safeModId}${separator}${safeIdentifier}`;
 }
 
 function applyParseJSExpressionPrimitive(
 	context: Context,
-	p1: string
+	p1: string,
 ): Record<any, any> {
 	const [, x] = p1.split("$");
 	try {
@@ -368,7 +397,7 @@ function applyParseJSExpressionPrimitive(
 	} catch (e) {
 		console.error(
 			`Failed to parse JS expression "${x}" in mod ${context.modId}:`,
-			e
+			e,
 		);
 		return {};
 	}
@@ -376,23 +405,47 @@ function applyParseJSExpressionPrimitive(
 
 function applyPrimitives(
 	context: Context,
-	input: string | Record<string, any> | any[]
+	input: string | Record<string, any> | any[],
 ): any {
-	const regex = new RegExp(
-		String.raw`\_\_(${SubstitutionPrimitives.UniqueSafeString.replace(".", "\\.")},[^|]+)\_\_`,
-		"g"
+	// Match both old and new formats:
+	// Old format: __Primitives_UniqueSafeString,identifier__ (standalone, with leading __)
+	// New format: Primitives_UniqueSafeString$identifier__ (embedded in larger string)
+	// The identifier can contain underscores, so use non-greedy match with lookahead for the __ delimiter
+
+	// First, match the old format with leading __ (for standalone usage)
+	// Matches: __Primitives_UniqueSafeString,<anything> where <anything> is followed by __
+	// The lookahead (?=__) ensures __ exists but doesn't include it in the captured group
+	const oldFormatRegex = new RegExp(
+		String.raw`__${SubstitutionPrimitives.UniqueSafeString.replace(".", "\\.")},(.+?)(?=__)`,
+		"g",
+	);
+
+	// Then, match the new format without leading __ (for embedded usage)
+	// Matches: Primitives_UniqueSafeString$<anything> where <anything> is followed by __
+	// The lookahead (?=__) ensures __ exists but doesn't include it in the captured group
+	const newFormatRegex = new RegExp(
+		String.raw`${SubstitutionPrimitives.UniqueSafeString.replace(".", "\\.")}\$(.+?)(?=__)`,
+		"g",
 	);
 
 	if (typeof input === "string") {
-		return input.replace(regex, (match, p1) =>
-			applyUniqueSafeStringPrimitive(context, p1)
+		// Apply both regexes
+		let result = input.replace(oldFormatRegex, (match, p1) =>
+			applyUniqueSafeStringPrimitive(context, p1),
 		);
+		result = result.replace(newFormatRegex, (match, p1) =>
+			applyUniqueSafeStringPrimitive(context, p1),
+		);
+		return result;
 	} else if (Array.isArray(input)) {
-		return input.map(item => applyPrimitives(context, item));
+		return input.map((item) => applyPrimitives(context, item));
 	} else if (input && typeof input === "object") {
 		const result: Record<string, any> = {};
 		if (input[ObjectPrimitives.ParseJSExpression]) {
-			input = applyParseJSExpressionPrimitive(context, input[ObjectPrimitives.ParseJSExpression]);
+			input = applyParseJSExpressionPrimitive(
+				context,
+				input[ObjectPrimitives.ParseJSExpression],
+			);
 		}
 		for (const [key, value] of Object.entries(input)) {
 			// Apply primitives to the key if it's a string
@@ -404,7 +457,12 @@ function applyPrimitives(
 	return input;
 }
 
-function applyAction(context: Context, action: Action, finalItem: any, node: Node) {
+function applyAction(
+	context: Context,
+	action: Action,
+	finalItem: any,
+	node: Node,
+) {
 	console.log("Applying action", action);
 	switch (action.type) {
 		case Actions.Delete:
@@ -418,19 +476,13 @@ function applyAction(context: Context, action: Action, finalItem: any, node: Nod
 			break;
 		case Actions.ReplaceProperty:
 			let value = applyPrimitives(context, action.value);
-			console.log(
-				"Replacing",
-				node[finalItem],
-				action.property,
-				"with",
-				value,
-			);
+			console.log("Replacing", node[finalItem], action.property, "with", value);
 			node[finalItem][action.property] = value;
 			break;
 		case Actions.AddArrayElement:
-			console.log(action.element)
+			console.log(action.element);
 			let element = applyPrimitives(context, action.element);
-			console.log(element)
+			console.log(element);
 			if (Array.isArray(node[finalItem])) {
 				if (action.position === AddArrayElementPosition.Start) {
 					node[finalItem].unshift(element);
@@ -445,3 +497,7 @@ function applyAction(context: Context, action: Action, finalItem: any, node: Nod
 			console.error("Unknown action type:", action.type);
 	}
 }
+
+// Export for testing
+export { applyPrimitives, makeStringJavascriptSafe };
+export type { Context };
