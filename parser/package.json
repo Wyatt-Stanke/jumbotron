@@ -3,7 +3,7 @@
 	"version": "0.0.1",
 	"main": "src/index.ts",
 	"scripts": {
-		"test": "node --import tsx --test $(find src -name '*.test.ts')"
+		"test": "node --import tsx --test src/index.test.ts"
 	},
 	"author": "",
 	"license": "ISC",

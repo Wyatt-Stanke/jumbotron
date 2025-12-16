@@ -6,7 +6,7 @@
 	"license": "ISC",
 	"author": "",
 	"scripts": {
-		"test": "node --import tsx --test $(find src -name '*.test.ts')"
+		"test": "node --import tsx --test src/fluent.test.ts"
 	},
 	"dependencies": {
 		"@jumbotron/injector-mod-format": "0.0.1",
