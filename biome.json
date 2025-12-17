@@ -1,5 +1,5 @@
 {
-	"$schema": "https://biomejs.dev/schemas/2.3.9/schema.json",
+	"$schema": "https://biomejs.dev/schemas/2.3.10/schema.json",
 	"vcs": {
 		"enabled": true,
 		"clientKind": "git",
@@ -27,6 +27,23 @@
 			},
 			"formatter": {
 				"enabled": false
+			}
+		},
+		{
+			"includes": ["typings-core/**/*"],
+			"linter": {
+				"rules": {
+					"suspicious": {
+						"noExplicitAny": "off",
+						"noShadowRestrictedNames": "off"
+					},
+					"complexity": {
+						"noBannedTypes": "off"
+					},
+					"correctness": {
+						"noUnusedVariables": "off"
+					}
+				}
 			}
 		}
 	],
