@@ -10,7 +10,7 @@
 		"injector/*"
 	],
 	"devDependencies": {
-		"@biomejs/biome": "2.3.9",
+		"@biomejs/biome": "2.3.10",
 		"esbuild": "0.27.2",
 		"javascript-obfuscator": "5.1.0",
 		"tsx": "4.21.0",
