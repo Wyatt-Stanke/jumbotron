@@ -19,6 +19,12 @@
 	"type": "module",
 	"scripts": {
 		"build": "npm run build --workspaces --if-present",
-		"test": "npm run test --workspaces --if-present"
+		"test": "npm run test --workspaces --if-present",
+		"format": "biome format --write --vcs-enabled=true --vcs-use-ignore-file=true --vcs-client-kind=git .",
+		"format:check": "biome format --vcs-enabled=true --vcs-use-ignore-file=true --vcs-client-kind=git .",
+		"lint": "biome lint --write --vcs-enabled=true --vcs-use-ignore-file=true --vcs-client-kind=git .",
+		"lint:check": "biome lint --vcs-enabled=true --vcs-use-ignore-file=true --vcs-client-kind=git .",
+		"check": "biome check --write --vcs-enabled=true --vcs-use-ignore-file=true --vcs-client-kind=git .",
+		"check:ci": "biome ci --vcs-enabled=true --vcs-use-ignore-file=true --vcs-client-kind=git ."
 	}
 }

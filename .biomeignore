@@ -1,0 +1,7 @@
+# Biome ignore patterns
+devkit/
+dist/
+data/raw/
+data/raw_co/
+node_modules/
+.mypy_cache/
