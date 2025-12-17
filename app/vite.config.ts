@@ -30,7 +30,9 @@ const copyPlugin = (): Plugin => {
 				console.log("Copying mods to dist");
 				await $({ shell: true })`cp -r ./mods ./dist`;
 				console.log("Copying modindex.json to dist");
-				await $({ shell: true })`cp ./public/mods/modindex.json ./dist/mods/modindex.json`;
+				await $({
+					shell: true,
+				})`cp ./public/mods/modindex.json ./dist/mods/modindex.json`;
 			}
 		},
 	};
@@ -48,5 +50,5 @@ export default defineConfig({
 	],
 	build: {
 		target: "esnext",
-	}
+	},
 });

@@ -8,21 +8,21 @@ export const Actions = {
 };
 
 export const SubstitutionPrimitives = {
-    UniqueSafeString: "Primitives_UniqueSafeString" as const,
+	UniqueSafeString: "Primitives_UniqueSafeString" as const,
 };
 
 export const ObjectPrimitives = {
-    ParseJSExpression: "Primitives_ParseJSExpression" as const,
-}
+	ParseJSExpression: "Primitives_ParseJSExpression" as const,
+};
 
 export class Tag {
-    public inner: number | string;
+	public inner: number | string;
 
-    constructor(inner: number | string) {
-        this.inner = inner;
-    }
+	constructor(inner: number | string) {
+		this.inner = inner;
+	}
 }
 
 export function tag(inner: number | string): Tag {
-    return new Tag(inner);
+	return new Tag(inner);
 }
