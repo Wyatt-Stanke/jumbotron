@@ -1,6 +1,6 @@
-import { parse, parseExpression } from "@babel/parser";
 import generateBabel from "@babel/generator";
-import type { File, Expression } from "@babel/types";
+import { parse, parseExpression } from "@babel/parser";
+import type { Expression, File } from "@babel/types";
 
 export function parseJS(code: string): File {
 	const result = parse(code, { sourceType: "script" });

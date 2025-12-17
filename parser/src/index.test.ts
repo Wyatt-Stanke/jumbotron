@@ -1,6 +1,6 @@
-import { describe, it } from "node:test";
 import assert from "node:assert";
-import { parseJS, parseJSExpression, parseTS, generate } from "./index.ts";
+import { describe, it } from "node:test";
+import { generate, parseJS, parseJSExpression, parseTS } from "./index.ts";
 
 describe("Parser", () => {
 	describe("parseJS", () => {

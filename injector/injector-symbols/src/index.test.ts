@@ -1,12 +1,12 @@
-import { describe, it } from "node:test";
 import assert from "node:assert";
+import { describe, it } from "node:test";
 import {
-	Contains,
-	TagSymbol,
 	Actions,
-	SubstitutionPrimitives,
+	Contains,
 	ObjectPrimitives,
+	SubstitutionPrimitives,
 	Tag,
+	TagSymbol,
 	tag,
 } from "./index.ts";
 

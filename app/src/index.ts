@@ -7,7 +7,6 @@ const log = document.getElementById("log");
 // with the code that's returned from the createHooks function
 const script = document.createElement("script");
 
-// biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
 const addMsg = (msg: string) => {
 	if (log) {
 		log.innerHTML += `${msg}</br>`;
@@ -31,6 +30,7 @@ const allMods = await Promise.all(
 );
 
 // Create mod selection panel
+// biome-ignore lint/suspicious/noExplicitAny: Mods array contains dynamic mod objects with varying structures
 const createModSelectionPanel = (): Promise<any[]> => {
 	return new Promise((resolve) => {
 		// Create overlay
@@ -82,14 +82,20 @@ const createModSelectionPanel = (): Promise<any[]> => {
 		const selectAllBtn = document.createElement("button");
 		selectAllBtn.textContent = "Select All";
 		selectAllBtn.className = "mod-button primary";
-		selectAllBtn.onclick = () =>
-			checkboxes.forEach((cb) => (cb.checked = true));
+		selectAllBtn.onclick = () => {
+			for (const cb of checkboxes) {
+				cb.checked = true;
+			}
+		};
 
 		const selectNoneBtn = document.createElement("button");
 		selectNoneBtn.textContent = "Select None";
 		selectNoneBtn.className = "mod-button secondary";
-		selectNoneBtn.onclick = () =>
-			checkboxes.forEach((cb) => (cb.checked = false));
+		selectNoneBtn.onclick = () => {
+			for (const cb of checkboxes) {
+				cb.checked = false;
+			}
+		};
 
 		const startBtn = document.createElement("button");
 		startBtn.textContent = "Start Game";
@@ -121,7 +127,10 @@ selectedMods.forEach((mod) => {
 	addMsg(`Selected mod: ${mod.name} (${mod.id}) - ${mod.size} bytes`);
 });
 
-document.getElementById("canvas")!.style.display = "block";
+const canvas = document.getElementById("canvas");
+if (canvas) {
+	canvas.style.display = "block";
+}
 const worker = new Worker(new URL("./index.worker.ts", import.meta.url), {
 	type: "module",
 });
@@ -164,7 +173,7 @@ worker.onmessage = (e: { data: WorkerMessage }) => {
 			if (!counter || !bar) {
 				return;
 			}
-			const filterCount = Number.parseInt(counter.innerHTML.split("/")[1]);
+			const filterCount = Number.parseInt(counter.innerHTML.split("/")[1], 10);
 			const progress = Math.floor(
 				((filterIndex + 1) / filterCount) * barLength,
 			);

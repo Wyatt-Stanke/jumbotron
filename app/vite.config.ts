@@ -1,7 +1,7 @@
-import { defineConfig, type Plugin } from "vite";
+import { promises as fs } from "node:fs";
 import { $ } from "execa";
+import { defineConfig, type Plugin } from "vite";
 import { nodePolyfills } from "vite-plugin-node-polyfills";
-import { promises as fs } from "fs";
 
 const copyPlugin = (): Plugin => {
 	return {

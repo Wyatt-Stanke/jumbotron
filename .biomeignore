@@ -5,3 +5,5 @@ data/raw/
 data/raw_co/
 node_modules/
 .mypy_cache/
+# Generated TypeScript definition file that causes Biome internal error
+typings-core/RetroBowl-raw.d.ts

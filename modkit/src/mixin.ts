@@ -1,11 +1,4 @@
-import { f } from "./fluent";
-import { parseJSExpression } from "@jumbotron/parser";
 import traverse, { type Node, type NodePath } from "@babel/traverse";
-import {
-	Actions,
-	SubstitutionPrimitives,
-	tag,
-} from "@jumbotron/injector-symbols";
 import type {
 	ArrowFunctionExpression,
 	BlockStatement,
@@ -14,15 +7,23 @@ import type {
 } from "@babel/types";
 import {
 	AddArrayElementPosition,
-	Filter,
+	type Filter,
 } from "@jumbotron/injector-mod-format";
-import { RBFunctions, RBFunctionNames } from "@jumbotron/typings-core";
+import {
+	Actions,
+	SubstitutionPrimitives,
+	tag,
+} from "@jumbotron/injector-symbols";
+import { parseJSExpression } from "@jumbotron/parser";
+import type { RBFunctionNames, RBFunctions } from "@jumbotron/typings-core";
+import { f } from "./fluent";
 
 interface Context<FName extends RBFunctionNames> {
 	original: RBFunctions[FName];
 	inputs: { [key: string]: unknown };
 }
 
+// biome-ignore lint/suspicious/noExplicitAny: Type utility requires any for generic function parameter extraction
 type ArgsFromFunction<T extends (...args: any[]) => any> = T extends (
 	...args: infer A
 ) => unknown
@@ -66,7 +67,7 @@ export class Override<FName extends RBFunctionNames> {
 		// }
 
 		const originalFunctionName = this.newFunctionName();
-		let functionBody: FunctionDeclaration = parseJSExpression(
+		const functionBody: FunctionDeclaration = parseJSExpression(
 			`function ${this.originalFunctionName}(...args) {}`,
 		) as unknown as FunctionDeclaration;
 

@@ -1,7 +1,8 @@
-// biome-ignore-all lint/suspicious/noExplicitAny
 import type * as rb from "./RetroBowl-raw";
+
 type RB = typeof rb;
 
+// biome-ignore lint/suspicious/noExplicitAny: Type utility requires any for generic function type detection
 type IsFunction<T> = T extends (...args: any[]) => any ? true : false;
 
 type IsNotAny<T> = 0 extends 1 & T ? false : true;
