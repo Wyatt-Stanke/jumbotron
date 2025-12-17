@@ -21,7 +21,7 @@
 			}
 		},
 		{
-			"includes": ["data/**/*"],
+			"includes": ["data/raw/**/*", "data/raw_co/**/*"],
 			"linter": {
 				"enabled": false
 			},

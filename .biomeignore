@@ -1,9 +1,7 @@
 # Biome ignore patterns
 devkit/
 dist/
-data/
+data/raw/
+data/raw_co/
 node_modules/
 .mypy_cache/
-# Large game files that should not be linted
-data/raw/html5game/RetroBowl.js
-data/raw_co/html5game/RetroBowl.js

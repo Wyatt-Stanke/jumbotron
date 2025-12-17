@@ -43,7 +43,7 @@ The main configuration file includes:
 - **Linter**: Enabled with recommended rules plus additional strict rules
 - **Overrides**: 
   - `.jb.json` files are excluded (mod definition format)
-  - `data/` directory is excluded (game files)
+  - `data/raw/` and `data/raw_co/` directories are excluded (game files)
 
 ### .biomeignore
 
@@ -51,7 +51,7 @@ Additional ignore patterns for:
 - Build artifacts (`devkit/`, `dist/`)
 - Dependencies (`node_modules/`)
 - Cache directories (`.mypy_cache/`)
-- Large game data files
+- Game data files (`data/raw/`, `data/raw_co/`)
 
 ## CI Integration
 
