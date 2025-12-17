@@ -34,7 +34,10 @@ jobs:
         uses: actions/configure-pages@v5
       - uses: actions/setup-node@v6
       - run: npm ci
-      - run: npm run check:ci
+      - name: Check formatting
+        run: npm run format:check
+      - name: Check linting
+        run: npm run lint:check
       - run: npm run build --workspaces --if-present
       - run: npm run build:gh --workspace=app
       - name: Upload artifact
