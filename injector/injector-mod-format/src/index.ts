@@ -1,4 +1,9 @@
-import { Contains, TagSymbol, Actions, Tag } from "@jumbotron/injector-symbols";
+import {
+	type Actions,
+	type Contains,
+	type Tag,
+	TagSymbol,
+} from "@jumbotron/injector-symbols";
 
 // TODO: use a better type system that uses the actual AST types
 type Key = string | number | boolean;
@@ -26,6 +31,7 @@ export interface ReplacePropertyAction extends BaseAction {
 
 export interface ReplaceSelfAction extends BaseAction {
 	type: typeof Actions.ReplaceSelf;
+	// biome-ignore lint/suspicious/noExplicitAny: Value can be any AST node type
 	value: any;
 }
 
@@ -36,6 +42,7 @@ export enum AddArrayElementPosition {
 
 export interface AddArrayElementAction extends BaseAction {
 	type: typeof Actions.AddArrayElement;
+	// biome-ignore lint/suspicious/noExplicitAny: Element can be any AST node type
 	element: any;
 	position?: AddArrayElementPosition;
 }
