@@ -28,6 +28,23 @@
 			"formatter": {
 				"enabled": false
 			}
+		},
+		{
+			"includes": ["typings-core/**/*"],
+			"linter": {
+				"rules": {
+					"suspicious": {
+						"noExplicitAny": "off",
+						"noShadowRestrictedNames": "off"
+					},
+					"complexity": {
+						"noBannedTypes": "off"
+					},
+					"correctness": {
+						"noUnusedVariables": "off"
+					}
+				}
+			}
 		}
 	],
 	"formatter": {
