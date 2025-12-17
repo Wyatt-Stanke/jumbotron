@@ -1,7 +1,7 @@
-import assert from "node:assert";
 import { describe, it } from "node:test";
-import { TagSymbol, tag } from "@jumbotron/injector-symbols";
+import assert from "node:assert";
 import { f } from "./fluent.ts";
+import { TagSymbol, tag } from "@jumbotron/injector-symbols";
 
 describe("Fluent API", () => {
 	describe("f.function", () => {

@@ -1,10 +1,11 @@
-import assert from "node:assert";
 import { describe, it } from "node:test";
+import assert from "node:assert";
 import {
 	applyPrimitives,
-	type Context,
 	makeStringJavascriptSafe,
+	type Context,
 } from "./hook.ts";
+import { SubstitutionPrimitives } from "@jumbotron/injector-symbols";
 
 describe("Primitive Substitution", () => {
 	const context: Context = { modId: "test-mod" };

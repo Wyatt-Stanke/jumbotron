@@ -1,4 +1,11 @@
+import { f } from "./fluent";
+import { parseJSExpression } from "@jumbotron/parser";
 import traverse, { type Node, type NodePath } from "@babel/traverse";
+import {
+	Actions,
+	SubstitutionPrimitives,
+	tag,
+} from "@jumbotron/injector-symbols";
 import type {
 	ArrowFunctionExpression,
 	BlockStatement,
@@ -7,16 +14,9 @@ import type {
 } from "@babel/types";
 import {
 	AddArrayElementPosition,
-	type Filter,
+	Filter,
 } from "@jumbotron/injector-mod-format";
-import {
-	Actions,
-	SubstitutionPrimitives,
-	tag,
-} from "@jumbotron/injector-symbols";
-import { parseJSExpression } from "@jumbotron/parser";
-import type { RBFunctionNames, RBFunctions } from "@jumbotron/typings-core";
-import { f } from "./fluent";
+import { RBFunctions, RBFunctionNames } from "@jumbotron/typings-core";
 
 interface Context<FName extends RBFunctionNames> {
 	original: RBFunctions[FName];
@@ -66,7 +66,7 @@ export class Override<FName extends RBFunctionNames> {
 		// }
 
 		const originalFunctionName = this.newFunctionName();
-		const functionBody: FunctionDeclaration = parseJSExpression(
+		let functionBody: FunctionDeclaration = parseJSExpression(
 			`function ${this.originalFunctionName}(...args) {}`,
 		) as unknown as FunctionDeclaration;
 
