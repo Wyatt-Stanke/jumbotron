@@ -9,7 +9,7 @@
 	"license": "ISC",
 	"description": "",
 	"dependencies": {
-		"@babel/traverse": "7.28.5",
+		"@babel/traverse": "7.29.0",
 		"@jumbotron/injector-mod-format": "0.0.1",
 		"@jumbotron/injector-symbols": "0.0.1",
 		"@jumbotron/parser": "0.0.1",
